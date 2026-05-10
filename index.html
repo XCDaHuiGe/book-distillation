@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Distillation V3 - 长文本深度蒸馏系统</title>
+    <link rel="stylesheet" href="ppt-assets/themes/corporate-clean.css">
+    <link rel="stylesheet" href="ppt-assets/base.css">
+    <link rel="stylesheet" href="ppt-assets/fonts.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero {
+            background: white;
+            border-radius: 20px;
+            padding: 60px 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .hero h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero .subtitle {
+            font-size: 1.3em;
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .hero .badges {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .feature-card ul {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .feature-card ul li {
+            padding: 8px 0;
+            color: #666;
+            border-bottom: 1px solid #eee;
+        }
+
+        .feature-card ul li:last-child {
+            border-bottom: none;
+        }
+
+        .feature-card ul li::before {
+            content: "✓ ";
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .examples {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 40px;
+        }
+
+        .examples h2 {
+            font-size: 2em;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #333;
+        }
+
+        .example-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .example-card {
+            border: 2px solid #eee;
+            border-radius: 15px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .example-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .example-card h3 {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .example-card .meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .example-card .meta span {
+            background: #f5f5f5;
+            padding: 5px 12px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            color: #666;
+        }
+
+        .example-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .example-card .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: transform 0.3s ease;
+        }
+
+        .example-card .btn:hover {
+            transform: scale(1.05);
+        }
+
+        .tech-stack {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 40px;
+        }
+
+        .tech-stack h2 {
+            font-size: 2em;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #333;
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .tech-item {
+            text-align: center;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 10px;
+        }
+
+        .tech-item h4 {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            color: #667eea;
+        }
+
+        .tech-item p {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px;
+            color: white;
+        }
+
+        .footer a {
+            color: white;
+            text-decoration: none;
+            border-bottom: 1px solid white;
+        }
+
+        .footer a:hover {
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2em;
+            }
+
+            .hero .subtitle {
+                font-size: 1em;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .example-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <h1>📚 Book Distillation V3</h1>
+            <p class="subtitle">长文本深度蒸馏系统<br>将数十万字巨著转化为PPT式HTML精华内参</p>
+            <div class="badges">
+                <span class="badge">GraphRAG</span>
+                <span class="badge">Agentic RAG</span>
+                <span class="badge">3-Agent协作</span>
+                <span class="badge">知识图谱</span>
+                <span class="badge">36主题</span>
+                <span class="badge">47动画</span>
+            </div>
+            <p style="color: #999; font-size: 0.9em;">
+                <a href="https://github.com/XCDaHuiGe/book-distillation" target="_blank" style="color: #667eea; text-decoration: none;">
+                    🔗 GitHub: XCDaHuiGe/book-distillation
+                </a>
+            </p>
+        </div>
+
+        <div class="features">
+            <div class="feature-card">
+                <h3>🚀 五阶段蒸馏流程</h3>
+                <p>系统化的书籍处理流程，确保输出质量</p>
+                <ul>
+                    <li>加载：EPUB内容提取</li>
+                    <li>蒸馏：逻辑种子提取</li>
+                    <li>拼接：模块整合验证</li>
+                    <li>生成：PPT设计输出</li>
+                    <li>清理：资源优化整理</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>🤖 3-Agent协作蒸馏</h3>
+                <p>分工明确的智能体协作机制</p>
+                <ul>
+                    <li>Alpha：核心概念提取</li>
+                    <li>Beta：知识模块化</li>
+                    <li>Gamma：场景模拟设计</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>📊 七大模块输出</h3>
+                <p>全方位呈现书籍精华内容</p>
+                <ul>
+                    <li>一句话逻辑</li>
+                    <li>核心知识地图</li>
+                    <li>颠覆性认知</li>
+                    <li>落地行动指南</li>
+                    <li>金句复刻</li>
+                    <li>知识蒸馏清单</li>
+                    <li>延伸行动地图</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>🎨 HTML PPT生成</h3>
+                <p>精美的可视化呈现</p>
+                <ul>
+                    <li>36种主题风格</li>
+                    <li>47种动画效果</li>
+                    <li>完整导航支持</li>
+                    <li>演讲者模式</li>
+                    <li>实时主题切换</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="examples">
+            <h2>📖 在线演示示例</h2>
+            <div class="example-grid">
+                <div class="example-card" onclick="window.location.href='关键对话_精华内参.html'">
+                    <h3>关键对话如何高效能沟通</h3>
+                    <div class="meta">
+                        <span>40页</span>
+                        <span>corporate-clean主题</span>
+                        <span>商业类</span>
+                    </div>
+                    <p>7大技巧、2大原则，掌握高效能沟通的核心方法。从心开始、注意观察、保证安全、控制想法、陈述观点、了解动机、开始行动。</p>
+                    <a href="关键对话_精华内参.html" class="btn">查看PPT →</a>
+                </div>
+
+                <div class="example-card" onclick="window.location.href='不要挑战人性_精华内参.html'">
+                    <h3>不要挑战人性</h3>
+                    <div class="meta">
+                        <span>22页</span>
+                        <span>麦肯锡风格</span>
+                        <span>心理学</span>
+                    </div>
+                    <p>10大支柱、9个颠覆性认知，揭示人性的底层逻辑。早期依恋、环境权威、认知偏差、自我实现、情绪机制、关系塑造等。</p>
+                    <a href="不要挑战人性_精华内参.html" class="btn">查看PPT →</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="tech-stack">
+            <h2>🛠️ 技术架构</h2>
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <h4>GraphRAG</h4>
+                    <p>基于图谱的检索增强生成</p>
+                </div>
+                <div class="tech-item">
+                    <h4>Agentic RAG</h4>
+                    <p>智能体驱动的检索协作</p>
+                </div>
+                <div class="tech-item">
+                    <h4>Knowledge Graph</h4>
+                    <p>概念关系网络构建</p>
+                </div>
+                <div class="tech-item">
+                    <h4>HTML/CSS/JS</h4>
+                    <p>前端可视化呈现</p>
+                </div>
+                <div class="tech-item">
+                    <h4>Python</h4>
+                    <p>数据处理与图谱构建</p>
+                </div>
+                <div class="tech-item">
+                    <h4>EPUB解析</h4>
+                    <p>电子书内容提取</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>
+                Made with ❤️ by 
+                <a href="https://github.com/XCDaHuiGe" target="_blank">XCDaHuiGe</a>
+            </p>
+            <p style="margin-top: 10px; font-size: 0.9em;">
+                <a href="https://github.com/XCDaHuiGe/book-distillation" target="_blank">GitHub</a> •
+                <a href="https://github.com/XCDaHuiGe/book-distillation/stargazers" target="_blank">Star ⭐</a> •
+                <a href="https://github.com/XCDaHuiGe/book-distillation/issues" target="_blank">Issues</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
