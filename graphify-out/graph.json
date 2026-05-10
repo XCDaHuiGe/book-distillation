@@ -1,0 +1,82 @@
+{
+  "nodes": [
+    {"id": "concept_crucial_conversation", "label": "关键对话", "type": "CONCEPT", "description": "高风险+不同观点+激烈情绪三要素齐备的对话"},
+    {"id": "concept_fools_choice", "label": "傻瓜式选择", "type": "CONCEPT", "description": "认为只有'要么对抗要么沉默'两种选择的思维陷阱"},
+    {"id": "concept_mutual_purpose", "label": "共同目的", "type": "CONCEPT", "description": "双方相信对话在朝共同目标前进"},
+    {"id": "concept_mutual_respect", "label": "互相尊重", "type": "CONCEPT", "description": "双方相信对方尊重自己的价值"},
+    {"id": "concept_dual_processing", "label": "双路处理", "type": "CONCEPT", "description": "同时关注对话内容+对话氛围"},
+    {"id": "concept_safety", "label": "安全感", "type": "CONCEPT", "description": "对话能够继续的基础条件"},
+    
+    {"id": "skill_1", "label": "技巧1：从心开始", "type": "SKILL", "description": "明确目的/拒绝傻瓜式选择"},
+    {"id": "skill_2", "label": "技巧2：注意观察", "type": "SKILL", "description": "双路处理/识别沉默暴力信号"},
+    {"id": "skill_3", "label": "技巧3：保证安全", "type": "SKILL", "description": "道歉/对比说明/创建共同目的(CRIB)"},
+    {"id": "skill_4", "label": "技巧4：控制想法", "type": "SKILL", "description": "行为方式模型/质疑三种错误想法"},
+    {"id": "skill_5", "label": "技巧5：陈述观点", "type": "SKILL", "description": "综合陈述法SHARE"},
+    {"id": "skill_6", "label": "技巧6：了解动机", "type": "SKILL", "description": "倾听四技巧AMPP"},
+    {"id": "skill_7", "label": "技巧7：开始行动", "type": "SKILL", "description": "决策四方式/任务分配"},
+    
+    {"id": "model_behavior", "label": "行为方式模型", "type": "MODEL", "description": "事实→想法→感受→行动"},
+    {"id": "model_share", "label": "SHARE模型", "type": "MODEL", "description": "分享事实→说出想法→征询观点→试探表达→鼓励质疑"},
+    {"id": "model_crib", "label": "CRIB法", "type": "MODEL", "description": "承诺→识别→创造→头脑风暴"},
+    {"id": "model_ampp", "label": "AMPP倾听", "type": "MODEL", "description": "询问→映射→复述→抛砖引玉"},
+    
+    {"id": "principle_purpose", "label": "原则：明确目的", "type": "PRINCIPLE", "description": "我真正想要的是什么？"},
+    {"id": "principle_safety", "label": "原则：维护安全感", "type": "PRINCIPLE", "description": "共同目的+互相尊重"},
+    
+    {"id": "emotion_victim", "label": "受害者想法", "type": "EMOTION", "description": "我是无辜的，都是别人的错"},
+    {"id": "emotion_villain", "label": "大反派想法", "type": "EMOTION", "description": "对方是坏人，故意伤害我"},
+    {"id": "emotion_helpless", "label": "无助者想法", "type": "EMOTION", "description": "我做什么都没用"},
+    
+    {"id": "signal_silence", "label": "沉默信号", "type": "SIGNAL", "description": "掩饰/逃避/退缩"},
+    {"id": "signal_violence", "label": "暴力信号", "type": "SIGNAL", "description": "控制/贴标签/攻击"}
+  ],
+  "edges": [
+    {"source": "concept_crucial_conversation", "target": "concept_safety", "relation": "需要"},
+    {"source": "concept_crucial_conversation", "target": "skill_1", "relation": "应用"},
+    {"source": "concept_crucial_conversation", "target": "skill_2", "relation": "应用"},
+    {"source": "concept_crucial_conversation", "target": "skill_3", "relation": "应用"},
+    
+    {"source": "concept_fools_choice", "target": "skill_1", "relation": "被拒绝"},
+    {"source": "concept_mutual_purpose", "target": "concept_safety", "relation": "构成"},
+    {"source": "concept_mutual_respect", "target": "concept_safety", "relation": "构成"},
+    {"source": "concept_dual_processing", "target": "skill_2", "relation": "实现"},
+    
+    {"source": "skill_3", "target": "model_crib", "relation": "使用"},
+    {"source": "skill_4", "target": "model_behavior", "relation": "使用"},
+    {"source": "skill_5", "target": "model_share", "relation": "使用"},
+    {"source": "skill_6", "target": "model_ampp", "relation": "使用"},
+    
+    {"source": "model_behavior", "target": "emotion_victim", "relation": "识别"},
+    {"source": "model_behavior", "target": "emotion_villain", "relation": "识别"},
+    {"source": "model_behavior", "target": "emotion_helpless", "relation": "识别"},
+    
+    {"source": "skill_2", "target": "signal_silence", "relation": "识别"},
+    {"source": "skill_2", "target": "signal_violence", "relation": "识别"},
+    
+    {"source": "principle_purpose", "target": "skill_1", "relation": "指导"},
+    {"source": "principle_safety", "target": "skill_3", "relation": "指导"},
+    
+    {"source": "skill_1", "target": "skill_2", "relation": "前置"},
+    {"source": "skill_2", "target": "skill_3", "relation": "前置"},
+    {"source": "skill_3", "target": "skill_4", "relation": "前置"},
+    {"source": "skill_4", "target": "skill_5", "relation": "前置"},
+    {"source": "skill_5", "target": "skill_6", "relation": "前置"},
+    {"source": "skill_6", "target": "skill_7", "relation": "前置"}
+  ],
+  "categories": {
+    "CONCEPT": "核心概念",
+    "SKILL": "技巧方法",
+    "MODEL": "工具模型",
+    "PRINCIPLE": "核心原则",
+    "EMOTION": "情绪陷阱",
+    "SIGNAL": "危险信号"
+  },
+  "colors": {
+    "CONCEPT": "#4A90E2",
+    "SKILL": "#7ED321",
+    "MODEL": "#F5A623",
+    "PRINCIPLE": "#D0021B",
+    "EMOTION": "#9013FE",
+    "SIGNAL": "#50E3C2"
+  }
+}
