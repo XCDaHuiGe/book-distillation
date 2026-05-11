@@ -1,539 +1,411 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Distillation — 长文本深度蒸馏系统</title>
-    <style>
-        :root {
-            --bg: #0A0A0A;
-            --bg-card: rgba(18,20,20,0.7);
-            --bg-card-solid: #121414;
-            --bg-soft: #1a1c1c;
-            --text: #e2e2e2;
-            --text-2: #9e9bb8;
-            --text-3: #6e6b88;
-            --accent: #FF5F1F;
-            --accent-glow: rgba(255,95,31,0.15);
-            --border: rgba(255,255,255,0.08);
-            --border-hover: rgba(255,255,255,0.15);
-            --font: 'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
-            --font-ui: 'Space Mono', 'SF Mono', monospace;
+<html class="dark" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Book Distillation — 长文本深度蒸馏系统</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Space+Mono:wght@400;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error": "#ffb4ab",
+                        "inverse-primary": "#ab3600",
+                        "secondary-fixed-dim": "#c9c6c5",
+                        "on-surface": "#e2e2e2",
+                        "surface-container-lowest": "#0d0e0f",
+                        "primary": "#ffb59c",
+                        "surface-bright": "#38393a",
+                        "surface-container-highest": "#333535",
+                        "on-tertiary-fixed-variant": "#474746",
+                        "outline-variant": "#5b4138",
+                        "on-tertiary": "#313030",
+                        "surface-container": "#1e2020",
+                        "background": "#0A0A0A",
+                        "surface-tint": "#ffb59c",
+                        "on-tertiary-fixed": "#1c1b1b",
+                        "on-primary-fixed-variant": "#832700",
+                        "on-tertiary-container": "#2c2c2c",
+                        "surface-container-low": "#1a1c1c",
+                        "on-background": "#e2e2e2",
+                        "surface-container-high": "#282a2b",
+                        "primary-fixed-dim": "#ffb59c",
+                        "on-primary-fixed": "#390c00",
+                        "tertiary-fixed": "#e5e2e1",
+                        "on-error": "#690005",
+                        "secondary-fixed": "#e5e2e1",
+                        "on-primary-container": "#561700",
+                        "surface-variant": "#333535",
+                        "secondary": "#c9c6c5",
+                        "secondary-container": "#4a4949",
+                        "on-secondary": "#313030",
+                        "outline": "#aa897f",
+                        "inverse-surface": "#e2e2e2",
+                        "tertiary-fixed-dim": "#c8c6c5",
+                        "tertiary-container": "#959393",
+                        "on-secondary-container": "#bab8b7",
+                        "on-primary": "#5c1900",
+                        "tertiary": "#c8c6c5",
+                        "primary-fixed": "#ffdbcf",
+                        "error-container": "#93000a",
+                        "inverse-on-surface": "#2f3131",
+                        "surface": "#121414",
+                        "on-surface-variant": "#e3bfb3",
+                        "primary-container": "#ff5f1f",
+                        "surface-dim": "#121414",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "on-secondary-fixed-variant": "#474646",
+                        "on-error-container": "#ffdad6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0px",
+                        "lg": "0px",
+                        "xl": "0px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "1rem",
+                        "margin-desktop": "4rem",
+                        "grid-size": "32px",
+                        "unit": "4px",
+                        "gutter": "1.5rem"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Anton", "sans-serif"],
+                        "subheader": ["Space Mono", "monospace"],
+                        "body-md": ["JetBrains Mono", "monospace"],
+                        "headline-lg-mobile": ["Anton", "sans-serif"],
+                        "display-lg": ["Anton", "sans-serif"],
+                        "label-sm": ["Space Mono", "monospace"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["48px", {"lineHeight": "110%", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                        "subheader": ["18px", {"lineHeight": "140%", "fontWeight": "700"}],
+                        "body-md": ["14px", {"lineHeight": "160%", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["36px", {"lineHeight": "110%", "fontWeight": "400"}],
+                        "display-lg": ["84px", {"lineHeight": "90%", "letterSpacing": "-0.02em", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "100%", "letterSpacing": "0.1em", "fontWeight": "500"}]
+                    }
+                },
+            },
         }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
+    </script>
+<style>
         body {
-            font-family: var(--font);
-            background: var(--bg);
-            background-image:
-                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-color: #0A0A0A;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
             background-size: 32px 32px;
-            color: var(--text);
-            -webkit-font-smoothing: antialiased;
-            line-height: 1.7;
-            font-size: 13px;
+            color: #e2e2e2;
         }
-
-        .container {
-            max-width: 960px;
-            margin: 0 auto;
-            padding: 0 24px;
+        .glass-panel {
+            background: rgba(18, 20, 20, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
-
-        /* Header */
-        header {
-            padding: 48px 0 32px;
-            border-bottom: 1px solid var(--border);
+        .orange-glow {
+            box-shadow: 0 0 20px rgba(255, 95, 31, 0.2);
+        }
+        .active-nav-indicator {
             position: relative;
         }
-
-        header .top {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 24px;
-        }
-
-        header .logo {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--text);
-        }
-
-        header .logo span {
-            color: var(--accent);
-        }
-
-        /* GitHub button — reference design style */
-        header .github-link {
-            font-size: 11px;
-            color: var(--accent);
-            text-decoration: none;
-            padding: 8px 20px;
-            border: 1px solid var(--accent);
-            font-family: var(--font-ui);
-            text-transform: uppercase;
-            letter-spacing: .1em;
-            transition: all .2s;
-            position: relative;
-        }
-
-        header .github-link:hover {
-            background: var(--accent);
-            color: #000;
-            box-shadow: 0 0 20px var(--accent-glow);
-        }
-
-        header .github-link::before {
-            content: '> ';
-            opacity: .5;
-        }
-
-        header h1 {
-            font-size: 32px;
-            font-weight: 400;
-            line-height: 1.15;
-            margin-bottom: 12px;
-            font-family: var(--font-ui);
-            text-transform: uppercase;
-            letter-spacing: .02em;
-        }
-
-        header .subtitle {
-            font-size: 13px;
-            color: var(--text-2);
-            max-width: 600px;
-            line-height: 1.6;
-        }
-
-        /* Stats */
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 1px;
-            margin: 32px 0;
-            background: var(--border);
-        }
-
-        .stat-item {
-            background: var(--bg-card-solid);
-            padding: 20px 12px;
-            text-align: center;
-        }
-
-        .stat-item .num {
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--accent);
-            font-variant-numeric: tabular-nums;
-        }
-
-        .stat-item .label {
-            font-size: 10px;
-            color: var(--text-3);
-            margin-top: 4px;
-            text-transform: uppercase;
-            letter-spacing: .12em;
-            font-family: var(--font-ui);
-        }
-
-        /* Section */
-        section {
-            margin: 48px 0;
-        }
-
-        section .section-header {
-            margin-bottom: 20px;
-            display: flex;
-            align-items: baseline;
-            gap: 12px;
-        }
-
-        section .section-header h2 {
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--text);
-            font-family: var(--font-ui);
-            text-transform: uppercase;
-            letter-spacing: .08em;
-        }
-
-        section .section-header p {
-            font-size: 11px;
-            color: var(--text-3);
-            font-family: var(--font-ui);
-        }
-
-        section .section-header::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: var(--border);
-        }
-
-        /* Feature grid */
-        .feature-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1px;
-            background: var(--border);
-        }
-
-        .feature-card {
-            background: var(--bg-card);
-            padding: 24px;
-            transition: all .2s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .feature-card:hover {
-            background: rgba(18,20,20,0.9);
-        }
-
-        .feature-card .icon {
-            font-size: 18px;
-            margin-bottom: 10px;
-        }
-
-        .feature-card h3 {
-            font-size: 13px;
-            font-weight: 700;
-            margin-bottom: 4px;
-            font-family: var(--font-ui);
-            text-transform: uppercase;
-            letter-spacing: .05em;
-        }
-
-        .feature-card p {
-            font-size: 12px;
-            color: var(--text-2);
-            line-height: 1.5;
-        }
-
-        /* Deliverables */
-        .deliverable-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1px;
-            background: var(--border);
-        }
-
-        .deliverable-card {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            background: var(--bg-card);
-            padding: 16px 20px;
-            text-decoration: none;
-            color: inherit;
-            transition: all .2s;
-            cursor: pointer;
-            position: relative;
-        }
-
-        .deliverable-card:hover {
-            background: rgba(18,20,20,0.9);
-        }
-
-        .deliverable-card::after {
+        .active-nav-indicator::before {
             content: '';
             position: absolute;
-            left: 0; top: 0; bottom: 0;
-            width: 3px;
-            background: var(--accent);
-            opacity: 0;
-            transition: opacity .2s;
+            left: -12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 4px;
+            background-color: #ff5f1f;
         }
-
-        .deliverable-card:hover::after {
-            opacity: 1;
-        }
-
-        .deliverable-card .num {
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--text-3);
-            font-family: var(--font-ui);
-            min-width: 28px;
-        }
-
-        .deliverable-card .info {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .deliverable-card .info h3 {
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 2px;
-        }
-
-        .deliverable-card .info .meta {
-            font-size: 11px;
-            color: var(--text-3);
-            font-family: var(--font-ui);
-        }
-
-        .deliverable-card .info .meta span {
-            display: inline-block;
-            margin-right: 12px;
-        }
-
-        .deliverable-card .arrow {
-            font-size: 12px;
-            color: var(--text-3);
-            transition: all .2s;
-            font-family: var(--font-ui);
-        }
-
-        .deliverable-card:hover .arrow {
-            color: var(--accent);
-        }
-
-        /* Tags */
-        .tag {
-            display: inline-block;
-            font-size: 9px;
-            font-weight: 500;
-            padding: 2px 8px;
-            border: 1px solid var(--border);
-            color: var(--text-2);
-            font-family: var(--font-ui);
-            text-transform: uppercase;
-            letter-spacing: .05em;
-        }
-
-        .tag-orange { border-color: var(--accent); color: var(--accent); }
-        .tag-blue { border-color: #4f46e5; color: #818cf8; }
-        .tag-green { border-color: #059669; color: #34d399; }
-
-        /* Tech */
-        .tech-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1px;
-        }
-
-        .tech-item {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 11px;
-            padding: 6px 14px;
-            background: var(--bg-card);
-            color: var(--text-2);
-            font-family: var(--font-ui);
-            transition: all .2s;
-        }
-
-        .tech-item:hover {
-            color: var(--accent);
-            background: rgba(18,20,20,0.9);
-        }
-
-        .tech-item .dot {
-            width: 5px;
-            height: 5px;
-            background: var(--accent);
-        }
-
-        /* Footer */
-        footer {
-            padding: 32px 0;
-            border-top: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 11px;
-            color: var(--text-3);
-            font-family: var(--font-ui);
-        }
-
-        footer .links {
-            display: flex;
-            gap: 20px;
-        }
-
-        footer a {
-            color: var(--text-3);
-            text-decoration: none;
-            transition: color .2s;
-            text-transform: uppercase;
-            letter-spacing: .05em;
-        }
-
-        footer a:hover {
-            color: var(--accent);
-        }
-
-        /* Tech corner decorations */
-        .tech-corner-tl, .tech-corner-tr, .tech-corner-bl, .tech-corner-br {
+        .tech-corner {
             position: absolute;
             width: 4px;
             height: 4px;
-            background: var(--accent);
-            opacity: .3;
-            pointer-events: none;
+            background: #ff5f1f;
         }
-
-        /* Responsive */
+        .stat-grid-5 {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+        }
         @media (max-width: 768px) {
-            header h1 { font-size: 24px; }
-            .stats { grid-template-columns: repeat(3, 1fr); }
-            .feature-grid { grid-template-columns: 1fr; }
-            .deliverable-card { flex-wrap: wrap; }
-            footer { flex-direction: column; gap: 12px; text-align: center; }
+            .stat-grid-5 { grid-template-columns: repeat(3, 1fr); }
         }
-
         @media (max-width: 480px) {
-            .stats { grid-template-columns: repeat(2, 1fr); }
-            header .top { flex-direction: column; align-items: flex-start; gap: 12px; }
-            .container { padding: 0 16px; }
+            .stat-grid-5 { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <header>
-            <div class="top">
-                <div class="logo">Book <span>Distillation</span></div>
-                <a href="https://github.com/XCDaHuiGe/book-distillation" target="_blank" class="github-link">
-                    GitHub
-                </a>
+<body class="font-body-md text-body-md overflow-x-hidden">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-white/10">
+<div class="flex justify-between items-center px-margin-desktop py-4 max-w-full mx-auto">
+<div class="flex items-center gap-8">
+<span class="font-headline-lg text-[24px] text-primary tracking-tighter uppercase">蒸馏系统</span>
+<div class="hidden md:flex gap-6">
+<a class="font-subheader text-label-sm uppercase text-primary border-b border-primary pb-1" href="#portfolio">Works</a>
+<a class="font-subheader text-label-sm uppercase text-on-surface/60 hover:text-on-surface transition-colors" href="#features">Features</a>
+<a class="font-subheader text-label-sm uppercase text-on-surface/60 hover:text-on-surface transition-colors" href="#stack">Stack</a>
+</div>
+</div>
+<a href="https://github.com/XCDaHuiGe/book-distillation" target="_blank" class="flex items-center gap-2 border border-primary-container text-primary-container px-4 py-2 font-label-sm uppercase hover:bg-primary-container hover:text-black transition-all">
+<span class="material-symbols-outlined" style="font-size:16px;">code</span>
+        GitHub
+</a>
+</div>
+</nav>
+<main class="pt-24 min-h-screen">
+<!-- Hero Section -->
+<section class="relative px-margin-desktop grid grid-cols-12 gap-gutter items-center min-h-[80vh]">
+<div class="col-span-12 lg:col-span-7 z-10">
+<div class="inline-flex items-center gap-2 px-3 py-1 border border-primary-container text-primary-container font-label-sm uppercase mb-8">
+<span class="w-2 h-2 bg-primary-container animate-pulse"></span>
+                BOOK DISTILLATION • V3.2
             </div>
-            <h1>长文本深度蒸馏系统</h1>
-            <p class="subtitle">
-                通过 GraphRAG 与 3-Agent 协作，将书籍、报告、文档<br>
-                蒸馏为结构化的 HTML 精华内参
+<h1 class="text-[64px] md:text-[84px] leading-[1.1] font-bold mb-8 tracking-tight">
+                用 <span class="text-primary-container">AI 工作流</span><br/>
+                重新定义<br/>
+                深度阅读
+            </h1>
+<p class="text-on-surface/60 max-w-xl mb-12 text-lg">
+                BOOK DISTILLATION 是一套基于 GraphRAG 与 3-Agent 协作的深度蒸馏系统。将书籍、报告、文档蒸馏为结构化的 HTML 精华内参。
             </p>
-        </header>
-
-        <div class="stats">
-            <div class="stat-item">
-                <div class="num">5</div>
-                <div class="label">阶段流程</div>
-            </div>
-            <div class="stat-item">
-                <div class="num">3</div>
-                <div class="label">Agent协作</div>
-            </div>
-            <div class="stat-item">
-                <div class="num">8</div>
-                <div class="label">输出模块</div>
-            </div>
-            <div class="stat-item">
-                <div class="num">36</div>
-                <div class="label">PPT主题</div>
-            </div>
-            <div class="stat-item">
-                <div class="num">47</div>
-                <div class="label">动画效果</div>
-            </div>
-        </div>
-
-        <section>
-            <div class="section-header">
-                <h2>精华内参</h2>
-                <p>已蒸馏完成的书籍与文档</p>
-            </div>
-
-            <div class="deliverable-list">
-                <a class="deliverable-card" href="155规划纲要_精华内参.html">
-                    <span class="num">#01</span>
-                    <div class="info">
-                        <h3>十五五规划纲要</h3>
-                        <div class="meta">
-                            <span>28页</span>
-                            <span class="tag tag-orange">政策文件</span>
-                            <span>18篇 · 62章 · 252节</span>
-                        </div>
-                    </div>
-                    <span class="arrow">→</span>
-                </a>
-
-                <a class="deliverable-card" href="关键对话_精华内参.html">
-                    <span class="num">#02</span>
-                    <div class="info">
-                        <h3>关键对话如何高效能沟通</h3>
-                        <div class="meta">
-                            <span>40页</span>
-                            <span class="tag tag-blue">商业</span>
-                            <span>7大技巧 · 2大原则</span>
-                        </div>
-                    </div>
-                    <span class="arrow">→</span>
-                </a>
-
-                <a class="deliverable-card" href="不要挑战人性_精华内参.html">
-                    <span class="num">#03</span>
-                    <div class="info">
-                        <h3>不要挑战人性</h3>
-                        <div class="meta">
-                            <span>22页</span>
-                            <span class="tag tag-green">心理学</span>
-                            <span>10大支柱 · 9个颠覆性认知</span>
-                        </div>
-                    </div>
-                    <span class="arrow">→</span>
-                </a>
-            </div>
-        </section>
-
-        <section>
-            <div class="section-header">
-                <h2>核心能力</h2>
-            </div>
-
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <div class="icon">📖</div>
-                    <h3>多格式输入</h3>
-                    <p>支持 EPUB / PDF / DOCX / TXT / MD</p>
+<div class="flex flex-wrap gap-6">
+<a href="https://github.com/XCDaHuiGe/book-distillation" target="_blank" class="bg-primary-container text-black px-8 py-4 font-subheader uppercase flex items-center gap-3 active:scale-95 transition-transform hover:orange-glow">
+                    GitHub 仓库 <span class="material-symbols-outlined">arrow_forward</span>
+</a>
+<a href="#portfolio" class="border border-primary-container text-primary-container px-8 py-4 font-subheader uppercase flex items-center gap-3 hover:bg-primary-container/10 transition-colors">
+                    查看作品 <span class="material-symbols-outlined">south_east</span>
+</a>
+</div>
+<div class="mt-16 flex items-center gap-8 text-on-surface/40 font-label-sm">
+<span class="uppercase tracking-widest">// STACK</span>
+<div class="flex gap-4">
+<span class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-primary-container"></span> GraphRAG</span>
+<span class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-secondary-container"></span> 3-Agent</span>
+<span class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-primary"></span> Knowledge Graph</span>
+</div>
+</div>
+</div>
+<div class="col-span-12 lg:col-span-5 relative mt-12 lg:mt-0">
+<div class="relative z-10 w-full aspect-square max-w-[500px] mx-auto">
+<div class="w-full h-full bg-surface-container-high flex items-center justify-center" style="background-image: linear-gradient(135deg, #1e2020 0%, #0d0e0f 100%);">
+<div class="text-center p-8">
+<div class="text-[120px] font-headline-lg text-primary-container/20 leading-none mb-4">BD</div>
+<div class="text-on-surface/40 font-label-sm uppercase tracking-widest">DISTILLATION ENGINE</div>
+<div class="w-16 h-[1px] bg-primary-container/30 mx-auto mt-4"></div>
+<div class="mt-4 text-[10px] text-on-surface/20 font-label-sm">V3.2 // DEEP QUALITY</div>
+</div>
+</div>
+<!-- Tech Details Floating -->
+<div class="absolute -right-4 top-1/4 glass-panel p-4 border-l-2 border-primary-container">
+<div class="text-on-surface/40 text-[10px] uppercase mb-1">REF_001</div>
+<div class="font-headline-lg text-lg text-primary-container">DISTILL</div>
+<div class="text-[10px] text-on-surface/40">phase: active</div>
+</div>
+<div class="absolute -left-8 bottom-1/4 glass-panel p-3 border-r-2 border-secondary-container text-right">
+<div class="text-on-surface/40 text-[10px] uppercase">core.rig /</div>
+<div class="w-12 h-1 bg-primary-container/30 mt-1 ml-auto">
+<div class="w-2/3 h-full bg-primary-container"></div>
+</div>
+</div>
+</div>
+<!-- Background Glow -->
+<div class="absolute inset-0 bg-primary-container/10 blur-[120px] rounded-full -z-10"></div>
+</div>
+</section>
+<!-- Stats -->
+<section class="px-margin-desktop py-24">
+<div class="stat-grid-5 gap-[1px] bg-white/5">
+<div class="glass-panel p-8 text-center border-none">
+<div class="text-on-surface/40 font-label-sm mb-4 uppercase tracking-[0.2em] border-b border-white/5 pb-2">Phases</div>
+<div class="text-[56px] font-headline-lg text-primary-container leading-none">05</div>
+<div class="font-subheader text-base uppercase mt-2">蒸馏阶段</div>
+</div>
+<div class="glass-panel p-8 text-center border-none">
+<div class="text-on-surface/40 font-label-sm mb-4 uppercase tracking-[0.2em] border-b border-white/5 pb-2">Agents</div>
+<div class="text-[56px] font-headline-lg text-primary leading-none">03</div>
+<div class="font-subheader text-base uppercase mt-2">智能代理</div>
+</div>
+<div class="glass-panel p-8 text-center border-none">
+<div class="text-on-surface/40 font-label-sm mb-4 uppercase tracking-[0.2em] border-b border-white/5 pb-2">Modules</div>
+<div class="text-[56px] font-headline-lg text-secondary-fixed leading-none">08</div>
+<div class="font-subheader text-base uppercase mt-2">输出模块</div>
+</div>
+<div class="glass-panel p-8 text-center border-none">
+<div class="text-on-surface/40 font-label-sm mb-4 uppercase tracking-[0.2em] border-b border-white/5 pb-2">Themes</div>
+<div class="text-[56px] font-headline-lg text-primary-container leading-none">36</div>
+<div class="font-subheader text-base uppercase mt-2">PPT主题</div>
+</div>
+<div class="glass-panel p-8 text-center border-none">
+<div class="text-on-surface/40 font-label-sm mb-4 uppercase tracking-[0.2em] border-b border-white/5 pb-2">FX</div>
+<div class="text-[56px] font-headline-lg text-primary leading-none">47</div>
+<div class="font-subheader text-base uppercase mt-2">动画特效</div>
+</div>
+</div>
+</section>
+<!-- Distillation Portfolio Section -->
+<section id="portfolio" class="px-margin-desktop py-24 relative">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-4">
+<div>
+<div class="text-primary-container font-label-sm uppercase tracking-widest mb-4 flex items-center gap-2">
+<span class="w-4 h-[1px] bg-primary-container"></span>
+                    Work Collection
                 </div>
-                <div class="feature-card">
-                    <div class="icon">🧠</div>
-                    <h3>3-Agent 协作</h3>
-                    <p>Alpha 架构师 · Beta 实战派 · Gamma 策展人</p>
-                </div>
-                <div class="feature-card">
-                    <div class="icon">🕸️</div>
-                    <h3>知识图谱</h3>
-                    <p>概念关系网络，交互式可视化</p>
-                </div>
-                <div class="feature-card">
-                    <div class="icon">🎨</div>
-                    <h3>HTML PPT</h3>
-                    <p>36主题 · 47动画 · 演讲者模式 · 响应式阅读</p>
-                </div>
+<h2 class="font-headline-lg text-headline-lg uppercase">最近蒸馏成果</h2>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Portfolio Item 1 -->
+<a href="155规划纲要_精华内参.html" class="glass-panel group cursor-pointer overflow-hidden border-white/5 hover:border-primary-container/30 transition-all">
+<div class="aspect-[4/3] bg-surface-container-high relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10"></div>
+<div class="absolute top-4 left-4 z-20 px-2 py-1 bg-primary-container text-black font-label-sm uppercase">政策文件</div>
+<div class="absolute bottom-4 left-4 right-4 z-20">
+<h3 class="font-subheader text-xl mb-1 group-hover:text-primary-container transition-colors">十五五规划纲要</h3>
+<div class="flex items-center gap-4 text-on-surface/40 text-[10px] uppercase font-label-sm">
+<span>28页</span>
+<span class="w-1 h-1 bg-primary-container rounded-full"></span>
+<span>18篇</span>
+<span class="w-1 h-1 bg-primary-container rounded-full"></span>
+<span>62章</span>
+</div>
+</div>
+</div>
+<div class="p-6">
+<p class="text-on-surface/60 text-sm line-clamp-2">针对国家中长期战略部署的语义级重构，提取18大战略领域与40余项核心指标。</p>
+<div class="mt-4 flex justify-between items-center">
+<span class="text-[10px] text-on-surface/30 font-label-sm">REF:GOV_2025_A1</span>
+<span class="material-symbols-outlined text-primary-container text-sm">arrow_outward</span>
+</div>
+</div>
+</a>
+<!-- Portfolio Item 2 -->
+<a href="关键对话_精华内参.html" class="glass-panel group cursor-pointer overflow-hidden border-white/5 hover:border-primary-container/30 transition-all">
+<div class="aspect-[4/3] bg-surface-container-high relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10"></div>
+<div class="absolute top-4 left-4 z-20 px-2 py-1 bg-secondary-container text-black font-label-sm uppercase">商业</div>
+<div class="absolute bottom-4 left-4 right-4 z-20">
+<h3 class="font-subheader text-xl mb-1 group-hover:text-primary-container transition-colors">关键对话</h3>
+<div class="flex items-center gap-4 text-on-surface/40 text-[10px] uppercase font-label-sm">
+<span>40页</span>
+<span class="w-1 h-1 bg-primary-container rounded-full"></span>
+<span>7大技巧</span>
+<span class="w-1 h-1 bg-primary-container rounded-full"></span>
+<span>2大原则</span>
+</div>
+</div>
+</div>
+<div class="p-6">
+<p class="text-on-surface/60 text-sm line-clamp-2">拆解高难度沟通的底层逻辑，生成结构化的对话决策树与心理博弈图谱。</p>
+<div class="mt-4 flex justify-between items-center">
+<span class="text-[10px] text-on-surface/30 font-label-sm">REF:BIZ_BOOK_08</span>
+<span class="material-symbols-outlined text-primary-container text-sm">arrow_outward</span>
+</div>
+</div>
+</a>
+<!-- Portfolio Item 3 -->
+<a href="不要挑战人性_精华内参.html" class="glass-panel group cursor-pointer overflow-hidden border-white/5 hover:border-primary-container/30 transition-all">
+<div class="aspect-[4/3] bg-surface-container-high relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10"></div>
+<div class="absolute top-4 left-4 z-20 px-2 py-1 bg-primary text-black font-label-sm uppercase">心理学</div>
+<div class="absolute bottom-4 left-4 right-4 z-20">
+<h3 class="font-subheader text-xl mb-1 group-hover:text-primary-container transition-colors">不要挑战人性</h3>
+<div class="flex items-center gap-4 text-on-surface/40 text-[10px] uppercase font-label-sm">
+<span>22页</span>
+<span class="w-1 h-1 bg-primary-container rounded-full"></span>
+<span>10大支柱</span>
+<span class="w-1 h-1 bg-primary-container rounded-full"></span>
+<span>9个洞见</span>
+</div>
+</div>
+</div>
+<div class="p-6">
+<p class="text-on-surface/60 text-sm line-clamp-2">深度剖析行为心理学背后的底层逻辑，将学术研究转化为可执行的行动指南。</p>
+<div class="mt-4 flex justify-between items-center">
+<span class="text-[10px] text-on-surface/30 font-label-sm">REF:PSY_RES_42</span>
+<span class="material-symbols-outlined text-primary-container text-sm">arrow_outward</span>
+</div>
+</div>
+</a>
+</div>
+</section>
+<!-- Feature Showcase -->
+<section id="features" class="px-margin-desktop py-24 border-t border-white/5 bg-surface-container-lowest/50">
+<div class="flex justify-between items-end mb-16">
+<div>
+<h2 class="font-headline-lg text-headline-lg mb-4">系统架构</h2>
+<p class="text-on-surface/60 max-w-md">通过模块化的流程设计，将阅读这种非线性行为转化为可复用、可优化的工程路径。</p>
+</div>
+<div class="text-primary-container font-label-sm">
+<span class="material-symbols-outlined align-middle mr-2">analytics</span>
+                DATA_PROCESSING_ACTIVE
             </div>
-        </section>
-
-        <section>
-            <div class="section-header">
-                <h2>技术栈</h2>
-            </div>
-
-            <div class="tech-list">
-                <span class="tech-item"><span class="dot"></span>GraphRAG</span>
-                <span class="tech-item"><span class="dot"></span>Agentic RAG</span>
-                <span class="tech-item"><span class="dot"></span>Knowledge Graph</span>
-                <span class="tech-item"><span class="dot"></span>Python</span>
-                <span class="tech-item"><span class="dot"></span>EPUB/PDF/DOCX</span>
-                <span class="tech-item"><span class="dot"></span>HTML/CSS/JS</span>
-            </div>
-        </section>
-
-        <footer>
-            <span>Book Distillation · XCDaHuiGe</span>
-            <div class="links">
-                <a href="https://github.com/XCDaHuiGe/book-distillation" target="_blank">GitHub</a>
-                <a href="https://github.com/XCDaHuiGe/book-distillation/stargazers" target="_blank">Star</a>
-                <a href="https://github.com/XCDaHuiGe/book-distillation/issues" target="_blank">Issues</a>
-            </div>
-        </footer>
-    </div>
-</body>
-</html>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter">
+<div class="glass-panel p-6 border-l-4 border-l-primary-container hover:bg-white/5 transition-all">
+<div class="w-12 h-12 flex items-center justify-center bg-primary-container/10 mb-6">
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">terminal</span>
+</div>
+<h3 class="font-subheader text-lg uppercase mb-3 tracking-tight">多格式输入</h3>
+<p class="text-on-surface/40 text-sm leading-relaxed">支持 EPUB / PDF / DOCX / TXT / MD 等多种格式，自动识别章节结构。</p>
+</div>
+<div class="glass-panel p-6 border-l-4 border-l-secondary-container hover:bg-white/5 transition-all">
+<div class="w-12 h-12 flex items-center justify-center bg-secondary-container/10 mb-6">
+<span class="material-symbols-outlined text-secondary-container" style="font-variation-settings: 'FILL' 1;">psychology</span>
+</div>
+<h3 class="font-subheader text-lg uppercase mb-3 tracking-tight">3-Agent 协作</h3>
+<p class="text-on-surface/40 text-sm leading-relaxed">Alpha 架构师 · Beta 实战派 · Gamma 策展人，分工协作深度蒸馏。</p>
+</div>
+<div class="glass-panel p-6 border-l-4 border-l-primary hover:bg-white/5 transition-all">
+<div class="w-12 h-12 flex items-center justify-center bg-primary/10 mb-6">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">hub</span>
+</div>
+<h3 class="font-subheader text-lg uppercase mb-3 tracking-tight">知识图谱</h3>
+<p class="text-on-surface/40 text-sm leading-relaxed">概念关系网络构建，交互式可视化，支持图遍历与多跳推理检索。</p>
+</div>
+<div class="glass-panel p-6 border-l-4 border-l-outline-variant hover:bg-white/5 transition-all">
+<div class="w-12 h-12 flex items-center justify-center bg-outline-variant/10 mb-6">
+<span class="material-symbols-outlined text-outline-variant" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<h3 class="font-subheader text-lg uppercase mb-3 tracking-tight">HTML PPT</h3>
+<p class="text-on-surface/40 text-sm leading-relaxed">36主题 · 47动画 · 演讲者模式 · 响应式阅读 · 一键生成精华内参。</p>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section id="stack" class="px-margin-desktop py-32 text-center relative overflow-hidden">
+<div class="absolute inset-0 bg-primary-container/5 -z-10 skew-y-3 scale-110"></div>
+<div class="max-w-3xl mx-auto">
+<h2 class="text-[48px] md:text-[72px] font-headline-lg leading-none mb-8">从<span class="text-primary-container">阅读</span>到<br/><span class="text-primary-container">内化</span>，一步到位</h2>
+<div class="flex flex-col md:flex-row gap-6 justify-center mt-12">
+<a href="https://github.com/XCDaHuiGe/book-distillation" target="_blank" class="bg-primary-container text-black px-12 py-5 font-subheader uppercase hover:orange-glow transition-all">
+                GitHub 仓库
+            </a>
+<a href="https://github.com/XCDaHuiGe/book-distillation/stargazers" target="_blank" class="border border-white/20 px-12 py-5 font-subheader uppercase hover:bg-white hover:text-black transition-all">
+                给个 Star ⭐
+            </a>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-12 bg-surface-container-lowest border-t border-white/5">
+<div class="flex flex-col md:flex-row justify-between items-center px-margin-desktop gap-gutter max-w-full mx-auto">
+<div class="flex flex-col items-center md:items-start gap-4">
+<span class="font-headline-lg text-headline-lg text-on-surface uppercase tracking-tighter">蒸馏系统</span>
+<span class="font-label-sm text-label-sm uppercase text-on-tertiary-container">© 2025 BOOK DISTILLATION V3.2. ALL RIGHTS RESERVED.</span>
+</div>
+<div class="flex gap-8">
+<a class="font-label-sm text-label-sm uppercase text-on-tertiary-container hover:text-primary transition-colors" href="https://github.com/XCDaHuiGe/book-distillation" target="_blank">GitHub</a>
+<a class="font-label-sm text-label-sm uppercase text-on-tertiary-container hover:text-primary transition-colors" href="https://github.com/XCDaHuiGe/book-distillation/stargazers" target="_blank">Star</a>
+<a class="font-label-sm text-label-sm uppercase text-on-tertiary-container hover:text-primary transition-colors" href="https://github.com/XCDaHuiGe/book-distillation/issues" target="_blank">Issues</a>
+</div>
+</div>
+</footer>
+</body></html>
