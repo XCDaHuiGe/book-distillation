@@ -1,8 +1,9 @@
 <!DOCTYPE html>
+
 <html class="dark" lang="zh-CN"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Book Distillation — 长文本深度蒸馏系统</title>
+<title>蒸馏系统 | AI 工作流 重新定义 深度阅读</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Space+Mono:wght@400;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
@@ -129,16 +130,6 @@
             height: 4px;
             background: #ff5f1f;
         }
-        .stat-grid-5 {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-        }
-        @media (max-width: 768px) {
-            .stat-grid-5 { grid-template-columns: repeat(3, 1fr); }
-        }
-        @media (max-width: 480px) {
-            .stat-grid-5 { grid-template-columns: repeat(2, 1fr); }
-        }
     </style>
 </head>
 <body class="font-body-md text-body-md overflow-x-hidden">
@@ -148,15 +139,14 @@
 <div class="flex items-center gap-8">
 <span class="font-headline-lg text-[24px] text-primary tracking-tighter uppercase">蒸馏系统</span>
 <div class="hidden md:flex gap-6">
-<a class="font-subheader text-label-sm uppercase text-primary border-b border-primary pb-1" href="#portfolio">Works</a>
-<a class="font-subheader text-label-sm uppercase text-on-surface/60 hover:text-on-surface transition-colors" href="#features">Features</a>
-<a class="font-subheader text-label-sm uppercase text-on-surface/60 hover:text-on-surface transition-colors" href="#stack">Stack</a>
+<a class="font-subheader text-label-sm uppercase text-primary border-b border-primary pb-1" href="#">Library</a>
+<a class="font-subheader text-label-sm uppercase text-on-surface/60 hover:text-on-surface transition-colors" href="#">Framework</a>
+<a class="font-subheader text-label-sm uppercase text-on-surface/60 hover:text-on-surface transition-colors" href="#">Technology</a>
 </div>
 </div>
-<a href="https://github.com/XCDaHuiGe/book-distillation" target="_blank" class="flex items-center gap-2 border border-primary-container text-primary-container px-4 py-2 font-label-sm uppercase hover:bg-primary-container hover:text-black transition-all">
-<span class="material-symbols-outlined" style="font-size:16px;">code</span>
-        GitHub
-</a>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary cursor-pointer hover:scale-110 transition-transform">code</span>
+</div>
 </div>
 </nav>
 <main class="pt-24 min-h-screen">
@@ -165,30 +155,30 @@
 <div class="col-span-12 lg:col-span-7 z-10">
 <div class="inline-flex items-center gap-2 px-3 py-1 border border-primary-container text-primary-container font-label-sm uppercase mb-8">
 <span class="w-2 h-2 bg-primary-container animate-pulse"></span>
-                BOOK DISTILLATION • V3.2
-            </div>
+                    AI × DESIGN STUDIO • 2024
+                </div>
 <h1 class="text-[64px] md:text-[84px] leading-[1.1] font-bold mb-8 tracking-tight">
-                用 <span class="text-primary-container">AI 工作流</span><br/>
-                重新定义<br/>
-                深度阅读
-            </h1>
+                    用 <span class="text-primary-container">AI 工作流</span><br/>
+                    重新定义<br/>
+                    深度阅读
+                </h1>
 <p class="text-on-surface/60 max-w-xl mb-12 text-lg">
-                BOOK DISTILLATION 是一套基于 GraphRAG 与 3-Agent 协作的深度蒸馏系统。将书籍、报告、文档蒸馏为结构化的 HTML 精华内参。
-            </p>
+                    BOOK DISTILLATION 是一套基于工程思维构建的阅读重构链。我们将复杂的认知过程拆解为标准化的自动化流水线，让深度理解变得更野、也更准。
+                </p>
 <div class="flex flex-wrap gap-6">
-<a href="https://github.com/XCDaHuiGe/book-distillation" target="_blank" class="bg-primary-container text-black px-8 py-4 font-subheader uppercase flex items-center gap-3 active:scale-95 transition-transform hover:orange-glow">
-                    GitHub 仓库 <span class="material-symbols-outlined">arrow_forward</span>
-</a>
-<a href="#portfolio" class="border border-primary-container text-primary-container px-8 py-4 font-subheader uppercase flex items-center gap-3 hover:bg-primary-container/10 transition-colors">
-                    查看作品 <span class="material-symbols-outlined">south_east</span>
-</a>
+<button class="bg-primary-container text-black px-8 py-4 font-subheader uppercase flex items-center gap-3 active:scale-95 transition-transform">
+                        探索方向 <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<button class="border border-primary-container text-primary-container px-8 py-4 font-subheader uppercase flex items-center gap-3 hover:bg-primary-container/10 transition-colors">
+                        查看作品 <span class="material-symbols-outlined">south_east</span>
+</button>
 </div>
 <div class="mt-16 flex items-center gap-8 text-on-surface/40 font-label-sm">
 <span class="uppercase tracking-widest">// STACK</span>
 <div class="flex gap-4">
-<span class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-primary-container"></span> GraphRAG</span>
-<span class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-secondary-container"></span> 3-Agent</span>
-<span class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-primary"></span> Knowledge Graph</span>
+<span class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-primary-container"></span> Claude Code Skills</span>
+<span class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-secondary-container"></span> n8n</span>
+<span class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-primary"></span> OpenClaw</span>
 </div>
 </div>
 </div>
@@ -198,8 +188,8 @@
 <!-- Tech Details Floating -->
 <div class="absolute -right-4 top-1/4 glass-panel p-4 border-l-2 border-primary-container">
 <div class="text-on-surface/40 text-[10px] uppercase mb-1">REF_001</div>
-<div class="font-headline-lg text-lg text-primary-container">DISTILL</div>
-<div class="text-[10px] text-on-surface/40">phase: active</div>
+<div class="font-headline-lg text-lg text-primary-container">DISTILL_TEEN</div>
+<div class="text-[10px] text-on-surface/40">signal.link / online</div>
 </div>
 <div class="absolute -left-8 bottom-1/4 glass-panel p-3 border-r-2 border-secondary-container text-right">
 <div class="text-on-surface/40 text-[10px] uppercase">core.rig /</div>
@@ -212,75 +202,54 @@
 <div class="absolute inset-0 bg-primary-container/10 blur-[120px] rounded-full -z-10"></div>
 </div>
 </section>
-<!-- Stats -->
+<!-- Stats Bento Grid -->
 <section class="px-margin-desktop py-24">
-<div class="stat-grid-5 gap-[1px] bg-white/5">
-<div class="glass-panel p-8 text-center border-none">
-<div class="text-on-surface/40 font-label-sm mb-4 uppercase tracking-[0.2em] border-b border-white/5 pb-2">Phases</div>
-<div class="text-[56px] font-headline-lg text-primary-container leading-none">05</div>
-<div class="font-subheader text-base uppercase mt-2">蒸馏阶段</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="glass-panel p-8 relative overflow-hidden group hover:border-primary-container/50 transition-colors">
+<div class="tech-corner top-0 left-0"></div>
+<div class="text-on-surface/40 font-label-sm mb-4 uppercase tracking-[0.2em] border-b border-white/5 pb-2">Cognitive Phases</div>
+<div class="text-[64px] font-display-lg text-primary-container group-hover:scale-110 transition-transform origin-left">05</div>
+<div class="font-subheader text-xl uppercase mt-2">核心阶段</div>
+<p class="text-on-surface/40 text-sm mt-4">从信息吞噬、逻辑重组到最终的智慧结晶化。</p>
 </div>
-<div class="glass-panel p-8 text-center border-none">
-<div class="text-on-surface/40 font-label-sm mb-4 uppercase tracking-[0.2em] border-b border-white/5 pb-2">Agents</div>
-<div class="text-[56px] font-headline-lg text-primary leading-none">03</div>
-<div class="font-subheader text-base uppercase mt-2">智能代理</div>
+<div class="glass-panel p-8 relative overflow-hidden group hover:border-primary-container/50 transition-colors">
+<div class="tech-corner top-0 left-0"></div>
+<div class="text-on-surface/40 font-label-sm mb-4 uppercase tracking-[0.2em] border-b border-white/5 pb-2">Neural Agents</div>
+<div class="text-[64px] font-display-lg text-primary group-hover:scale-110 transition-transform origin-left">03</div>
+<div class="font-subheader text-xl uppercase mt-2">智能代理</div>
+<p class="text-on-surface/40 text-sm mt-4">不同维度的AI专员，协同完成高强度的文本解析任务。</p>
 </div>
-<div class="glass-panel p-8 text-center border-none">
-<div class="text-on-surface/40 font-label-sm mb-4 uppercase tracking-[0.2em] border-b border-white/5 pb-2">Modules</div>
-<div class="text-[56px] font-headline-lg text-secondary-fixed leading-none">08</div>
-<div class="font-subheader text-base uppercase mt-2">输出模块</div>
-</div>
-<div class="glass-panel p-8 text-center border-none">
-<div class="text-on-surface/40 font-label-sm mb-4 uppercase tracking-[0.2em] border-b border-white/5 pb-2">Themes</div>
-<div class="text-[56px] font-headline-lg text-primary-container leading-none">36</div>
-<div class="font-subheader text-base uppercase mt-2">PPT主题</div>
-</div>
-<div class="glass-panel p-8 text-center border-none">
-<div class="text-on-surface/40 font-label-sm mb-4 uppercase tracking-[0.2em] border-b border-white/5 pb-2">FX</div>
-<div class="text-[56px] font-headline-lg text-primary leading-none">47</div>
-<div class="font-subheader text-base uppercase mt-2">动画特效</div>
+<div class="glass-panel p-8 relative overflow-hidden group hover:border-primary-container/50 transition-colors">
+<div class="tech-corner top-0 left-0"></div>
+<div class="text-on-surface/40 font-label-sm mb-4 uppercase tracking-[0.2em] border-b border-white/5 pb-2">System Modules</div>
+<div class="text-[64px] font-display-lg text-secondary-fixed group-hover:scale-110 transition-transform origin-left">08</div>
+<div class="font-subheader text-xl uppercase mt-2">功能模块</div>
+<p class="text-on-surface/40 text-sm mt-4">精细化的处理工具组，适配各种复杂书籍与文献。</p>
 </div>
 </div>
 </section>
 <!-- Distillation Portfolio Section -->
-<section id="portfolio" class="px-margin-desktop py-24 relative">
+<section class="px-margin-desktop py-24 relative">
 <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-4">
 <div>
 <div class="text-primary-container font-label-sm uppercase tracking-widest mb-4 flex items-center gap-2">
 <span class="w-4 h-[1px] bg-primary-container"></span>
-                    Work Collection
-                </div>
+                        Work Collection
+                    </div>
 <h2 class="font-headline-lg text-headline-lg uppercase">最近蒸馏成果</h2>
+</div>
+<div class="flex gap-4">
+<button class="w-12 h-12 border border-white/10 flex items-center justify-center hover:bg-white/5 transition-colors">
+<span class="material-symbols-outlined">west</span>
+</button>
+<button class="w-12 h-12 border border-primary-container flex items-center justify-center bg-primary-container/5 text-primary-container hover:bg-primary-container/10 transition-colors">
+<span class="material-symbols-outlined">east</span>
+</button>
 </div>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
 <!-- Portfolio Item 1 -->
-<!-- Portfolio Item 1 (newest) -->
-<a href="申论写作八讲_精华内参.html" class="glass-panel group cursor-pointer overflow-hidden border-white/5 hover:border-primary-container/30 transition-all">
-<div class="aspect-[4/3] bg-surface-container-high relative overflow-hidden">
-<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10"></div>
-<div class="absolute top-4 left-4 z-20 px-2 py-1 bg-secondary-container text-black font-label-sm uppercase">工具书</div>
-<div class="absolute bottom-4 left-4 right-4 z-20">
-<h3 class="font-subheader text-xl mb-1 group-hover:text-primary-container transition-colors">申论写作八讲</h3>
-<div class="flex items-center gap-4 text-on-surface/40 text-[10px] uppercase font-label-sm">
-<span>30页</span>
-<span class="w-1 h-1 bg-primary-container rounded-full"></span>
-<span>8讲</span>
-<span class="w-1 h-1 bg-primary-container rounded-full"></span>
-<span>17.5万字</span>
-</div>
-</div>
-</div>
-<div class="p-6">
-<p class="text-on-surface/60 text-sm line-clamp-2">将申论从"玄学"转化为可训练的工程技术。8大支柱、4项基本功、5大题型攻坚。</p>
-<div class="mt-4 flex justify-between items-center">
-<span class="text-[10px] text-on-surface/30 font-label-sm">REF:EXAM_BOOK_01</span>
-<span class="material-symbols-outlined text-primary-container text-sm">arrow_outward</span>
-</div>
-</div>
-</a>
-<!-- Portfolio Item 2 -->
-<a href="155规划纲要_精华内参.html" class="glass-panel group cursor-pointer overflow-hidden border-white/5 hover:border-primary-container/30 transition-all">
+<div class="glass-panel group cursor-pointer overflow-hidden border-white/5 hover:border-primary-container/30 transition-all">
 <div class="aspect-[4/3] bg-surface-container-high relative overflow-hidden">
 <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10"></div>
 <img alt="Fifteenth Five-Year Plan" class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuByACh88iAzV6dILg8FgBuZirYY-iiV5fNxyP1G7AmIE8tZ3607iXIqy2_uxe7BJVxbKpJdxAPp82kfeOTcQZnnKUl97YVMVYT9EKp_s6uk8VMsBPQ7WssxYdhoo0x1MoUAOF2epEUbByaiN39Gw9reza6NG1AhWTGCGzTKqyZCkvoAAzKhNNBEFCRn9IlMD5m9gvwAN3I51li4g-tNz631D5wuW_0jpm_iFSLVZ8sWjgtu_IYB1EVeeZu1BBRIG1558DT_PIl_6Q"/>
@@ -297,27 +266,27 @@
 </div>
 </div>
 <div class="p-6">
-<p class="text-on-surface/60 text-sm line-clamp-2">针对国家中长期战略部署的语义级重构，提取18大战略领域与40余项核心指标。</p>
+<p class="text-on-surface/60 text-sm line-clamp-2">针对国家中长期战略部署的语义级重构，提取12个核心增长极与40项关键指标。</p>
 <div class="mt-4 flex justify-between items-center">
 <span class="text-[10px] text-on-surface/30 font-label-sm">REF:GOV_2025_A1</span>
 <span class="material-symbols-outlined text-primary-container text-sm">arrow_outward</span>
 </div>
 </div>
-</a>
-<!-- Portfolio Item 3 -->
-<a href="关键对话_精华内参.html" class="glass-panel group cursor-pointer overflow-hidden border-white/5 hover:border-primary-container/30 transition-all">
+</div>
+<!-- Portfolio Item 2 -->
+<div class="glass-panel group cursor-pointer overflow-hidden border-white/5 hover:border-primary-container/30 transition-all">
 <div class="aspect-[4/3] bg-surface-container-high relative overflow-hidden">
 <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10"></div>
 <img alt="Crucial Conversations" class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBP9uVJNmRyVe4TTTLaDn_vpIetk0nkhdpq9btdArY_QwxOj4L37eVTsPCZsMolTKBsQRMnOt3QSLIEUEpaYJwkfK-bay1eupimS7CeVOXMcA9znnTjCZagI-54DB5JIEwKRwPGt_3JQ49WLM4inNKDiMMBot9SFHmwzIoPWToETH1kDcRL29jLtpwBtc4lTR46b1eW-bLHAiMjJdSDyHuZzO9vEIuzbo9mPf90xNwl5C2MKd7qCeCC1958mXGlEPstURlpo5UQw"/>
-<div class="absolute top-4 left-4 z-20 px-2 py-1 bg-secondary-container text-black font-label-sm uppercase">商业</div>
+<div class="absolute top-4 left-4 z-20 px-2 py-1 bg-secondary-container text-white font-label-sm uppercase">商业</div>
 <div class="absolute bottom-4 left-4 right-4 z-20">
 <h3 class="font-subheader text-xl mb-1 group-hover:text-primary-container transition-colors">关键对话</h3>
 <div class="flex items-center gap-4 text-on-surface/40 text-[10px] uppercase font-label-sm">
-<span>40页</span>
+<span>245页</span>
 <span class="w-1 h-1 bg-primary-container rounded-full"></span>
-<span>7大技巧</span>
+<span>12篇</span>
 <span class="w-1 h-1 bg-primary-container rounded-full"></span>
-<span>2大原则</span>
+<span>34章</span>
 </div>
 </div>
 </div>
@@ -328,9 +297,9 @@
 <span class="material-symbols-outlined text-primary-container text-sm">arrow_outward</span>
 </div>
 </div>
-</a>
+</div>
 <!-- Portfolio Item 3 -->
-<a href="不要挑战人性_精华内参.html" class="glass-panel group cursor-pointer overflow-hidden border-white/5 hover:border-primary-container/30 transition-all">
+<div class="glass-panel group cursor-pointer overflow-hidden border-white/5 hover:border-primary-container/30 transition-all">
 <div class="aspect-[4/3] bg-surface-container-high relative overflow-hidden">
 <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10"></div>
 <img alt="Human Nature" class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkI709QcheOaQV1p8IM_jdBRasLHcK90c0U_XJ-XlCXRowpSWaxKw2pxkubAc_CGZQ8ZJV6_hYPGsJkUxF_FZaM9FcobRoMa-V39epWl1iisGC8EBkmItoB89wLzGig6IztEoT8bYLEQbHWx0WJFtCr1GfRsWoMOwHWnph_sTgqD05ipismGqr9qjF9Ai_Y9NpJ2MBX7hj-N-gByMHTemSbHIW9_2QRJY-mjHhjEjptf9PKAHLGlwXwQsrEj3cmkoP6MAF_JSd5Q"/>
@@ -338,30 +307,30 @@
 <div class="absolute bottom-4 left-4 right-4 z-20">
 <h3 class="font-subheader text-xl mb-1 group-hover:text-primary-container transition-colors">不要挑战人性</h3>
 <div class="flex items-center gap-4 text-on-surface/40 text-[10px] uppercase font-label-sm">
-<span>22页</span>
+<span>312页</span>
 <span class="w-1 h-1 bg-primary-container rounded-full"></span>
-<span>10大支柱</span>
+<span>15篇</span>
 <span class="w-1 h-1 bg-primary-container rounded-full"></span>
-<span>9个洞见</span>
+<span>45章</span>
 </div>
 </div>
 </div>
 <div class="p-6">
-<p class="text-on-surface/60 text-sm line-clamp-2">深度剖析行为心理学背后的底层逻辑，将学术研究转化为可执行的行动指南。</p>
+<p class="text-on-surface/60 text-sm line-clamp-2">深度剖析行为经济学背后的生物本能，将晦涩的学术研究转化为极简的行动指南。</p>
 <div class="mt-4 flex justify-between items-center">
 <span class="text-[10px] text-on-surface/30 font-label-sm">REF:PSY_RES_42</span>
 <span class="material-symbols-outlined text-primary-container text-sm">arrow_outward</span>
 </div>
 </div>
-</a>
 </div>
-<!-- Side Deco Image -->
+</div>
+<!-- Side Deco Image (3D aesthetic) -->
 <div class="hidden xl:block absolute -right-24 top-1/2 -translate-y-1/2 opacity-20 pointer-events-none">
 <img alt="3D Deco" class="w-64 h-64 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIa8FYXRFNexiK2jtrXrPS7cUmcJG3Ir55UZgT5_ZNLsVNhQlgwybgFr_MIJrVbLjOqIGvs2IepuwP3Rx6YwyYsFn5FE-CenLwGvj-ghz95hb_eIcXvidSJGthMLtCmbSrj_o7fHERgO-85BSxnBYxSyQkGCUymbHyhl24UH5LL7WhxJ4YT5I_UTFVtkWOos_kQGRVNpMlR4JCQP-S18YvyBP2uIRTqAGAsmsIXW0acOypN4hnBHrPzeoGUXo1wFY0RLOIMNSo9g"/>
 </div>
 </section>
-<!-- Feature Showcase -->
-<section id="features" class="px-margin-desktop py-24 border-t border-white/5 bg-surface-container-lowest/50">
+<!-- Feature Showcase (System Architecture) -->
+<section class="px-margin-desktop py-24 border-t border-white/5 bg-surface-container-lowest/50">
 <div class="flex justify-between items-end mb-16">
 <div>
 <h2 class="font-headline-lg text-headline-lg mb-4">系统架构</h2>
@@ -369,52 +338,56 @@
 </div>
 <div class="text-primary-container font-label-sm">
 <span class="material-symbols-outlined align-middle mr-2">analytics</span>
-                DATA_PROCESSING_ACTIVE
-            </div>
+                    DATA_PROCESSING_ACTIVE
+                </div>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-4 gap-gutter">
+<!-- Feature 1 -->
 <div class="glass-panel p-6 border-l-4 border-l-primary-container hover:bg-white/5 transition-all">
 <div class="w-12 h-12 flex items-center justify-center bg-primary-container/10 mb-6">
 <span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">terminal</span>
 </div>
-<h3 class="font-subheader text-lg uppercase mb-3 tracking-tight">多格式输入</h3>
-<p class="text-on-surface/40 text-sm leading-relaxed">支持 EPUB / PDF / DOCX / TXT / MD 等多种格式，自动识别章节结构。</p>
+<h3 class="font-subheader text-lg uppercase mb-3 tracking-tight">结构化解构</h3>
+<p class="text-on-surface/40 text-sm leading-relaxed">自动识别全书骨架，生成多级思维导图，秒级掌握宏观逻辑。</p>
 </div>
+<!-- Feature 2 -->
 <div class="glass-panel p-6 border-l-4 border-l-secondary-container hover:bg-white/5 transition-all">
 <div class="w-12 h-12 flex items-center justify-center bg-secondary-container/10 mb-6">
 <span class="material-symbols-outlined text-secondary-container" style="font-variation-settings: 'FILL' 1;">psychology</span>
 </div>
-<h3 class="font-subheader text-lg uppercase mb-3 tracking-tight">3-Agent 协作</h3>
-<p class="text-on-surface/40 text-sm leading-relaxed">Alpha 架构师 · Beta 实战派 · Gamma 策展人，分工协作深度蒸馏。</p>
+<h3 class="font-subheader text-lg uppercase mb-3 tracking-tight">语义级蒸馏</h3>
+<p class="text-on-surface/40 text-sm leading-relaxed">剔除语言水分，直击核心论点，支持跨语种的即时知识对齐。</p>
 </div>
+<!-- Feature 3 -->
 <div class="glass-panel p-6 border-l-4 border-l-primary hover:bg-white/5 transition-all">
 <div class="w-12 h-12 flex items-center justify-center bg-primary/10 mb-6">
 <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">hub</span>
 </div>
-<h3 class="font-subheader text-lg uppercase mb-3 tracking-tight">知识图谱</h3>
-<p class="text-on-surface/40 text-sm leading-relaxed">概念关系网络构建，交互式可视化，支持图遍历与多跳推理检索。</p>
+<h3 class="font-subheader text-lg uppercase mb-3 tracking-tight">知识图谱化</h3>
+<p class="text-on-surface/40 text-sm leading-relaxed">将孤立的知识点通过向量关联，自动并入你的个人长期知识库。</p>
 </div>
+<!-- Feature 4 -->
 <div class="glass-panel p-6 border-l-4 border-l-outline-variant hover:bg-white/5 transition-all">
 <div class="w-12 h-12 flex items-center justify-center bg-outline-variant/10 mb-6">
 <span class="material-symbols-outlined text-outline-variant" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
 </div>
-<h3 class="font-subheader text-lg uppercase mb-3 tracking-tight">HTML PPT</h3>
-<p class="text-on-surface/40 text-sm leading-relaxed">36主题 · 47动画 · 演讲者模式 · 响应式阅读 · 一键生成精华内参。</p>
+<h3 class="font-subheader text-lg uppercase mb-3 tracking-tight">输出生产力</h3>
+<p class="text-on-surface/40 text-sm leading-relaxed">一键生成拆解报告、播客脚本或深度长文，闭环学习到产出。</p>
 </div>
 </div>
 </section>
 <!-- CTA Section -->
-<section id="stack" class="px-margin-desktop py-32 text-center relative overflow-hidden">
+<section class="px-margin-desktop py-32 text-center relative overflow-hidden">
 <div class="absolute inset-0 bg-primary-container/5 -z-10 skew-y-3 scale-110"></div>
 <div class="max-w-3xl mx-auto">
-<h2 class="text-[48px] md:text-[72px] font-headline-lg leading-none mb-8">从<span class="text-primary-container">阅读</span>到<br/><span class="text-primary-container">内化</span>，一步到位</h2>
+<h2 class="text-[48px] md:text-[72px] font-headline-lg leading-none mb-8">准备好让你的大脑<br/>进入<span class="text-primary-container">超频模式</span>了吗？</h2>
 <div class="flex flex-col md:flex-row gap-6 justify-center mt-12">
-<a href="https://github.com/XCDaHuiGe/book-distillation" target="_blank" class="bg-primary-container text-black px-12 py-5 font-subheader uppercase hover:orange-glow transition-all">
-                GitHub 仓库
-            </a>
-<a href="https://github.com/XCDaHuiGe/book-distillation/stargazers" target="_blank" class="border border-white/20 px-12 py-5 font-subheader uppercase hover:bg-white hover:text-black transition-all">
-                给个 Star ⭐
-            </a>
+<a class="bg-primary-container text-black px-12 py-5 font-subheader uppercase hover:orange-glow transition-all" href="#">
+                        申请内测使用
+                    </a>
+<a class="border border-white/20 px-12 py-5 font-subheader uppercase hover:bg-white hover:text-black transition-all" href="#">
+                        查看开发者文档
+                    </a>
 </div>
 </div>
 </section>
@@ -424,12 +397,12 @@
 <div class="flex flex-col md:flex-row justify-between items-center px-margin-desktop gap-gutter max-w-full mx-auto">
 <div class="flex flex-col items-center md:items-start gap-4">
 <span class="font-headline-lg text-headline-lg text-on-surface uppercase tracking-tighter">蒸馏系统</span>
-<span class="font-label-sm text-label-sm uppercase text-on-tertiary-container">© 2025 BOOK DISTILLATION V3.2. ALL RIGHTS RESERVED.</span>
+<span class="font-label-sm text-label-sm uppercase text-on-tertiary-container">© 2024 DEEP DISTILLATION SYSTEM. ALL RIGHTS RESERVED. REF_001</span>
 </div>
 <div class="flex gap-8">
-<a class="font-label-sm text-label-sm uppercase text-on-tertiary-container hover:text-primary transition-colors" href="https://github.com/XCDaHuiGe/book-distillation" target="_blank">GitHub</a>
-<a class="font-label-sm text-label-sm uppercase text-on-tertiary-container hover:text-primary transition-colors" href="https://github.com/XCDaHuiGe/book-distillation/stargazers" target="_blank">Star</a>
-<a class="font-label-sm text-label-sm uppercase text-on-tertiary-container hover:text-primary transition-colors" href="https://github.com/XCDaHuiGe/book-distillation/issues" target="_blank">Issues</a>
+<a class="font-label-sm text-label-sm uppercase text-on-tertiary-container hover:text-primary transition-colors" href="#">Documentation</a>
+<a class="font-label-sm text-label-sm uppercase text-on-tertiary-container hover:text-primary transition-colors" href="#">Privacy</a>
+<a class="font-label-sm text-label-sm uppercase text-on-tertiary-container hover:text-primary transition-colors" href="#">Terms</a>
 </div>
 </div>
 </footer>

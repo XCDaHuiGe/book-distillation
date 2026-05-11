@@ -1024,6 +1024,113 @@
     }
     window.addEventListener('hashchange', fromHash);
     fromHash();
+
+    /* ===== 桌面端TOC目录侧边栏 ===== */
+    function buildTOC() {
+      if (document.querySelector('.toc-sidebar')) return;
+
+      const toggle = document.createElement('div');
+      toggle.className = 'toc-toggle';
+      toggle.textContent = '☰';
+      toggle.setAttribute('title', '显示目录');
+
+      const sidebar = document.createElement('div');
+      sidebar.className = 'toc-sidebar';
+
+      const header = document.createElement('div');
+      header.className = 'toc-header';
+      header.innerHTML = '<h3>📑 目录</h3>';
+      sidebar.appendChild(header);
+
+      const list = document.createElement('ul');
+      list.className = 'toc-list';
+
+      slides.forEach(function(s, i) {
+        const title = s.getAttribute('data-title') ||
+          (s.querySelector('h1,h2,h3')||{}).textContent || ('第 '+(i+1)+' 页');
+        const item = document.createElement('li');
+        item.className = 'toc-item';
+        const link = document.createElement('a');
+        link.className = 'toc-link' + (i === 0 ? ' active' : '');
+        link.innerHTML = '<span class="toc-num">' + (i+1) + '</span>' + title.trim().slice(0, 50);
+        link.addEventListener('click', function() {
+          go(i);
+          sidebar.classList.remove('open');
+          toggle.classList.remove('open');
+          toggle.textContent = '☰';
+        });
+        item.appendChild(link);
+        list.appendChild(item);
+      });
+
+      sidebar.appendChild(list);
+
+      const footer = document.createElement('div');
+      footer.className = 'toc-footer';
+      footer.textContent = total + ' 页 · book-distillation';
+      sidebar.appendChild(footer);
+
+      toggle.addEventListener('click', function() {
+        const isOpen = sidebar.classList.toggle('open');
+        toggle.classList.toggle('open');
+        toggle.textContent = isOpen ? '✕' : '☰';
+        updateTOC();
+      });
+
+      document.body.appendChild(toggle);
+      document.body.appendChild(sidebar);
+    }
+
+    function updateTOC() {
+      const links = document.querySelectorAll('.toc-link');
+      links.forEach(function(link, i) {
+        link.classList.toggle('active', i === idx);
+      });
+    }
+
+    // 在go()执行后更新TOC高亮
+    var _origGo = go;
+    go = function(n, fromRemote) {
+      _origGo(n, fromRemote);
+      updateTOC();
+    };
+
+    /* ===== 移动端滚动模式检测 ===== */
+    function isMobile() {
+      return window.innerWidth < 768;
+    }
+
+    function applyMobileMode() {
+      deck.classList.toggle('is-mobile', isMobile());
+    }
+
+    // 添加滚动指示器（移动端首次加载时提示下滑）
+    function addScrollIndicator() {
+      if (!isMobile()) return;
+      if (document.querySelector('.scroll-indicator')) return;
+
+      const indicator = document.createElement('div');
+      indicator.className = 'scroll-indicator show';
+      indicator.innerHTML = '<span class="arrow"></span><span>下滑阅读</span>';
+      document.body.appendChild(indicator);
+
+      // 用户滚动后隐藏
+      var hideTimer = setTimeout(function() {
+        indicator.classList.remove('show');
+      }, 4000);
+      window.addEventListener('scroll', function() {
+        indicator.classList.remove('show');
+        clearTimeout(hideTimer);
+      }, { once: true });
+    }
+
+    window.addEventListener('resize', function() {
+      applyMobileMode();
+    });
+
+    buildTOC();
+    applyMobileMode();
+    addScrollIndicator();
     go(idx);
   });
 })();

@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="academic-paper">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>十五五规划纲要 精华内参 — book-distillation</title>
+  <link rel="stylesheet" href="ppt-assets/fonts.css">
+  <link rel="stylesheet" href="ppt-assets/base.css">
+  <link rel="stylesheet" id="theme-link" href="ppt-assets/themes/academic-paper.css">
+  <link rel="stylesheet" href="ppt-assets/animations/animations.css">
+  <style>
+    :root {
+      --hl-gold: #d4a017;
+      --hl-red: #c41e3a;
+    }
+    .hl-gold { color: var(--hl-gold); font-weight: 700; }
+    .hl-red { color: var(--hl-red); font-weight: 700; }
+    .tag { background: var(--accent-2); color: var(--bg); padding: 2px 10px; border-radius: 4px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+    .section-divider { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+    .section-divider .line { flex: 1; height: 2px; background: var(--border); }
+    .kicker { font-size: 12px; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; font-weight: 600; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
+    .card-accent { border-left: 4px solid var(--accent); }
+    .card-soft { border-left: 4px solid var(--accent-2); }
+    .card-warn { border-left: 4px solid var(--hl-red); }
+    .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+    .g4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; }
+    .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; }
+    .stat-item { text-align: center; padding: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); }
+    .stat-item .num { font-size: 2em; font-weight: 900; color: var(--accent); }
+    .stat-item .label { font-size: 12px; color: var(--text-3); margin-top: 4px; text-transform: uppercase; letter-spacing: 1px; }
+    table.checklist { width: 100%; border-collapse: collapse; font-size: 13px; }
+    table.checklist th, table.checklist td { padding: 8px 12px; border: 1px solid var(--border); text-align: left; }
+    table.checklist th { background: var(--accent); color: var(--bg); font-weight: 700; }
+    table.checklist tr:nth-child(even) { background: var(--bg-soft); }
+    ul.stack { list-style: none; padding: 0; }
+    ul.stack li { padding: 8px 0; border-bottom: 1px solid var(--border); }
+    ul.stack li:last-child { border-bottom: none; }
+    ul.stack li::before { content: "▸ "; color: var(--accent); font-weight: bold; }
+    ol.stack { list-style: none; padding: 0; counter-reset: item; }
+    ol.stack li { padding: 10px 0 10px 40px; position: relative; border-bottom: 1px solid var(--border); counter-increment: item; }
+    ol.stack li:last-child { border-bottom: none; }
+    ol.stack li::before { content: counter(item); position: absolute; left: 0; top: 10px; width: 28px; height: 28px; background: var(--accent); color: var(--bg); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; }
+    blockquote { border-left: 4px solid var(--accent); padding-left: 16px; margin: 16px 0; color: var(--text-2); font-style: italic; }
+    .dim { color: var(--text-2); }
+    .title { font-size: 1.8em; margin-bottom: 16px; }
+    .deck-footer { position: fixed; bottom: 0; left: 0; right: 0; padding: 8px 24px; background: var(--bg); border-top: 1px solid var(--border); display: flex; justify-content: space-between; font-size: 11px; color: var(--text-3); z-index: 100; }
+    .slide { padding-bottom: 40px; }
+  </style>
+</head>
+<body data-themes="academic-paper,corporate-clean,minimal-white,swiss-grid" data-theme-base="ppt-assets/themes/">
+<div class="deck">
+
+  <!-- SLIDE 1: 封面 -->
+  <section class="slide center tc" data-title="封面">
+    <div data-fx="particle-burst" style="position:absolute;inset:0"></div>
+    <p class="kicker" data-anim="fade-down">精华内参</p>
+    <h1 class="h1 gradient-text" data-anim="fade-up">十五五规划纲要<br><span style="font-size:0.6em;">中华人民共和国国民经济和社会发展<br>第十五个五年（2026－2030年）规划纲要</span></h1>
+    <p class="lede dim" data-anim="fade-up">18篇 · 62章 · 252节 · 约5.3万字</p>
+    <p class="dim" data-anim="fade-up" style="font-size:14px;">book-distillation V3 蒸馏</p>
+    <div class="notes">封面：十五五规划纲要精华内参。按S键开启演讲者模式，按T键切换主题。</div>
+  </section>
+
+  <!-- SLIDE 2: 目录 -->
+  <section class="slide" data-title="目录">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up">
+        <span class="tag">目录</span>
+        <span class="line"></span>
+      </div>
+      <h2 class="title" data-anim="fade-up">内容导航</h2>
+      <div class="g3" data-anim="stagger-list">
+        <div class="card">
+          <h4>模块1</h4>
+          <p class="dim" style="font-size:13px;">一句话逻辑</p>
+        </div>
+        <div class="card">
+          <h4>模块2</h4>
+          <p class="dim" style="font-size:13px;">核心知识地图</p>
+        </div>
+        <div class="card">
+          <h4>模块3</h4>
+          <p class="dim" style="font-size:13px;">颠覆性认知</p>
+        </div>
+        <div class="card">
+          <h4>模块4</h4>
+          <p class="dim" style="font-size:13px;">落地行动指南</p>
+        </div>
+        <div class="card">
+          <h4>模块5</h4>
+          <p class="dim" style="font-size:13px;">金句复刻</p>
+        </div>
+        <div class="card">
+          <h4>模块6-7</h4>
+          <p class="dim" style="font-size:13px;">知识清单与延伸地图</p>
+        </div>
+      </div>
+    </div>
+    <div class="deck-footer">
+      <span>十五五规划纲要 · 精华内参</span>
+      <span class="slide-number" data-current="2" data-total="28"></span>
+    </div>
+    <div class="notes">目录：七大模块导航。</div>
+  </section>
+
+  <!-- SLIDE 3: 核心问题 -->
+  <section class="slide" data-title="核心问题">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up">
+        <span class="tag">模块1</span>
+        <span class="line"></span>
+      </div>
+      <h2 class="title" data-anim="fade-up"><span class="hl-red">核心问题</span></h2>
+      <blockquote data-anim="fade-right" style="font-size:18px;line-height:1.8;">
+        在百年变局加速演进、外部环境不确定性剧增的背景下，中国如何在2026-2030年这一关键窗口期，统筹高质量发展与国家安全，为基本实现社会主义现代化奠定决定性基础？
+      </blockquote>
+      <p class="dim" data-anim="fade-up" style="margin-top:20px;">这是规划要解决的根本问题——<span class="hl-gold">以高质量发展的确定性应对各种不确定性</span>。</p>
+    </div>
+    <div class="deck-footer">
+      <span>十五五规划纲要 · 精华内参</span>
+      <span class="slide-number" data-current="3" data-total="28"></span>
+    </div>
+    <div class="notes">核心问题：在不确定性中用高质量发展的确定性来应对。</div>
+  </section>
+
+  <!-- SLIDE 4: 核心观点 -->
+  <section class="slide" data-title="核心观点">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up">
+        <span class="tag">模块1</span>
+        <span class="line"></span>
+      </div>
+      <h2 class="title" data-anim="fade-up"><span class="hl-gold">核心观点</span></h2>
+      <div class="g2" style="gap:20px;" data-anim="stagger-list">
+        <div class="card card-accent">
+          <h4 style="color:var(--accent);">三大战略支撑</h4>
+          <ul class="stack" style="font-size:14px;">
+            <li><strong>高质量发展</strong> 为主题</li>
+            <li><strong>科技自立自强</strong> 为战略支撑</li>
+            <li><strong>扩大内需</strong> 为战略基点</li>
+          </ul>
+        </div>
+        <div class="card card-soft">
+          <h4 style="color:var(--accent-2);">根本动力与部署</h4>
+          <ul class="stack" style="font-size:14px;">
+            <li><strong>改革开放</strong> 为根本动力</li>
+            <li><strong>18大战略领域</strong> 系统部署</li>
+            <li><strong>构建新发展格局</strong></li>
+          </ul>
+        </div>
+      </div>
+      <blockquote data-anim="fade-right" style="margin-top:16px;">
+        规划不是简单的经济发展计划，而是涵盖经济、科技、社会、文化、生态、安全、国防、法治的<span class="hl-gold">全方位战略蓝图</span>。
+      </blockquote>
+    </div>
+    <div class="deck-footer">
+      <span>十五五规划纲要 · 精华内参</span>
+      <span class="slide-number" data-current="4" data-total="28"></span>
+    </div>
+    <div class="notes">核心观点：三大战略支撑+改革开放+18大领域系统部署。</div>
+  </section>
+
+  <!-- SLIDE 5: 六大原则 -->
+  <section class="slide" data-title="六大原则">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up">
+        <span class="tag">模块1</span>
+        <span class="line"></span>
+      </div>
+      <h2 class="title" data-anim="fade-up"><span class="hl-gold">六大原则</span> · 行动指南</h2>
+      <div class="g3" style="gap:12px;" data-anim="stagger-list">
+        <div class="card" style="text-align:center;">
+          <p style="font-size:20px;font-weight:900;color:var(--accent);">①</p>
+          <p style="font-size:13px;">党的全面领导</p>
+        </div>
+        <div class="card" style="text-align:center;">
+          <p style="font-size:20px;font-weight:900;color:var(--accent);">②</p>
+          <p style="font-size:13px;">人民至上</p>
+        </div>
+        <div class="card" style="text-align:center;">
+          <p style="font-size:20px;font-weight:900;color:var(--accent);">③</p>
+          <p style="font-size:13px;">高质量发展</p>
+        </div>
+        <div class="card" style="text-align:center;">
+          <p style="font-size:20px;font-weight:900;color:var(--accent);">④</p>
+          <p style="font-size:13px;">全面深化改革</p>
+        </div>
+        <div class="card" style="text-align:center;">
+          <p style="font-size:20px;font-weight:900;color:var(--accent);">⑤</p>
+          <p style="font-size:13px;">有效市场+有为政府</p>
+        </div>
+        <div class="card" style="text-align:center;">
+          <p style="font-size:20px;font-weight:900;color:var(--accent);">⑥</p>
+          <p style="font-size:13px;">统筹发展和安全</p>
+        </div>
+      </div>
+    </div>
+    <div class="deck-footer">
+      <span>十五五规划纲要 · 精华内参</span>
+      <span class="slide-number" data-current="5" data-total="28"></span>
+    </div>
+    <div class="notes">六大原则：党的领导、人民至上、高质量发展、深化改革、有效市场+有为政府、统筹发展和安全。</div>
+  </section>
+
+  <!-- SLIDE 6: 核心指标一览 -->
+  <section class="slide" data-title="核心指标">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up">
+        <span class="tag">模块2</span>
+        <span class="line"></span>
+      </div>
+      <h2 class="title" data-anim="fade-up"><span class="hl-gold">核心指标</span> 一览</h2>
+      <div class="stat-grid" data-anim="stagger-list">
+        <div class="stat-item">
+          <div class="num">140万亿</div>
+          <div class="label">十四五GDP</div>
+        </div>
+        <div class="stat-item">
+          <div class="num">7%+</div>
+          <div class="label">研发年均增长</div>
+        </div>
+        <div class="stat-item">
+          <div class="num">&lt;5.5%</div>
+          <div class="label">城镇失业率</div>
+        </div>
+        <div class="stat-item">
+          <div class="num">11.7年</div>
+          <div class="label">平均受教育年限</div>
+        </div>
+        <div class="stat-item">
+          <div class="num">80岁</div>
+          <div class="label">人均预期寿命</div>
+        </div>
+        <div class="stat-item">
+          <div class="num">-17%</div>
+          <div class="label">单位GDP碳排放</div>
+        </div>
+        <div class="stat-item">
+          <div class="num">1.45万亿斤</div>
+          <div class="label">粮食综合产能</div>
+        </div>
+        <div class="stat-item">
+          <div class="num">25.8%</div>
+          <div class="label">森林覆盖率</div>
+        </div>
+      </div>
+    </div>
+    <div class="deck-footer">
+      <span>十五五规划纲要 · 精华内参</span>
+      <span class="slide-number" data-current="6" data-total="28"></span>
+    </div>
+    <div class="notes">核心指标：涵盖经济、科技、就业、教育、健康、环境、农业、生态等8大维度。</div>
+  </section>
+
+  <!-- SLIDE 7: 18篇战略架构总览 -->
+  <section class="slide" data-title="18篇战略架构">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up">
+        <span class="tag">模块2</span>
+        <span class="line"></span>
+      </div>
+      <h2 class="title" data-anim="fade-up"><span class="hl-gold">18篇战略架构</span> 总览</h2>
+      <div class="g4" style="gap:8px;font-size:12px;" data-anim="stagger-list">
+        <div class="card" style="padding:8px;text-align:center;"><strong>第一篇</strong><br>总领</div>
+        <div class="card" style="padding:8px;text-align:center;"><strong>第二篇</strong><br>产业体系</div>
+        <div class="card" style="padding:8px;text-align:center;"><strong>第三篇</strong><br>科技自立</div>
+        <div class="card" style="padding:8px;text-align:center;"><strong>第四篇</strong><br>数字中国</div>
+        <div class="card" style="padding:8px;text-align:center;"><strong>第五篇</strong><br>国内市场</div>
+        <div class="card" style="padding:8px;text-align:center;"><strong>第六篇</strong><br>市场经济</div>
+        <div class="card" style="padding:8px;text-align:center;"><strong>第七篇</strong><br>对外开放</div>
+        <div class="card" style="padding:8px;text-align:center;"><strong>第八篇</strong><br>农业现代化</div>
+        <div class="card" style="padding:8px;text-align:center;"><strong>第九篇</strong><br>区域协调</div>
+        <div class="card" style="padding:8px;text-align:center;"><strong>第十篇</strong><br>文化繁荣</div>
+        <div class="card" style="padding:8px;text-align:center;"><strong>第十一篇</strong><br>人口战略</div>
+        <div class="card" style="padding:8px;text-align:center;"><strong>第十二篇</strong><br>民生保障</div>
+        <div class="card" style="padding:8px;text-align:center;"><strong>第十三篇</strong><br>绿色转型</div>
+        <div class="card" style="padding:8px;text-align:center;"><strong>第十四篇</strong><br>国家安全</div>
+        <div class="card" style="padding:8px;text-align:center;"><strong>第十五篇</strong><br>国防军队</div>
+        <div class="card" style="padding:8px;text-align:center;"><strong>第十六篇</strong><br>民主法治</div>
+        <div class="card" style="padding:8px;text-align:center;"><strong>第十七篇</strong><br>一国两制</div>
+        <div class="card card-accent" style="padding:8px;text-align:center;"><strong>第十八篇</strong><br>实施保障</div>
+      </div>
+      <p class="dim" data-anim="fade-up" style="font-size:13px;margin-top:12px;">
+        逻辑递进：发展环境研判 → 指导方针确立 → 18大战略领域全面部署 → 实施保障机制
+      </p>
+    </div>
+    <div class="deck-footer">
+      <span>十五五规划纲要 · 精华内参</span>
+      <span class="slide-number" data-current="7" data-total="28"></span>
+    </div>
+    <div class="notes">18篇战略架构：从总领到实施保障的全方位部署。</div>
+  </section>
+
+  <!-- SLIDE 8: 支柱1-2 -->
+  <section class="slide" data-title="产业与体系">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up">
+        <span class="tag">核心知识地图 · 支柱1-2</span>
+        <span class="line"></span>
+      </div>
+      <h2 class="title" data-anim="fade-up">发展环境 + <span class="hl-gold">现代化产业体系</span></h2>
+      <div class="g2" style="gap:16px;" data-anim="stagger-list">
+        <div class="card card-accent">
+          <h4 style="color:var(--accent);">支柱1：认清形势、把准方向</h4>
+          <p style="font-size:13px;color:var(--text-2);line-height:1.6;">
+            "十四五"成就奠定坚实基础：GDP突破140万亿、研发强度2.8%、人均预期寿命79岁以上。<br>
+            "十五五"环境深刻变化：国际（百年变局、单边主义、大国博弈）与国内（供强需弱、新旧动能转换）交织。<br>
+            确立六大原则为行动指南。
+          </p>
+        </div>
+        <div class="card card-soft">
+          <h4 style="color:var(--accent-2);">支柱2：实体经济是根基</h4>
+          <p style="font-size:13px;color:var(--text-2);line-height:1.6;">
+            四条路径：<br>
+            ① <strong>传统产业</strong> 向中高端升级（钢铁、石化、船舶）<br>
+            ② <strong>新兴产业</strong> 支柱性先导性（新能源、机器人）<br>
+            ③ <strong>未来产业</strong> 前瞻布局（量子、核聚变、脑机接口、6G）<br>
+            ④ <strong>服务业+基础设施</strong> 优质高效<br>
+            关键机制：综合整治"内卷式"竞争，培育独角兽，"沙盒监管"。
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="deck-footer">
+      <span>十五五规划纲要 · 精华内参</span>
+      <span class="slide-number" data-current="8" data-total="28"></span>
+    </div>
+    <div class="notes">支柱1-2：发展环境研判和现代化产业体系部署。</div>
+  </section>
+
+  <!-- SLIDE 9: 支柱3-4 -->
+  <section class="slide" data-title="科技与数字">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up">
+        <span class="tag">核心知识地图 · 支柱3-4</span>
+        <span class="line"></span>
+      </div>
+      <h2 class="title" data-anim="fade-up"><span class="hl-gold">科技自立自强</span> + 数字中国</h2>
+      <div class="g2" style="gap:16px;" data-anim="stagger-list">
+        <div class="card card-accent">
+          <h4 style="color:var(--accent);">支柱3：科技创新是核心驱动力</h4>
+          <p style="font-size:13px;color:var(--text-2);line-height:1.6;">
+            四大维度：<br>
+            ① <strong>原始创新+关键技术</strong> 攻坚战<br>
+            ② <strong>体系化创新能力</strong> 国家战略科技力量<br>
+            ③ <strong>企业科技创新主体</strong> 产学研融通<br>
+            ④ <strong>教育科技人才一体推进</strong><br>
+            核心指标：研发经费年均增长7%以上。
+          </p>
+        </div>
+        <div class="card card-soft">
+          <h4 style="color:var(--accent-2);">支柱4：数智技术全方位赋能</h4>
+          <p style="font-size:13px;color:var(--text-2);line-height:1.6;">
+            三大方向：<br>
+            ① <strong>算力算法数据</strong> 高效供给<br>
+            ② <strong>数智技术赋能</strong> 实体经济融合<br>
+            ③ <strong>健康发展生态</strong> 数据要素制度<br>
+            核心定位：数智技术是新一轮科技革命的核心。
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="deck-footer">
+      <span>十五五规划纲要 · 精华内参</span>
+      <span class="slide-number" data-current="9" data-total="28"></span>
+    </div>
+    <div class="notes">支柱3-4：科技自立自强和数字中国建设。</div>
+  </section>
+
+  <!-- SLIDE 10: 支柱5-6 -->
+  <section class="slide" data-title="市场与经济">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up">
+        <span class="tag">核心知识地图 · 支柱5-6</span>
+        <span class="line"></span>
+      </div>
+      <h2 class="title" data-anim="fade-up"><span class="hl-gold">强大国内市场</span> + 高水平市场经济</h2>
+      <div class="g2" style="gap:16px;" data-anim="stagger-list">
+        <div class="card card-accent">
+          <h4 style="color:var(--accent);">支柱5：扩大内需是战略基点</h4>
+          <p style="font-size:13px;color:var(--text-2);line-height:1.6;">
+            三大方向：<br>
+            ① <strong>提振消费</strong> 夯实基础、释放潜力、扩容升级<br>
+            ② <strong>扩大有效投资</strong> 提高效益、激发活力<br>
+            ③ <strong>全国统一大市场</strong> 基础制度规则、公平竞争<br>
+            核心目标：居民消费率明显提高，内需为主动力。
+          </p>
+        </div>
+        <div class="card card-soft">
+          <h4 style="color:var(--accent-2);">支柱6：有效市场+有为政府</h4>
+          <p style="font-size:13px;color:var(--text-2);line-height:1.6;">
+            三大方向：<br>
+            ① <strong>激发经营主体活力</strong> 国企改革、民营经济、营商环境<br>
+            ② <strong>要素市场化配置</strong> 制度规则、价格机制、存量资源<br>
+            ③ <strong>宏观经济治理</strong> 宏观调控、财政制度、金融强国<br>
+            核心原则："放得活"又"管得好"的经济秩序。
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="deck-footer">
+      <span>十五五规划纲要 · 精华内参</span>
+      <span class="slide-number" data-current="10" data-total="28"></span>
+    </div>
+    <div class="notes">支柱5-6：强大国内市场和高水平市场经济体制。</div>
+  </section>
+
+  <!-- SLIDE 11: 支柱7-8 -->
+  <section class="slide" data-title="开放与农业">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up">
+        <span class="tag">核心知识地图 · 支柱7-8</span>
+        <span class="line"></span>
+      </div>
+      <h2 class="title" data-anim="fade-up"><span class="hl-gold">高水平对外开放</span> + 农业农村现代化</h2>
+      <div class="g2" style="gap:16px;" data-anim="stagger-list">
+        <div class="card card-accent">
+          <h4 style="color:var(--accent);">支柱7：开放是必由之路</h4>
+          <p style="font-size:13px;color:var(--text-2);line-height:1.6;">
+            四大方向：<br>
+            ① <strong>自主开放</strong> 扩大领域、对接规则<br>
+            ② <strong>贸易投资合作</strong> 创新发展、吸引外资<br>
+            ③ <strong>一带一路</strong> 战略对接、互联互通<br>
+            ④ <strong>人类命运共同体</strong> 全球治理、公共产品<br>
+            核心理念：以高水平开放促改革促发展。
+          </p>
+        </div>
+        <div class="card card-soft">
+          <h4 style="color:var(--accent-2);">支柱8：农业是根基</h4>
+          <p style="font-size:13px;color:var(--text-2);line-height:1.6;">
+            三大方向：<br>
+            ① <strong>农业综合生产能力</strong> 粮食保障、科技装备、多元食物<br>
+            ② <strong>和美乡村建设</strong> 优质空间、富民产业、乡村治理<br>
+            ③ <strong>强农惠农富农</strong> 投入保障、农村改革、帮扶机制<br>
+            核心目标：粮食综合生产能力1.45万亿斤。
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="deck-footer">
+      <span>十五五规划纲要 · 精华内参</span>
+      <span class="slide-number" data-current="11" data-total="28"></span>
+    </div>
+    <div class="notes">支柱7-8：高水平对外开放和农业农村现代化。</div>
+  </section>
+
+  <!-- SLIDE 12: 支柱9-10 -->
+  <section class="slide" data-title="区域与文化">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up">
+        <span class="tag">核心知识地图 · 支柱9-10</span>
+        <span class="line"></span>
+      </div>
+      <h2 class="title" data-anim="fade-up"><span class="hl-gold">区域协调发展</span> + 社会主义文化繁荣</h2>
+      <div class="g2" style="gap:16px;" data-anim="stagger-list">
+        <div class="card card-accent">
+          <h4 style="color:var(--accent);">支柱9：优化国土空间布局</h4>
+          <p style="font-size:13px;color:var(--text-2);line-height:1.6;">
+            五大方向：<br>
+            ① <strong>区域协调性</strong> 东中西、京津冀长三角粤港澳、长江黄河<br>
+            ② <strong>区域联动</strong> 跨区域合作<br>
+            ③ <strong>国土空间</strong> 主体功能区、空间管控<br>
+            ④ <strong>新型城镇化</strong> 市民化、都市圈、人民城市<br>
+            ⑤ <strong>海洋强国</strong> 海洋经济、生态、权益
+          </p>
+        </div>
+        <div class="card card-soft">
+          <h4 style="color:var(--accent-2);">支柱10：文化自信是力量</h4>
+          <p style="font-size:13px;color:var(--text-2);line-height:1.6;">
+            四大方向：<br>
+            ① <strong>核心价值观</strong> 理想信念、社会文明、网络文明<br>
+            ② <strong>文化事业</strong> 创作生产、公共服务、遗产保护<br>
+            ③ <strong>文化产业</strong> 产业体系、文旅融合<br>
+            ④ <strong>文明传播</strong> 国际传播、交流互鉴
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="deck-footer">
+      <span>十五五规划纲要 · 精华内参</span>
+      <span class="slide-number" data-current="12" data-total="28"></span>
+    </div>
+    <div class="notes">支柱9-10：区域协调发展和社会主义文化繁荣。</div>
+  </section>
+
+  <!-- SLIDE 13: 支柱11-12 -->
+  <section class="slide" data-title="人口与民生">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up">
+        <span class="tag">核心知识地图 · 支柱11-12</span>
+        <span class="line"></span>
+      </div>
+      <h2 class="title" data-anim="fade-up"><span class="hl-gold">人口高质量发展</span> + 民生保障与共同富裕</h2>
+      <div class="g2" style="gap:16px;" data-anim="stagger-list">
+        <div class="card card-accent">
+          <h4 style="color:var(--accent);">支柱11：人口是战略性问题</h4>
+          <p style="font-size:13px;color:var(--text-2);line-height:1.6;">
+            四大方向：<br>
+            ① <strong>生育友好</strong> 支持政策、育幼体系、家庭发展<br>
+            ② <strong>教育强国</strong> 立德树人、基础教育、高等教育、职业教育<br>
+            ③ <strong>健康中国</strong> 公共卫生、医疗服务、医保协同、中医药、体育<br>
+            ④ <strong>应对老龄化</strong> 养老网络、老年生活<br>
+            目标：人均预期寿命80岁，平均受教育11.7年。
+          </p>
+        </div>
+        <div class="card card-soft">
+          <h4 style="color:var(--accent-2);">支柱12：扎实推进共同富裕</h4>
+          <p style="font-size:13px;color:var(--text-2);line-height:1.6;">
+            六大方向：<br>
+            ① <strong>高质量充分就业</strong> ② <strong>收入分配</strong><br>
+            ③ <strong>社会保障</strong> ④ <strong>房地产</strong><br>
+            ⑤ <strong>基本公共服务</strong> ⑥ <strong>特殊群体</strong><br>
+            核心：在高质量发展中促进全体人民共享。
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="deck-footer">
+      <span>十五五规划纲要 · 精华内参</span>
+      <span class="slide-number" data-current="13" data-total="28"></span>
+    </div>
+    <div class="notes">支柱11-12：人口高质量发展和民生保障与共同富裕。</div>
+  </section>
+
+  <!-- SLIDE 14: 支柱13-14 -->
+  <section class="slide" data-title="绿色与安全">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up">
+        <span class="tag">核心知识地图 · 支柱13-14</span>
+        <span class="line"></span>
+      </div>
+      <h2 class="title" data-anim="fade-up"><span class="hl-gold">绿色转型与美丽中国</span> + 国家安全与平安中国</h2>
+      <div class="g2" style="gap:16px;" data-anim="stagger-list">
+        <div class="card card-accent">
+          <h4 style="color:var(--accent);">支柱13：绿水青山就是金山银山</h4>
+          <p style="font-size:13px;color:var(--text-2);line-height:1.6;">
+            四大方向：<br>
+            ① <strong>碳达峰</strong> 碳排放双控、节能降碳、应对气候变化<br>
+            ② <strong>环境质量</strong> 蓝天碧水净土、风险防控、环境治理<br>
+            ③ <strong>生态系统</strong> 生态屏障、保护地体系、保护机制<br>
+            ④ <strong>绿色生活</strong> 资源节约、绿色政策、全民行动<br>
+            目标：碳排放-17%，PM2.5≤27，优良水体85%，森林25.8%。
+          </p>
+        </div>
+        <div class="card card-soft">
+          <h4 style="color:var(--accent-2);">支柱14：安全是发展的前提</h4>
+          <p style="font-size:13px;color:var(--text-2);line-height:1.6;">
+            四大方向：<br>
+            ① <strong>国家安全体系</strong> 体系和能力建设<br>
+            ② <strong>经济安全</strong> 粮食、能源资源、风险防范、网络安全<br>
+            ③ <strong>公共安全</strong> 食品药品、安全生产、应急管理<br>
+            ④ <strong>社会治理</strong> 基层根基、新兴领域、安全稳定<br>
+            核心理念：在发展中固安全，在安全中谋发展。
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="deck-footer">
+      <span>十五五规划纲要 · 精华内参</span>
+      <span class="slide-number" data-current="14" data-total="28"></span>
+    </div>
+    <div class="notes">支柱13-14：绿色转型与美丽中国，国家安全与平安中国。</div>
+  </section>
+
+  <!-- SLIDE 15: 支柱15-18 -->
+  <section class="slide" data-title="保障体系">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up">
+        <span class="tag">核心知识地图 · 支柱15-18</span>
+        <span class="line"></span>
+      </div>
+      <h2 class="title" data-anim="fade-up"><span class="hl-gold">保障体系</span> · 确保战略有效落地</h2>
+      <div class="g4" style="gap:12px;" data-anim="stagger-list">
+        <div class="card" style="text-align:center;">
+          <h4 style="color:var(--accent);">第十五篇</h4>
+          <p style="font-size:13px;">国防和军队现代化</p>
+          <p class="dim" style="font-size:11px;">建军百年奋斗目标</p>
+        </div>
+        <div class="card" style="text-align:center;">
+          <h4 style="color:var(--accent);">第十六篇</h4>
+          <p style="font-size:13px;">全过程人民民主</p>
+          <p class="dim" style="font-size:11px;">中国特色社会主义法治体系</p>
+        </div>
+        <div class="card" style="text-align:center;">
+          <h4 style="color:var(--accent);">第十七篇</h4>
+          <p style="font-size:13px;">一国两制</p>
+          <p class="dim" style="font-size:11px;">推进祖国统一</p>
+        </div>
+        <div class="card card-accent" style="text-align:center;">
+          <h4 style="color:var(--accent);">第十八篇</h4>
+          <p style="font-size:13px;">实施保障</p>
+          <p class="dim" style="font-size:11px;">党的领导+全周期推进机制</p>
+        </div>
+      </div>
+      <blockquote data-anim="fade-right" style="margin-top:16px;">
+        这些支柱构成规划的保障体系，确保18大战略领域有效落地。
+      </blockquote>
+    </div>
+    <div class="deck-footer">
+      <span>十五五规划纲要 · 精华内参</span>
+      <span class="slide-number" data-current="15" data-total="28"></span>
+    </div>
+    <div class="notes">支柱15-18：国防、民主法治、一国两制、实施保障——确保规划落地。</div>
+  </section>
+
+  <!-- SLIDE 16: 颠覆性认知1 -->
+  <section class="slide" data-title="颠覆性认知1">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up">
+        <span class="tag">模块3</span>
+        <span class="line"></span>
+      </div>
+      <h2 class="title" data-anim="fade-up"><span class="hl-red">颠覆性认知 ①</span></h2>
+      <h3 style="color:var(--accent);margin-bottom:16px;" data-anim="fade-up">从"GDP增速"到"高质量发展"——范式转换</h3>
+      <div class="g2" style="gap:16px;" data-anim="stagger-list">
+        <div class="card card-warn">
+          <h4 style="color:var(--hl-red);">常见误解</h4>
+          <p style="font-size:14px;color:var(--text-2);">发展就是追求GDP高速度增长，增速越高越好。</p>
+        </div>
+        <div class="card card-accent">
+          <h4 style="color:var(--accent);">书中真相</h4>
+          <p style="font-size:14px;color:var(--text-2);">规划明确"国内生产总值增长保持在合理区间、各年度视情提出"，不再设定具体增速目标。从"量的扩张"转向"质的提升"。</p>
+        </div>
+      </div>
+      <p data-anim="fade-up" style="margin-top:16px;font-size:15px;font-weight:600;color:var(--accent);">
+        为什么重要：标志着中国经济进入新阶段——不再以速度论英雄，而是以质量、结构、效益为核心。
+      </p>
+    </div>
+    <div class="deck-footer">
+      <span>十五五规划纲要 · 精华内参</span>
+      <span class="slide-number" data-current="16" data-total="28"></span>
+    </div>
+    <div class="notes">颠覆性认知1：从GDP增速到高质量发展的范式转换。</div>
+  </section>
+
+  <!-- SLIDE 17: 颠覆性认知2 -->
+  <section class="slide" data-title="颠覆性认知2">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up">
+        <span class="tag">模块3</span>
+        <span class="line"></span>
+      </div>
+      <h2 class="title" data-anim="fade-up"><span class="hl-red">颠覆性认知 ②</span></h2>
+      <h3 style="color:var(--accent);margin-bottom:16px;" data-anim="fade-up">新质生产力 = 传统产业+新兴产业+未来产业协同</h3>
+      <div class="g2" style="gap:16px;" data-anim="stagger-list">
+        <div class="card card-warn">
+          <h4 style="color:var(--hl-red);">常见误解</h4>
+          <p style="font-size:14px;color:var(--text-2);">发展新质生产力就是搞高科技、放弃传统产业。</p>
+        </div>
+        <div class="card card-accent">
+          <h4 style="color:var(--accent);">书中真相</h4>
+          <p style="font-size:14px;color:var(--text-2);">规划要求"保持制造业合理比重"，传统产业"向中高端升级"，新兴产业"支柱性先导性"，未来产业"前瞻布局"。三者是协同演进，不是替代关系。</p>
+        </div>
+      </div>
+      <p data-anim="fade-up" style="margin-top:16px;font-size:15px;font-weight:600;color:var(--accent);">
+        为什么重要：中国不能脱离制造业谈高科技，必须保持完整的产业体系。
+      </p>
+    </div>
+    <div class="deck-footer">
+      <span>十五五规划纲要 · 精华内参</span>
+      <span class="slide-number" data-current="17" data-total="28"></span>
+    </div>
+    <div class="notes">颠覆性认知2：新质生产力不是放弃传统产业，而是三者协同。</div>
+  </section>
+
+  <!-- SLIDE 18: 颠覆性认知3 -->
+  <section class="slide" data-title="颠覆性认知3">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up">
+        <span class="tag">模块3</span>
+        <span class="line"></span>
+      </div>
+      <h2 class="title" data-anim="fade-up"><span class="hl-red">颠覆性认知 ③</span></h2>
+      <h3 style="color:var(--accent);margin-bottom:16px;" data-anim="fade-up">科技自立 ≠ 关起门来搞创新</h3>
+      <div class="g2" style="gap:16px;" data-anim="stagger-list">
+        <div class="card card-warn">
+          <h4 style="color:var(--hl-red);">常见误解</h4>
+          <p style="font-size:14px;color:var(--text-2);">科技自立就是什么都要自己搞，不搞国际合作。</p>
+        </div>
+        <div class="card card-accent">
+          <h4 style="color:var(--accent);">书中真相</h4>
+          <p style="font-size:14px;color:var(--text-2);">规划强调"构建高水平科技开放合作新格局"，"积极参与和引领全球经济治理"。自立自强与开放合作不是对立，而是相辅相成。</p>
+        </div>
+      </div>
+      <p data-anim="fade-up" style="margin-top:16px;font-size:15px;font-weight:600;color:var(--accent);">
+        为什么重要：在全球化遭遇逆流的背景下，中国坚持开放姿态，以自立为根基，以合作促发展。
+      </p>
+    </div>
+    <div class="deck-footer">
+      <span>十五五规划纲要 · 精华内参</span>
+      <span class="slide-number" data-current="18" data-total="28"></span>
+    </div>
+    <div class="notes">颠覆性认知3：科技自立自强不是关起门来搞创新，而是高水平开放合作。</div>
+  </section>
+
+  <!-- SLIDE 19: 行动指南框架 -->
+  <section class="slide" data-title="行动指南">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up">
+        <span class="tag">模块4</span>
+        <span class="line"></span>
+      </div>
+      <h2 class="title" data-anim="fade-up">规划理解与执行<span class="hl-gold">框架</span></h2>
+      <ol class="stack" data-anim="stagger-list">
+        <li>
+          <h4 style="color:var(--accent);">阶段1：理解与解读</h4>
+          <p class="dim" style="font-size:13px;">精读第一篇把握总体方向 → 对照自身领域定位相关篇章 → 提取关键指标建立执行时间表</p>
+        </li>
+        <li>
+          <h4 style="color:var(--accent);">阶段2：对标与谋划</h4>
+          <p class="dim" style="font-size:13px;">建立指标对标体系 → 制定三年/五年行动计划 → 明确责任主体、时间节点、资源配置</p>
+        </li>
+        <li>
+          <h4 style="color:var(--accent);">阶段3：执行与反馈</h4>
+          <p class="dim" style="font-size:13px;">扎实推进各项任务 → 建立季度评估机制 → 根据形势变化动态调整</p>
+        </li>
+      </ol>
+      <div class="card card-warn" data-anim="fade-up" style="margin-top:16px;">
+        <h4 style="color:var(--hl-red);">常见踩坑</h4>
+        <p style="font-size:13px;color:var(--text-2);">重规划轻执行，指标停留在纸面 | 缺乏动态调整机制</p>
+      </div>
+    </div>
+    <div class="deck-footer">
+      <span>十五五规划纲要 · 精华内参</span>
+      <span class="slide-number" data-current="19" data-total="28"></span>
+    </div>
+    <div class="notes">行动指南：理解解读→对标谋划→执行反馈的三阶段框架。</div>
+  </section>
+
+  <!-- SLIDE 20: 场景模拟 -->
+  <section class="slide" data-title="场景模拟">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up">
+        <span class="tag">模块4</span>
+        <span class="line"></span>
+      </div>
+      <h2 class="title" data-anim="fade-up">场景模拟：地方政府制定实施方案</h2>
+      <table class="checklist" data-anim="stagger-list">
+        <thead>
+          <tr>
+            <th>阶段</th>
+            <th>错误反应</th>
+            <th>理想路径</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>目标设定</strong></td>
+            <td>简单照搬国家指标</td>
+            <td>结合本地产业基础设定差异化目标</td>
+          </tr>
+          <tr>
+            <td><strong>产业选择</strong></td>
+            <td>跟风布局热门产业</td>
+            <td>根据比较优势发展特色产业</td>
+          </tr>
+          <tr>
+            <td><strong>科技投入</strong></td>
+            <td>重引进轻创新</td>
+            <td>建立企业主导的产学研体系</td>
+          </tr>
+          <tr>
+            <td><strong>民生保障</strong></td>
+            <td>重建设轻服务</td>
+            <td>从"有没有"转向"好不好"</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="deck-footer">
+      <span>十五五规划纲要 · 精华内参</span>
+      <span class="slide-number" data-current="20" data-total="28"></span>
+    </div>
+    <div class="notes">场景模拟：地方政府制定实施方案的错误路径vs理想路径对比。</div>
+  </section>
+
+  <!-- SLIDE 21: 自检卡 -->
+  <section class="slide" data-title="自检卡">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up">
+        <span class="tag">模块4</span>
+        <span class="line"></span>
+      </div>
+      <h2 class="title" data-anim="fade-up">每日快速<span class="hl-gold">自检卡</span></h2>
+      <table class="checklist" data-anim="stagger-list">
+        <thead>
+          <tr>
+            <th>阶段</th>
+            <th>致命误区</th>
+            <th>核心审视问题</th>
+            <th>触发行动</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>理解</strong></td>
+            <td>只看标题不看内容</td>
+            <td>是否真正理解核心逻辑？</td>
+            <td>精读原文，把握主旨</td>
+          </tr>
+          <tr>
+            <td><strong>对标</strong></td>
+            <td>脱离实际盲目跟风</td>
+            <td>本地/行业基础条件是什么？</td>
+            <td>建立差异化对标体系</td>
+          </tr>
+          <tr>
+            <td><strong>执行</strong></td>
+            <td>重规划轻落实</td>
+            <td>是否有明确时间表和责任主体？</td>
+            <td>制定行动计划，建立反馈机制</td>
+          </tr>
+          <tr>
+            <td><strong>评估</strong></td>
+            <td>只报喜不报忧</td>
+            <td>哪些指标滞后？原因是什么？</td>
+            <td>季度评估，动态调整</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="deck-footer">
+      <span>十五五规划纲要 · 精华内参</span>
+      <span class="slide-number" data-current="21" data-total="28"></span>
+    </div>
+    <div class="notes">自检卡：理解、对标、执行、评估四个阶段的致命误区和行动触发。</div>
+  </section>
+
+  <!-- SLIDE 22: 金句复刻1 -->
+  <section class="slide" data-title="金句1">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up">
+        <span class="tag">模块5</span>
+        <span class="line"></span>
+      </div>
+      <h2 class="title" data-anim="fade-up"><span class="hl-gold">金句</span>复刻</h2>
+      <blockquote data-anim="fade-right" style="font-size:22px;line-height:1.8;">
+        "以高质量发展的<span class="hl-gold">确定性</span>应对各种<span class="hl-red">不确定性</span>"
+      </blockquote>
+      <p class="dim" data-anim="fade-up" style="font-size:14px;">—— 第二节 发展环境 | 核心方法论</p>
+      
+      <blockquote data-anim="fade-right" style="font-size:18px;line-height:1.8;margin-top:24px;">
+        "坚持把发展经济的着力点放在<span class="hl-gold">实体经济</span>上"
+      </blockquote>
+      <p class="dim" data-anim="fade-up" style="font-size:14px;">—— 第二篇 开篇 | 产业根基</p>
+      
+      <blockquote data-anim="fade-right" style="font-size:18px;line-height:1.8;margin-top:24px;">
+        "在发展中<span class="hl-gold">固安全</span>，在安全中<span class="hl-gold">谋发展</span>"
+      </blockquote>
+      <p class="dim" data-anim="fade-up" style="font-size:14px;">—— 必须遵循的原则 | 安全发展观</p>
+    </div>
+    <div class="deck-footer">
+      <span>十五五规划纲要 · 精华内参</span>
+      <span class="slide-number" data-current="22" data-total="28"></span>
+    </div>
+    <div class="notes">金句复刻：三句核心金句，体现方法论、产业观、安全观。</div>
+  </section>
+
+  <!-- SLIDE 23: 金句复刻2 -->
+  <section class="slide" data-title="金句2">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up">
+        <span class="tag">模块5</span>
+        <span class="line"></span>
+      </div>
+      <h2 class="title" data-anim="fade-up"><span class="hl-gold">金句</span>复刻（续）</h2>
+      <div class="g2" style="gap:16px;" data-anim="stagger-list">
+        <blockquote style="font-size:16px;">
+          "保持制造业<span class="hl-gold">合理比重</span>"<br>
+          <span class="dim" style="font-size:12px;">—— 第二篇 开篇 | 战略定力</span>
+        </blockquote>
+        <blockquote style="font-size:16px;">
+          "坚持有效市场和<span class="hl-gold">有为政府</span>相结合"<br>
+          <span class="dim" style="font-size:12px;">—— 必须遵循的原则 | 制度创新</span>
+        </blockquote>
+        <blockquote style="font-size:16px;">
+          "推动产业政策向<span class="hl-gold">普惠化和功能性</span>转型"<br>
+          <span class="dim" style="font-size:12px;">—— 第三章第三节 | 政策转型</span>
+        </blockquote>
+        <blockquote style="font-size:16px;">
+          "综合整治<span class="hl-red">'内卷式'</span>竞争"<br>
+          <span class="dim" style="font-size:12px;">—— 第三章第三节 | 市场治理</span>
+        </blockquote>
+      </div>
+    </div>
+    <div class="deck-footer">
+      <span>十五五规划纲要 · 精华内参</span>
+      <span class="slide-number" data-current="23" data-total="28"></span>
+    </div>
+    <div class="notes">金句复刻（续）：制造业比重、有效市场+有为政府、产业政策转型、整治内卷竞争。</div>
+  </section>
+
+  <!-- SLIDE 24: 知识蒸馏清单 -->
+  <section class="slide" data-title="知识清单">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up">
+        <span class="tag">模块6</span>
+        <span class="line"></span>
+      </div>
+      <h2 class="title" data-anim="fade-up">知识<span class="hl-gold">蒸馏</span>清单</h2>
+      <h4 style="color:var(--accent);margin-bottom:12px;" data-anim="fade-up">核心逻辑链</h4>
+      <ol class="stack" data-anim="stagger-list">
+        <li>发展环境研判 → 指导方针 → 18篇战略部署 → 实施保障（主线贯穿）</li>
+        <li>高质量发展是主题，科技自立自强是战略支撑，扩大内需是战略基点（三大核心）</li>
+        <li>传统产业+新兴产业+未来产业协同（产业体系完整性）</li>
+      </ol>
+      <h4 style="color:var(--accent);margin:16px 0 12px;" data-anim="fade-up">被省略的内容</h4>
+      <table class="checklist" data-anim="stagger-list" style="font-size:12px;">
+        <thead>
+          <tr>
+            <th>被省略内容</th>
+            <th>省略理由</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>各产业具体产品清单</td><td>过于具体，核心是政策方向</td></tr>
+          <tr><td>各区域具体项目列表</td><td>项目会随形势变化，战略方向才是核心</td></tr>
+          <tr><td>各部门详细措施</td><td>具体由各部门制定，纲要只定方向</td></tr>
+          <tr><td>各省市配套指标</td><td>地方规划另行制定</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="deck-footer">
+      <span>十五五规划纲要 · 精华内参</span>
+      <span class="slide-number" data-current="24" data-total="28"></span>
+    </div>
+    <div class="notes">知识蒸馏清单：核心逻辑链和被省略的内容及理由。</div>
+  </section>
+
+  <!-- SLIDE 25: 延伸行动地图1 -->
+  <section class="slide" data-title="延伸行动1">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up">
+        <span class="tag">模块7</span>
+        <span class="line"></span>
+      </div>
+      <h2 class="title" data-anim="fade-up">延伸<span class="hl-gold">行动</span>地图</h2>
+      <div class="g2" style="gap:16px;" data-anim="stagger-list">
+        <div class="card card-accent">
+          <h4 style="color:var(--accent);">行动1：研读"十四五"评估报告</h4>
+          <p style="font-size:13px;color:var(--text-2);">对照"十四五"完成情况和"十五五"新要求，找出差距和延续性任务。</p>
+          <p style="font-size:12px;color:var(--accent);margin-top:8px;">关键词：十四五规划中期评估</p>
+        </div>
+        <div class="card card-soft">
+          <h4 style="color:var(--accent-2);">行动2：研究各部委专项规划</h4>
+          <p style="font-size:13px;color:var(--text-2);">跟踪发改委、科技部、工信部等部门专项实施方案。纲要定方向，专项规划定措施。</p>
+          <p style="font-size:12px;color:var(--accent-2);margin-top:8px;">关键词：十五五专项规划</p>
+        </div>
+        <div class="card card-accent">
+          <h4 style="color:var(--accent);">行动3：跟踪地方规划制定</h4>
+          <p style="font-size:13px;color:var(--text-2);">关注各省市县本地实施方案，对照本地特色的差异化部署。</p>
+          <p style="font-size:12px;color:var(--accent);margin-top:8px;">关键词：省级十五五规划</p>
+        </div>
+        <div class="card card-soft">
+          <h4 style="color:var(--accent-2);">行动4：研究国际环境变化</h4>
+          <p style="font-size:13px;color:var(--text-2);">跟踪大国关系演变、全球治理格局变化对规划实施的外部环境影响。</p>
+          <p style="font-size:12px;color:var(--accent-2);margin-top:8px;">关键词：geopolitical risk assessment</p>
+        </div>
+      </div>
+    </div>
+    <div class="deck-footer">
+      <span>十五五规划纲要 · 精华内参</span>
+      <span class="slide-number" data-current="25" data-total="28"></span>
+    </div>
+    <div class="notes">延伸行动地图：四个建议行动方向。</div>
+  </section>
+
+  <!-- SLIDE 26: 递进阅读关系 -->
+  <section class="slide" data-title="递进阅读">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up">
+        <span class="tag">模块7</span>
+        <span class="line"></span>
+      </div>
+      <h2 class="title" data-anim="fade-up"><span class="hl-gold">递进阅读</span>关系</h2>
+      <ol class="stack" data-anim="stagger-list">
+        <li>
+          <h4 style="color:var(--accent);">中共中央关于制定"十五五"规划的建议</h4>
+          <p class="dim" style="font-size:13px;">规划编制依据</p>
+        </li>
+        <li>
+          <h4 style="color:var(--accent);">十五五规划纲要</h4>
+          <p class="dim" style="font-size:13px;">本文档</p>
+        </li>
+        <li>
+          <h4 style="color:var(--accent);">各部委专项规划</h4>
+          <p class="dim" style="font-size:13px;">具体落实</p>
+        </li>
+        <li>
+          <h4 style="color:var(--accent);">地方实施方案</h4>
+          <p class="dim" style="font-size:13px;">地方行动</p>
+        </li>
+        <li>
+          <h4 style="color:var(--accent);">年度政府工作报告</h4>
+          <p class="dim" style="font-size:13px;">年度执行</p>
+        </li>
+      </ol>
+    </div>
+    <div class="deck-footer">
+      <span>十五五规划纲要 · 精华内参</span>
+      <span class="slide-number" data-current="26" data-total="28"></span>
+    </div>
+    <div class="notes">递进阅读关系：从中央建议到年度执行的五层递进。</div>
+  </section>
+
+  <!-- SLIDE 27: 总结 -->
+  <section class="slide center tc" data-title="总结">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;align-items:center;">
+      <div class="section-divider" data-anim="fade-up" style="width:100%;max-width:800px;">
+        <span class="tag">总结</span>
+        <span class="line"></span>
+      </div>
+      <h2 class="title" data-anim="fade-up">以<span class="hl-gold">高质量发展</span>的确定性<br>应对各种<span class="hl-red">不确定性</span></h2>
+      <p class="lede dim" data-anim="fade-up" style="max-width:700px;margin:20px auto 0;line-height:1.8;">
+        十五五规划是2026-2030年中国发展的宏伟蓝图。<br>
+        通过18大战略领域的系统部署，构建新发展格局，<br>
+        培育新质生产力，为基本实现社会主义现代化奠定决定性基础。
+      </p>
+      <div class="stat-grid" style="max-width:600px;margin:30px auto 0;" data-anim="stagger-list">
+        <div class="stat-item">
+          <div class="num">18篇</div>
+          <div class="label">战略领域</div>
+        </div>
+        <div class="stat-item">
+          <div class="num">62章</div>
+          <div class="label">战略部署</div>
+        </div>
+        <div class="stat-item">
+          <div class="num">252节</div>
+          <div class="label">具体任务</div>
+        </div>
+      </div>
+    </div>
+    <div class="deck-footer">
+      <span>十五五规划纲要 · 精华内参</span>
+      <span class="slide-number" data-current="27" data-total="28"></span>
+    </div>
+    <div class="notes">总结：十五五规划是宏伟蓝图，18大战略领域系统部署。</div>
+  </section>
+
+  <!-- SLIDE 28: 结尾 -->
+  <section class="slide center tc" data-title="结尾">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <p class="kicker" data-anim="fade-down">book-distillation V3</p>
+      <h1 class="h1 gradient-text" data-anim="fade-up">谢谢</h1>
+      <p class="lede dim" data-anim="fade-up">十五五规划纲要 · 精华内参</p>
+      <p class="dim" data-anim="fade-up" style="margin-top:20px;font-size:14px;">
+        蒸馏来源：《中华人民共和国国民经济和社会发展第十五个五年规划纲要》<br>
+        按S键查看演讲者备注 | 按T键切换主题
+      </p>
+    </div>
+    <div class="deck-footer">
+      <span>十五五规划纲要 · 精华内参</span>
+      <span class="slide-number" data-current="28" data-total="28"></span>
+    </div>
+    <div class="notes">结尾页：谢谢。按S键查看演讲者备注，按T键切换主题。</div>
+  </section>
+
+</div>
+<script src="ppt-assets/runtime.js"></script>
+</body>
+</html>

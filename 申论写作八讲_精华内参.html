@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="engineering-whiteprint">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>申论写作八讲 精华内参 — book-distillation</title>
+  <link rel="stylesheet" href="ppt-assets/fonts.css">
+  <link rel="stylesheet" href="ppt-assets/base.css">
+  <link rel="stylesheet" id="theme-link" href="ppt-assets/themes/engineering-whiteprint.css">
+  <link rel="stylesheet" href="ppt-assets/animations/animations.css">
+  <style>
+    :root {
+      --hl-orange: #d45500;
+      --hl-blue: #0057b3;
+    }
+    .hl-orange { color: var(--hl-orange); font-weight: 700; }
+    .hl-blue { color: var(--hl-blue); font-weight: 700; }
+    .tag { background: var(--accent-2); color: var(--bg); padding: 2px 10px; border-radius: 2px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+    .section-divider { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+    .section-divider .line { flex: 1; height: 2px; background: var(--border); }
+    .card { background: var(--surface); border: 1px solid var(--border); padding: 16px; }
+    .card-accent { border-left: 4px solid var(--accent); }
+    .card-blue { border-left: 4px solid var(--hl-blue); }
+    .card-orange { border-left: 4px solid var(--hl-orange); }
+    .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+    .g4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; }
+    .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; }
+    .stat-item { text-align: center; padding: 16px; background: var(--surface); border: 1px solid var(--border); }
+    .stat-item .num { font-size: 2em; font-weight: 900; color: var(--accent); }
+    .stat-item .label { font-size: 12px; color: var(--text-3); margin-top: 4px; text-transform: uppercase; letter-spacing: 1px; }
+    table.checklist { width: 100%; border-collapse: collapse; font-size: 13px; }
+    table.checklist th, table.checklist td { padding: 8px 12px; border: 1px solid var(--border); text-align: left; }
+    table.checklist th { background: var(--accent); color: var(--bg); font-weight: 700; }
+    table.checklist tr:nth-child(even) { background: var(--bg-soft); }
+    ul.stack { list-style: none; padding: 0; }
+    ul.stack li { padding: 8px 0; border-bottom: 1px solid var(--border); }
+    ul.stack li:last-child { border-bottom: none; }
+    ul.stack li::before { content: "▸ "; color: var(--accent); font-weight: bold; }
+    ol.stack { list-style: none; padding: 0; counter-reset: item; }
+    ol.stack li { padding: 10px 0 10px 40px; position: relative; border-bottom: 1px solid var(--border); counter-increment: item; }
+    ol.stack li:last-child { border-bottom: none; }
+    ol.stack li::before { content: counter(item); position: absolute; left: 0; top: 10px; width: 28px; height: 28px; background: var(--accent); color: var(--bg); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; }
+    blockquote { border-left: 4px solid var(--accent); padding-left: 16px; margin: 16px 0; color: var(--text-2); font-style: italic; }
+    .dim { color: var(--text-2); }
+    .title { font-size: 1.8em; margin-bottom: 16px; }
+    .deck-footer { position: fixed; bottom: 0; left: 0; right: 0; padding: 8px 24px; background: var(--bg); border-top: 1px solid var(--border); display: flex; justify-content: space-between; font-size: 11px; color: var(--text-3); z-index: 100; }
+    .slide { padding-bottom: 40px; }
+  </style>
+</head>
+<body data-themes="engineering-whiteprint,corporate-clean,academic-paper,minimal-white" data-theme-base="ppt-assets/themes/">
+<div class="deck">
+
+  <!-- SLIDE 1: 封面 -->
+  <section class="slide center tc" data-title="封面">
+    <div data-fx="particle-burst" style="position:absolute;inset:0"></div>
+    <p class="kicker" data-anim="fade-down">精华内参 · book-distillation</p>
+    <h1 class="h1 gradient-text" data-anim="fade-up">申论写作八讲</h1>
+    <p class="lede dim" data-anim="fade-up" style="font-size:22px;">半月谈教育 编著 · 8讲 · 约17.5万字</p>
+    <p class="dim" data-anim="fade-up" style="font-size:14px;margin-top:12px;">将申论从"玄学"转化为可训练的工程技术</p>
+    <div class="notes">封面。按S键演讲者模式。按T键切换主题。</div>
+  </section>
+
+  <!-- SLIDE 2: 目录 -->
+  <section class="slide" data-title="目录">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up">
+        <span class="tag">目录</span>
+        <span class="line"></span>
+      </div>
+      <h2 class="title" data-anim="fade-up">内容导航</h2>
+      <div class="g3" data-anim="stagger-list">
+        <div class="card card-accent"><h4>模块1</h4><p class="dim" style="font-size:13px;">一句话逻辑</p></div>
+        <div class="card"><h4>模块2</h4><p class="dim" style="font-size:13px;">核心知识地图</p></div>
+        <div class="card card-blue"><h4>模块3</h4><p class="dim" style="font-size:13px;">颠覆性认知</p></div>
+        <div class="card"><h4>模块4</h4><p class="dim" style="font-size:13px;">落地行动指南</p></div>
+        <div class="card card-orange"><h4>模块5-6</h4><p class="dim" style="font-size:13px;">金句·蒸馏清单</p></div>
+        <div class="card card-accent"><h4>模块7-8</h4><p class="dim" style="font-size:13px;">行动地图·避坑</p></div>
+      </div>
+    </div>
+    <div class="deck-footer"><span>申论写作八讲 · 精华内参</span><span class="slide-number" data-current="2" data-total="30"></span></div>
+    <div class="notes">目录</div>
+  </section>
+
+  <!-- SLIDE 3: 核心问题 -->
+  <section class="slide" data-title="核心问题">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up"><span class="tag">模块1</span><span class="line"></span></div>
+      <h2 class="title" data-anim="fade-up"><span class="hl-orange">核心问题</span></h2>
+      <blockquote data-anim="fade-right" style="font-size:20px;line-height:1.8;">
+        申论备考为什么成了"<span class="hl-orange">玄学</span>"？<br>
+        考生如何从"<span class="hl-blue">无效刷题</span>"的恶性循环中走出，<br>
+        真正提升申论写作能力？
+      </blockquote>
+      <p class="dim" data-anim="fade-up" style="margin-top:20px;">答案：申论不是玄学，是<span class="hl-orange">可训练的工程技术</span>——考的不是"题"，而是"人"</p>
+    </div>
+    <div class="deck-footer"><span>申论写作八讲 · 精华内参</span><span class="slide-number" data-current="3" data-total="30"></span></div>
+    <div class="notes">核心问题</div>
+  </section>
+
+  <!-- SLIDE 4: 核心观点 -->
+  <section class="slide" data-title="核心观点">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up"><span class="tag">模块1</span><span class="line"></span></div>
+      <h2 class="title" data-anim="fade-up"><span class="hl-blue">核心观点</span></h2>
+      <div class="g3" style="gap:16px;" data-anim="stagger-list">
+        <div class="card card-accent" style="text-align:center;">
+          <h4 style="color:var(--accent);">认知重塑</h4>
+          <p style="font-size:13px;color:var(--text-2);">打破"玄学论"，建立"以考代训"的工程思维</p>
+        </div>
+        <div class="card card-blue" style="text-align:center;">
+          <h4 style="color:var(--hl-blue);">聚焦不变</h4>
+          <p style="font-size:13px;color:var(--text-2);">掌握核心方法，而非疲于应付题型变化</p>
+        </div>
+        <div class="card card-orange" style="text-align:center;">
+          <h4 style="color:var(--hl-orange);">改造而非原创</h4>
+          <p style="font-size:13px;color:var(--text-2);">答案从给定资料"繁衍"而来</p>
+        </div>
+      </div>
+      <blockquote data-anim="fade-right" style="margin-top:16px;">
+        "知人者智，自知者明" — 先训练"自知"的能力
+      </blockquote>
+    </div>
+    <div class="deck-footer"><span>申论写作八讲 · 精华内参</span><span class="slide-number" data-current="4" data-total="30"></span></div>
+    <div class="notes">核心观点</div>
+  </section>
+
+  <!-- SLIDE 5: 三重角色模型 -->
+  <section class="slide" data-title="三重角色模型">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up"><span class="tag">核心模型</span><span class="line"></span></div>
+      <h2 class="title" data-anim="fade-up"><span class="hl-orange">三重角色</span> — 全书认知框架</h2>
+      <div class="g3" style="gap:16px;" data-anim="stagger-list">
+        <div class="card card-accent" style="text-align:center;">
+          <h4 style="font-size:24px;color:var(--accent);">① 考生</h4>
+          <p style="font-size:13px;">学习如何考试<br>掌握技术（语法+读法+写法）</p>
+        </div>
+        <div class="card card-blue" style="text-align:center;">
+          <h4 style="font-size:24px;color:var(--hl-blue);">② 准公务员</h4>
+          <p style="font-size:13px;">建立联系<br>行测+阅读辅助申论</p>
+        </div>
+        <div class="card card-orange" style="text-align:center;">
+          <h4 style="font-size:24px;color:var(--hl-orange);">③ 公务员</h4>
+          <p style="font-size:13px;">形成概念<br>理解职业特点与使命</p>
+        </div>
+      </div>
+      <p class="dim" data-anim="fade-up" style="margin-top:16px;text-align:center;font-size:14px;">核心隐喻：申论"以考代训"——备考即上岗前的职业训练</p>
+    </div>
+    <div class="deck-footer"><span>申论写作八讲 · 精华内参</span><span class="slide-number" data-current="5" data-total="30"></span></div>
+    <div class="notes">三重角色模型</div>
+  </section>
+
+  <!-- SLIDE 6: 八讲逻辑链 -->
+  <section class="slide" data-title="八讲逻辑链">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up"><span class="tag">模块2</span><span class="line"></span></div>
+      <h2 class="title" data-anim="fade-up">八讲<span class="hl-blue">逻辑递进</span></h2>
+      <ol class="stack" data-anim="stagger-list">
+        <li><strong>第一讲 · 认知重塑</strong> — 克服挫败感→掌握技术→建立联系→形成概念</li>
+        <li><strong>第二讲 · 审题破局</strong> — 提升理解力→审清题干→解读要求→读懂资料</li>
+        <li><strong>第三讲 · 基本功训练</strong> — 删减→替换→仿写→改写四项基本功</li>
+        <li><strong>第四-六讲 · 题型攻坚</strong> — 归纳概括→言语阐释→综合分析</li>
+        <li><strong>第七讲 · 应用文写作</strong> — 三类结构模板（报告/调研/讲话）</li>
+        <li><strong>第八讲 · 大作文</strong> — 三个标准+八大写作模块</li>
+      </ol>
+    </div>
+    <div class="deck-footer"><span>申论写作八讲 · 精华内参</span><span class="slide-number" data-current="6" data-total="30"></span></div>
+    <div class="notes">八讲逻辑链</div>
+  </section>
+
+  <!-- SLIDE 7: 支柱1-认知重塑 -->
+  <section class="slide" data-title="支柱1-认知重塑">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up"><span class="tag">核心知识地图 · 支柱1</span><span class="line"></span></div>
+      <h2 class="title" data-anim="fade-up">认知重塑 — 申论不是<span class="hl-orange">玄学</span></h2>
+      <div class="g2" style="gap:16px;" data-anim="stagger-list">
+        <div class="card card-accent">
+          <h4 style="color:var(--accent);">三大技术</h4>
+          <p style="font-size:13px;color:var(--text-2);line-height:1.6;">
+            🔹 <strong>语法技术</strong>：理解题干和材料，写出无错字病句<br>
+            🔹 <strong>读法技术</strong>：作者讲了什么/想讲什么/没讲什么/该讲什么<br>
+            🔹 <strong>写法技术</strong>：不是教出来的，是悟出来练出来的
+          </p>
+        </div>
+        <div class="card card-blue">
+          <h4 style="color:var(--hl-blue);">三个层次</h4>
+          <p style="font-size:13px;color:var(--text-2);line-height:1.6;">
+            🔹 <strong>掌握技术</strong>（初阶）— 语法+读法+写法<br>
+            🔹 <strong>建立联系</strong>（中阶）— 行测+阅读辅助申论<br>
+            🔹 <strong>形成概念</strong>（高阶）— 理解公务员职业使命
+          </p>
+        </div>
+      </div>
+      <blockquote data-anim="fade-right" style="margin-top:12px;">
+        "昨天的太阳晒不干今天的衣裳，但昨天的风雨能泥泞今天的道路"
+      </blockquote>
+    </div>
+    <div class="deck-footer"><span>申论写作八讲 · 精华内参</span><span class="slide-number" data-current="7" data-total="30"></span></div>
+    <div class="notes">支柱1: 认知重塑</div>
+  </section>
+
+  <!-- SLIDE 8: 支柱2-审题破局 -->
+  <section class="slide" data-title="支柱2-审题">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up"><span class="tag">核心知识地图 · 支柱2</span><span class="line"></span></div>
+      <h2 class="title" data-anim="fade-up">审题破局 — 答是<span class="hl-blue">所问</span></h2>
+      <div class="g2" style="gap:16px;" data-anim="stagger-list">
+        <div class="card card-accent">
+          <h4 style="color:var(--accent);">审题三层模型</h4>
+          <p style="font-size:13px;color:var(--text-2);line-height:1.6;">
+            认识题目 → 理解题目 → <strong>读懂</strong>题目<br><br>
+            "审"=详细周密+深入思考+反复推敲<br>
+            不是读题，是<strong>想</strong>题
+          </p>
+        </div>
+        <div class="card card-blue">
+          <h4 style="color:var(--hl-blue);">阅读三层模型</h4>
+          <p style="font-size:13px;color:var(--text-2);line-height:1.6;">
+            🔹 逐段阅读搭框架 — <strong>摸全象</strong><br>
+            🔹 逐句阅读看逻辑 — <strong>老老实实读</strong><br>
+            🔹 逐字阅读找重点 — <strong>披沙拣金</strong>
+          </p>
+        </div>
+      </div>
+      <p class="dim" data-anim="fade-up" style="margin-top:12px;font-size:13px;">
+        ⚠️ "梳理"≠"归纳"≠"概括"≠"分析" — 每个词都有精确含义
+      </p>
+    </div>
+    <div class="deck-footer"><span>申论写作八讲 · 精华内参</span><span class="slide-number" data-current="8" data-total="30"></span></div>
+    <div class="notes">支柱2: 审题破局</div>
+  </section>
+
+  <!-- SLIDE 9: 支柱3-四项基本功 -->
+  <section class="slide" data-title="支柱3-基本功">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up"><span class="tag">核心知识地图 · 支柱3</span><span class="line"></span></div>
+      <h2 class="title" data-anim="fade-up">四项基本功 — 先磨刀后<span class="hl-orange">砍柴</span></h2>
+      <div class="g4" style="gap:12px;" data-anim="stagger-list">
+        <div class="card" style="text-align:center;">
+          <h4 style="color:var(--accent);">① 删减</h4>
+          <p style="font-size:12px;color:var(--text-2);">长句写短<br>去辅留主</p>
+        </div>
+        <div class="card" style="text-align:center;">
+          <h4 style="color:var(--hl-blue);">② 替换</h4>
+          <p style="font-size:12px;color:var(--text-2);">口语→书面<br>规范表达</p>
+        </div>
+        <div class="card" style="text-align:center;">
+          <h4 style="color:var(--accent);">③ 仿写</h4>
+          <p style="font-size:12px;color:var(--text-2);">无序→有序<br>逻辑清晰</p>
+        </div>
+        <div class="card" style="text-align:center;">
+          <h4 style="color:var(--hl-orange);">④ 改写</h4>
+          <p style="font-size:12px;color:var(--text-2);">资料→作文<br>四变运用</p>
+        </div>
+      </div>
+      <div class="card card-blue" data-anim="fade-up" style="margin-top:16px;">
+        <h4 style="color:var(--hl-blue);">四变运用法</h4>
+        <p style="font-size:13px;color:var(--text-2);">
+          变事例为经验 → 变做法为举措 → 变素材为论据 → 变要点为内容
+        </p>
+      </div>
+    </div>
+    <div class="deck-footer"><span>申论写作八讲 · 精华内参</span><span class="slide-number" data-current="9" data-total="30"></span></div>
+    <div class="notes">支柱3: 四项基本功</div>
+  </section>
+
+  <!-- SLIDE 10: 解题四步法 -->
+  <section class="slide" data-title="解题四步法">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up"><span class="tag">核心模型</span><span class="line"></span></div>
+      <h2 class="title" data-anim="fade-up">通用解题<span class="hl-blue">四步法</span></h2>
+      <ol class="stack" data-anim="stagger-list">
+        <li><strong>逐句逐段分析</strong> — 以一"句"为要素单元，理解每句话→每段话→整则资料</li>
+        <li><strong>判断要点数量</strong> — 根据行文逻辑判断要点分布，按字数平均分配</li>
+        <li><strong>材料去辅留主</strong> — 识别关键信息（词组/短句），优先写入答案</li>
+        <li><strong>序号区分要点</strong> — 阿拉伯数字标号，按时间/主次等逻辑排序</li>
+      </ol>
+      <div class="card card-orange" data-anim="fade-up" style="margin-top:12px;">
+        <h4 style="color:var(--hl-orange);">字数控制三技巧</h4>
+        <p style="font-size:13px;color:var(--text-2);">去辅留主 + 同类合并 + 同义替换</p>
+      </div>
+    </div>
+    <div class="deck-footer"><span>申论写作八讲 · 精华内参</span><span class="slide-number" data-current="10" data-total="30"></span></div>
+    <div class="notes">通用解题四步法</div>
+  </section>
+
+  <!-- SLIDE 11: 言语阐释三板斧 -->
+  <section class="slide" data-title="阐释三板斧">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up"><span class="tag">核心模型</span><span class="line"></span></div>
+      <h2 class="title" data-anim="fade-up">言语阐释 <span class="hl-orange">三板斧</span></h2>
+      <div class="g3" style="gap:16px;" data-anim="stagger-list">
+        <div class="card card-accent" style="text-align:center;">
+          <h4 style="font-size:20px;color:var(--accent);">是什么</h4>
+          <p style="font-size:13px;color:var(--text-2);"><strong>必答</strong><br>说明关键词句的基本义和比喻义</p>
+        </div>
+        <div class="card card-blue" style="text-align:center;">
+          <h4 style="font-size:20px;color:var(--hl-blue);">为什么</h4>
+          <p style="font-size:13px;color:var(--text-2);"><strong>可选</strong><br>解释背景和成因</p>
+        </div>
+        <div class="card card-orange" style="text-align:center;">
+          <h4 style="font-size:20px;color:var(--hl-orange);">怎么办</h4>
+          <p style="font-size:13px;color:var(--text-2);"><strong>可选</strong><br>提出对策建议</p>
+        </div>
+      </div>
+      <p class="dim" data-anim="fade-up" style="margin-top:12px;text-align:center;">关键：找到阐释对象的关键词，关注前后句的提示信息</p>
+    </div>
+    <div class="deck-footer"><span>申论写作八讲 · 精华内参</span><span class="slide-number" data-current="11" data-total="30"></span></div>
+    <div class="notes">言语阐释三板斧</div>
+  </section>
+
+  <!-- SLIDE 12: 综合分析四个工具 -->
+  <section class="slide" data-title="分析四个工具">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up"><span class="tag">核心模型</span><span class="line"></span></div>
+      <h2 class="title" data-anim="fade-up">综合分析 <span class="hl-blue">四个工具</span></h2>
+      <div class="g4" style="gap:12px;" data-anim="stagger-list">
+        <div class="card" style="text-align:center;">
+          <h4 style="color:var(--accent);">🗑️ 删除</h4>
+          <p style="font-size:12px;color:var(--text-2);">删掉与主题关联弱的内容<br>留"实质"去"形式"</p>
+        </div>
+        <div class="card" style="text-align:center;">
+          <h4 style="color:var(--hl-blue);">🔄 转化</h4>
+          <p style="font-size:12px;color:var(--text-2);">具体事例→普遍意义<br>经验做法→工作建议</p>
+        </div>
+        <div class="card" style="text-align:center;">
+          <h4 style="color:var(--accent);">📦 合并</h4>
+          <p style="font-size:12px;color:var(--text-2);">同类合并<br>关键信息整合压缩</p>
+        </div>
+        <div class="card" style="text-align:center;">
+          <h4 style="color:var(--hl-orange);">➕ 补充</h4>
+          <p style="font-size:12px;color:var(--text-2);">只有事例→提炼<br>只有问题→反推对策</p>
+        </div>
+      </div>
+    </div>
+    <div class="deck-footer"><span>申论写作八讲 · 精华内参</span><span class="slide-number" data-current="12" data-total="30"></span></div>
+    <div class="notes">综合分析四个工具</div>
+  </section>
+
+  <!-- SLIDE 13: 应用文三类结构 -->
+  <section class="slide" data-title="应用文三类结构">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up"><span class="tag">核心模型 · 支柱7</span><span class="line"></span></div>
+      <h2 class="title" data-anim="fade-up">应用文写作 <span class="hl-orange">三类结构</span></h2>
+      <div class="g3" style="gap:16px;" data-anim="stagger-list">
+        <div class="card card-accent">
+          <h4 style="color:var(--accent);">报告类 · 自下而上</h4>
+          <p style="font-size:13px;color:var(--text-2);">基本情况 → 主观努力 → 客观成效</p>
+          <p class="dim" style="font-size:11px;margin-top:4px;">听众不了解情况，需要先介绍背景</p>
+        </div>
+        <div class="card card-blue">
+          <h4 style="color:var(--hl-blue);">调研类 · 所见所思</h4>
+          <p style="font-size:13px;color:var(--text-2);">基本情况 → 所见所闻 → 所思所想 → 下一步</p>
+          <p class="dim" style="font-size:11px;margin-top:4px;">核心公式：提出问题+分析问题+解决问题</p>
+        </div>
+        <div class="card card-orange">
+          <h4 style="color:var(--hl-orange);">讲话类 · 自上而下</h4>
+          <p style="font-size:13px;color:var(--text-2);">开场白(是什么) → 谈认识(为什么) → 提要求(怎么办)</p>
+          <p class="dim" style="font-size:11px;margin-top:4px;">上级对下级，统一思想→推动工作</p>
+        </div>
+      </div>
+    </div>
+    <div class="deck-footer"><span>申论写作八讲 · 精华内参</span><span class="slide-number" data-current="13" data-total="30"></span></div>
+    <div class="notes">应用文三类结构</div>
+  </section>
+
+  <!-- SLIDE 14: 大作文三个标准 -->
+  <section class="slide" data-title="大作文三个标准">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up"><span class="tag">核心模型 · 支柱8</span><span class="line"></span></div>
+      <h2 class="title" data-anim="fade-up">大作文 <span class="hl-blue">三个标准</span></h2>
+      <div class="g3" style="gap:16px;" data-anim="stagger-list">
+        <div class="card" style="text-align:center;border-top:3px solid var(--accent);">
+          <h4 style="color:var(--accent);">🍽️ 观之有食欲</h4>
+          <p style="font-size:13px;color:var(--text-2);">形神兼备，核心思想统领全文<br>宜小则小、宜长则长</p>
+        </div>
+        <div class="card" style="text-align:center;border-top:3px solid var(--hl-blue);">
+          <h4 style="color:var(--hl-blue);">💪 食之能消化</h4>
+          <p style="font-size:13px;color:var(--text-2);">说理清晰、观点正确<br>结合读者"脾胃"定制</p>
+        </div>
+        <div class="card" style="text-align:center;border-top:3px solid var(--hl-orange);">
+          <h4 style="color:var(--hl-orange);">⚡ 化之得能量</h4>
+          <p style="font-size:13px;color:var(--text-2);">鼓舞人、发动人、产生行动<br>文以载道、文以辅政</p>
+        </div>
+      </div>
+    </div>
+    <div class="deck-footer"><span>申论写作八讲 · 精华内参</span><span class="slide-number" data-current="14" data-total="30"></span></div>
+    <div class="notes">大作文三个标准</div>
+  </section>
+
+  <!-- SLIDE 15: 大作文八大模块 -->
+  <section class="slide" data-title="大作文八大模块">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up"><span class="tag">核心模型</span><span class="line"></span></div>
+      <h2 class="title" data-anim="fade-up">大作文 <span class="hl-orange">八大写作模块</span></h2>
+      <div class="g4" style="gap:8px;font-size:12px;" data-anim="stagger-list">
+        <div class="card" style="padding:10px;text-align:center;"><strong>① 立意</strong><br><span class="dim">政治+民本+问题+行动</span></div>
+        <div class="card" style="padding:10px;text-align:center;"><strong>② 分论点</strong><br><span class="dim">论证有力·逻辑清晰</span></div>
+        <div class="card" style="padding:10px;text-align:center;"><strong>③ 标题</strong><br><span class="dim">大标题+小标题三种思路</span></div>
+        <div class="card" style="padding:10px;text-align:center;"><strong>④ 开头</strong><br><span class="dim">引人入胜</span></div>
+        <div class="card" style="padding:10px;text-align:center;"><strong>⑤ 过渡衔接</strong><br><span class="dim">行文流畅</span></div>
+        <div class="card" style="padding:10px;text-align:center;"><strong>⑥ 分论点论证</strong><br><span class="dim">论据充实</span></div>
+        <div class="card" style="padding:10px;text-align:center;"><strong>⑦ 写作积木</strong><br><span class="dim">论据积累库</span></div>
+        <div class="card" style="padding:10px;text-align:center;"><strong>⑧ 结尾</strong><br><span class="dim">升华有力</span></div>
+      </div>
+      <p class="dim" data-anim="fade-up" style="margin-top:12px;text-align:center;font-size:13px;">
+        四大导向：政治导向 · 民本导向 · 问题导向 · 行动导向
+      </p>
+    </div>
+    <div class="deck-footer"><span>申论写作八讲 · 精华内参</span><span class="slide-number" data-current="15" data-total="30"></span></div>
+    <div class="notes">大作文八大模块</div>
+  </section>
+
+  <!-- SLIDE 16: 颠覆性认知1 -->
+  <section class="slide" data-title="颠覆性认知1">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up"><span class="tag">模块3</span><span class="line"></span></div>
+      <h2 class="title" data-anim="fade-up"><span class="hl-orange">颠覆性认知 ①</span></h2>
+      <h3 style="color:var(--accent);margin-bottom:16px;" data-anim="fade-up">申论不是玄学，是技术</h3>
+      <div class="g2" style="gap:16px;" data-anim="stagger-list">
+        <div class="card card-orange"><h4 style="color:var(--hl-orange);">常见误解</h4><p style="font-size:14px;color:var(--text-2);">申论是玄学，成绩看运气，努力没用。</p></div>
+        <div class="card card-accent"><h4 style="color:var(--accent);">书中真相</h4><p style="font-size:14px;color:var(--text-2);">没有标准答案≠不能通过训练提高。"昨天的太阳晒不干今天的衣裳"——过去成功经验未必有用。</p></div>
+      </div>
+      <p style="margin-top:16px;font-size:15px;font-weight:600;color:var(--accent);">为什么重要：只有打破"玄学论"，才能把申论从"听天由命"转变为"可掌控的工程问题"。</p>
+    </div>
+    <div class="deck-footer"><span>申论写作八讲 · 精华内参</span><span class="slide-number" data-current="16" data-total="30"></span></div>
+    <div class="notes">颠覆性认知1</div>
+  </section>
+
+  <!-- SLIDE 17: 颠覆性认知2 -->
+  <section class="slide" data-title="颠覆性认知2">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up"><span class="tag">模块3</span><span class="line"></span></div>
+      <h2 class="title" data-anim="fade-up"><span class="hl-blue">颠覆性认知 ②</span></h2>
+      <h3 style="color:var(--hl-blue);margin-bottom:16px;" data-anim="fade-up">聚焦不变，而非应付变</h3>
+      <div class="g2" style="gap:16px;" data-anim="stagger-list">
+        <div class="card card-orange"><h4 style="color:var(--hl-orange);">常见误解</h4><p style="font-size:14px;color:var(--text-2);">申论题型多变，需要学大量技巧应对不同题型。</p></div>
+        <div class="card card-accent"><h4 style="color:var(--accent);">书中真相</h4><p style="font-size:14px;color:var(--text-2);">技巧越多→负担越重→检索越困难。聚焦"不变"——固化的题型、通用的答题技巧，再灵活运用。</p></div>
+      </div>
+      <p style="margin-top:16px;font-size:15px;font-weight:600;color:var(--hl-blue);">为什么重要：打破"技巧学太多、练太少"的恶性循环。</p>
+    </div>
+    <div class="deck-footer"><span>申论写作八讲 · 精华内参</span><span class="slide-number" data-current="17" data-total="30"></span></div>
+    <div class="notes">颠覆性认知2</div>
+  </section>
+
+  <!-- SLIDE 18: 颠覆性认知3 -->
+  <section class="slide" data-title="颠覆性认知3">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up"><span class="tag">模块3</span><span class="line"></span></div>
+      <h2 class="title" data-anim="fade-up"><span class="hl-orange">颠覆性认知 ③</span></h2>
+      <h3 style="color:var(--accent);margin-bottom:16px;" data-anim="fade-up">答案不是"原创"而是"改造"</h3>
+      <div class="g2" style="gap:16px;" data-anim="stagger-list">
+        <div class="card card-orange"><h4 style="color:var(--hl-orange);">常见误解</h4><p style="font-size:14px;color:var(--text-2);">申论高分需要好文采、原创观点。</p></div>
+        <div class="card card-accent"><h4 style="color:var(--accent);">书中真相</h4><p style="font-size:14px;color:var(--text-2);">答案是从给定资料中"繁衍"出来的——保留"遗传"特征（原文信息），也有"变异"特征（自己的语言）。</p></div>
+      </div>
+      <p style="margin-top:16px;font-size:15px;font-weight:600;color:var(--accent);">为什么重要：减轻写作心理压力——不需要无中生有，只需要在资料基础上加工处理。</p>
+    </div>
+    <div class="deck-footer"><span>申论写作八讲 · 精华内参</span><span class="slide-number" data-current="18" data-total="30"></span></div>
+    <div class="notes">颠覆性认知3</div>
+  </section>
+
+  <!-- SLIDE 19: 备考三段式框架 -->
+  <section class="slide" data-title="备考框架">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up"><span class="tag">模块4</span><span class="line"></span></div>
+      <h2 class="title" data-anim="fade-up">申论备考<span class="hl-blue">三段式框架</span></h2>
+      <ol class="stack" data-anim="stagger-list">
+        <li><h4 style="color:var(--accent);">阶段1：认知重塑（第1-2周）</h4><p class="dim" style="font-size:13px;">精读第一讲→练习审题三步法→每周3篇"三层阅读法"练习</p></li>
+        <li><h4 style="color:var(--hl-blue);">阶段2：基本功训练（第3-4周）</h4><p class="dim" style="font-size:13px;">每天删减/替换各1道→每周仿写2道→改写1道</p></li>
+        <li><h4 style="color:var(--hl-orange);">阶段3：题型攻坚（第5-10周）</h4><p class="dim" style="font-size:13px;">归纳概括2周→言语阐释1周→综合分析2周→应用文2周→大作文3周</p></li>
+      </ol>
+    </div>
+    <div class="deck-footer"><span>申论写作八讲 · 精华内参</span><span class="slide-number" data-current="19" data-total="30"></span></div>
+    <div class="notes">备考三段式框架</div>
+  </section>
+
+  <!-- SLIDE 20: 备考时间分配 -->
+  <section class="slide" data-title="备考时间分配">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up"><span class="tag">模块4</span><span class="line"></span></div>
+      <h2 class="title" data-anim="fade-up">3个月备考<span class="hl-orange">时间轴</span></h2>
+      <table class="checklist" data-anim="stagger-list">
+        <thead><tr><th>阶段</th><th>时间</th><th>核心任务</th><th>验收标准</th></tr></thead>
+        <tbody>
+          <tr><td>认知重塑</td><td>第1-2周</td><td>理解三重角色、审题方法</td><td>能准确区分"梳理/概括/分析"</td></tr>
+          <tr><td>基本功</td><td>第3-4周</td><td>删减+替换+仿写+改写</td><td>200字材料能压缩到100字不失关键信息</td></tr>
+          <tr><td>归纳概括</td><td>第5-6周</td><td>四步法+字数控制</td><td>正确率≥70%</td></tr>
+          <tr><td>言语阐释</td><td>第7周</td><td>三板斧练习</td><td>能准确锁定关键词</td></tr>
+          <tr><td>综合分析</td><td>第8-9周</td><td>四个工具运用</td><td>正确率≥65%</td></tr>
+          <tr><td>应用文+大作文</td><td>第10-12周</td><td>三类模板+八大模块</td><td>能独立完成完整作文</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="deck-footer"><span>申论写作八讲 · 精华内参</span><span class="slide-number" data-current="20" data-total="30"></span></div>
+    <div class="notes">备考时间分配</div>
+  </section>
+
+  <!-- SLIDE 21: 场景模拟 -->
+  <section class="slide" data-title="场景模拟">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up"><span class="tag">模块4</span><span class="line"></span></div>
+      <h2 class="title" data-anim="fade-up">场景：制定备考计划</h2>
+      <p class="dim" data-anim="fade-up" style="font-size:13px;margin-bottom:16px;">背景：距离考试3个月，考生裸考50分</p>
+      <table class="checklist" data-anim="stagger-list">
+        <thead><tr><th>阶段</th><th>错误路径</th><th>理想路径</th></tr></thead>
+        <tbody>
+          <tr><td><strong>认知</strong></td><td>直接买真题刷题</td><td>先读第一讲，理解"三重角色"</td></tr>
+          <tr><td><strong>审题</strong></td><td>看题目划关键词就开写</td><td>练习"想"题：每个词的含义+要求指向</td></tr>
+          <tr><td><strong>阅读</strong></td><td>快速浏览给定资料</td><td>三层阅读法：逐段→逐句→逐字</td></tr>
+          <tr><td><strong>基础</strong></td><td>直接做真题</td><td>四项基本功各练1周</td></tr>
+          <tr><td><strong>题型</strong></td><td>按年份顺序做题</td><td>按题型分类攻克</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="deck-footer"><span>申论写作八讲 · 精华内参</span><span class="slide-number" data-current="21" data-total="30"></span></div>
+    <div class="notes">场景模拟</div>
+  </section>
+
+  <!-- SLIDE 22: 自检卡 -->
+  <section class="slide" data-title="自检卡">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up"><span class="tag">模块4</span><span class="line"></span></div>
+      <h2 class="title" data-anim="fade-up">每日快速<span class="hl-orange">自检卡</span></h2>
+      <table class="checklist" data-anim="stagger-list">
+        <thead><tr><th>阶段</th><th>致命误区</th><th>核心审视问题</th><th>触发行动</th></tr></thead>
+        <tbody>
+          <tr><td><strong>认知</strong></td><td>觉得申论是玄学</td><td>我是否理解"以考代训"？</td><td>重读第一讲</td></tr>
+          <tr><td><strong>审题</strong></td><td>只看不"想"</td><td>题干每个词都理解了吗？</td><td>逐词分析题干</td></tr>
+          <tr><td><strong>阅读</strong></td><td>满足于"读过"</td><td>作者"想讲什么"读懂了？</td><td>三层阅读法</td></tr>
+          <tr><td><strong>答题</strong></td><td>追求"原创"</td><td>答案从资料"改造"来的？</td><td>去辅留主+同类合并</td></tr>
+          <tr><td><strong>练习</strong></td><td>只做题不反思</td><td>在练"方法"还是"题目"？</td><td>错题分析+方法复盘</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="deck-footer"><span>申论写作八讲 · 精华内参</span><span class="slide-number" data-current="22" data-total="30"></span></div>
+    <div class="notes">自检卡</div>
+  </section>
+
+  <!-- SLIDE 23: 金句 -->
+  <section class="slide" data-title="金句">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up"><span class="tag">模块5</span><span class="line"></span></div>
+      <h2 class="title" data-anim="fade-up"><span class="hl-orange">金句</span>复刻</h2>
+      <div class="g2" style="gap:16px;" data-anim="stagger-list">
+        <blockquote style="font-size:16px;">"昨天的太阳晒不干今天的衣裳，<br>但昨天的风雨能泥泞今天的道路。"<br><span class="dim" style="font-size:12px;">——第一讲·关于经验与习惯</span></blockquote>
+        <blockquote style="font-size:16px;">"借来的火，点不亮自己的心灵。"<br><span class="dim" style="font-size:12px;">——第四讲·关于主动学习</span></blockquote>
+        <blockquote style="font-size:16px;">"练武不练功，到老一场空。"<br><span class="dim" style="font-size:12px;">——第三讲·关于基本功</span></blockquote>
+        <blockquote style="font-size:16px;">"手里拿着锤子，你看到的都是钉子。"<br><span class="dim" style="font-size:12px;">——第四讲·关于方法论</span></blockquote>
+      </div>
+    </div>
+    <div class="deck-footer"><span>申论写作八讲 · 精华内参</span><span class="slide-number" data-current="23" data-total="30"></span></div>
+    <div class="notes">金句</div>
+  </section>
+
+  <!-- SLIDE 24: 金句2 -->
+  <section class="slide" data-title="金句2">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up"><span class="tag">模块5</span><span class="line"></span></div>
+      <h2 class="title" data-anim="fade-up"><span class="hl-blue">金句</span>复刻（续）</h2>
+      <div class="g2" style="gap:16px;" data-anim="stagger-list">
+        <blockquote style="font-size:15px;">"知人者智，自知者明"<br><span class="dim" style="font-size:12px;">——前言</span></blockquote>
+        <blockquote style="font-size:15px;">"申论考的不是'题'，而是'人'"<br><span class="dim" style="font-size:12px;">——全文主题</span></blockquote>
+        <blockquote style="font-size:15px;">"聚焦不变，而非应付变"<br><span class="dim" style="font-size:12px;">——第一讲·方法论</span></blockquote>
+        <blockquote style="font-size:15px;">"答案不是'原创'而是'改造'"<br><span class="dim" style="font-size:12px;">——前言·写作哲学</span></blockquote>
+      </div>
+    </div>
+    <div class="deck-footer"><span>申论写作八讲 · 精华内参</span><span class="slide-number" data-current="24" data-total="30"></span></div>
+    <div class="notes">金句2</div>
+  </section>
+
+  <!-- SLIDE 25: 知识蒸馏清单 -->
+  <section class="slide" data-title="知识清单">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up"><span class="tag">模块6</span><span class="line"></span></div>
+      <h2 class="title" data-anim="fade-up">知识<span class="hl-orange">蒸馏</span>清单</h2>
+      <h4 style="color:var(--accent);margin-bottom:12px;" data-anim="fade-up">核心逻辑链</h4>
+      <ol class="stack" data-anim="stagger-list">
+        <li>认知重塑 → 审题破局 → 基本功训练 → 题型攻坚（学习路径）</li>
+        <li>三项技术（语法+读法+写法）→ 四项训练 → 五大题型</li>
+      </ol>
+      <h4 style="color:var(--hl-blue);margin:16px 0 12px;" data-anim="fade-up">省略确认</h4>
+      <table class="checklist" data-anim="stagger-list" style="font-size:12px;">
+        <thead><tr><th>省略内容</th><th>省略理由</th></tr></thead>
+        <tbody>
+          <tr><td>大量真题原文示范</td><td>案例为方法服务，方法已完整保留</td></tr>
+          <tr><td>各题型多个真题练习</td><td>题型方法+结构已完整提炼</td></tr>
+          <tr><td>大作文参考例文</td><td>立意框架已提炼，例文过长</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="deck-footer"><span>申论写作八讲 · 精华内参</span><span class="slide-number" data-current="25" data-total="30"></span></div>
+    <div class="notes">知识蒸馏清单</div>
+  </section>
+
+  <!-- SLIDE 26: 行动地图 -->
+  <section class="slide" data-title="行动地图">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up"><span class="tag">模块7</span><span class="line"></span></div>
+      <h2 class="title" data-anim="fade-up">延伸<span class="hl-blue">行动</span>地图</h2>
+      <div class="g2" style="gap:16px;" data-anim="stagger-list">
+        <div class="card card-accent">
+          <h4 style="color:var(--accent);">行动1：精读半月谈评论</h4>
+          <p style="font-size:13px;color:var(--text-2);">每天1-2篇，练习删减+替换，提升语感和政策理解力</p>
+          <p style="font-size:12px;color:var(--accent);margin-top:8px;">关键词：半月谈评论</p>
+        </div>
+        <div class="card card-blue">
+          <h4 style="color:var(--hl-blue);">行动2：建"写作积木"库</h4>
+          <p style="font-size:13px;color:var(--text-2);">分类整理论据素材（政策类/案例类/金句类）</p>
+          <p style="font-size:12px;color:var(--hl-blue);margin-top:8px;">关键词：申论写作素材积累</p>
+        </div>
+        <div class="card card-accent">
+          <h4 style="color:var(--accent);">行动3：分析机关公文</h4>
+          <p style="font-size:13px;color:var(--text-2);">在政府官网找报告/讲话/调研，对照三类结构分析</p>
+          <p style="font-size:12px;color:var(--accent);margin-top:8px;">关键词：国务院政府工作报告</p>
+        </div>
+        <div class="card card-blue">
+          <h4 style="color:var(--hl-blue);">行动4：建立错题本</h4>
+          <p style="font-size:13px;color:var(--text-2);">每次练习后记录:做错的题型+原因+正确方法</p>
+          <p style="font-size:12px;color:var(--hl-blue);margin-top:8px;">关键词：申论错题分析</p>
+        </div>
+      </div>
+    </div>
+    <div class="deck-footer"><span>申论写作八讲 · 精华内参</span><span class="slide-number" data-current="26" data-total="30"></span></div>
+    <div class="notes">行动地图</div>
+  </section>
+
+  <!-- SLIDE 27: 避坑指南 -->
+  <section class="slide" data-title="避坑指南">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="section-divider" data-anim="fade-up"><span class="tag">模块8</span><span class="line"></span></div>
+      <h2 class="title" data-anim="fade-up"><span class="hl-orange">边界约束</span>与避坑指南</h2>
+      <div class="g2" style="gap:16px;" data-anim="stagger-list">
+        <div class="card card-orange">
+          <h4 style="color:var(--hl-orange);">🚫 红线清单</h4>
+          <p style="font-size:13px;color:var(--text-2);line-height:1.6;">
+            · 不要迷信"万能模板"——模板是框架，不是答案<br>
+            · 不要"原创"——答案是对给定资料的加工改造<br>
+            · 不要只做题不反思——练的是方法，不是题目
+          </p>
+        </div>
+        <div class="card card-blue">
+          <h4 style="color:var(--hl-blue);">⚠️ 致命误区</h4>
+          <p style="font-size:13px;color:var(--text-2);line-height:1.6;">
+            · 学太多技巧→增加负担，考场上检索困难<br>
+            · 跳过基础训练→大题做不好，小题写不精<br>
+            · 追求"文采"→偏离答题要点，得分低
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="deck-footer"><span>申论写作八讲 · 精华内参</span><span class="slide-number" data-current="27" data-total="30"></span></div>
+    <div class="notes">避坑指南</div>
+  </section>
+
+  <!-- SLIDE 28: 总结 -->
+  <section class="slide center tc" data-title="总结">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;align-items:center;">
+      <div class="section-divider" data-anim="fade-up" style="width:100%;max-width:800px;">
+        <span class="tag">总结</span>
+        <span class="line"></span>
+      </div>
+      <h2 class="title" data-anim="fade-up">申论不是<span class="hl-orange">玄学</span><br>是<span class="hl-blue">可训练的工程技术</span></h2>
+      <p class="lede dim" data-anim="fade-up" style="max-width:700px;margin:20px auto 0;line-height:1.8;">
+        聚焦不变 → 掌握方法 → 扎实训练 → 以考代训
+      </p>
+      <p class="dim" data-anim="fade-up" style="margin-top:16px;font-size:15px;">
+        考的不只是"题"，更是"人"——训练自己，才是备考的真正意义
+      </p>
+      <div class="stat-grid" style="max-width:600px;margin:30px auto 0;" data-anim="stagger-list">
+        <div class="stat-item"><div class="num">8</div><div class="label">系统讲次</div></div>
+        <div class="stat-item"><div class="num">4</div><div class="label">基本训练</div></div>
+        <div class="stat-item"><div class="num">5</div><div class="label">核心题型</div></div>
+        <div class="stat-item"><div class="num">4</div><div class="label">主导向</div></div>
+      </div>
+    </div>
+    <div class="deck-footer"><span>申论写作八讲 · 精华内参</span><span class="slide-number" data-current="28" data-total="30"></span></div>
+    <div class="notes">总结</div>
+  </section>
+
+  <!-- SLIDE 29: 知识图谱 -->
+  <section class="slide" data-title="知识图谱">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;align-items:center;">
+      <div class="section-divider" data-anim="fade-up" style="width:100%;max-width:1200px;">
+        <span class="tag">知识图谱</span>
+        <span class="line"></span>
+      </div>
+      <h2 class="title" data-anim="fade-up" style="margin-bottom:16px;">核心概念关系网络</h2>
+      <div style="width:100%;max-width:1200px;height:450px;border:1px solid var(--border);overflow:hidden;" data-anim="fade-up">
+        <iframe src="graphify-out/graph.html" style="width:100%;height:100%;border:none;" title="知识图谱"></iframe>
+      </div>
+      <p style="font-size:13px;color:var(--text-3);margin-top:12px;" data-anim="fade-up">拖动节点 · 缩放图谱 · 点击查看详情</p>
+    </div>
+    <div class="deck-footer"><span>申论写作八讲 · 精华内参</span><span class="slide-number" data-current="29" data-total="30"></span></div>
+    <div class="notes">知识图谱</div>
+  </section>
+
+  <!-- SLIDE 30: 结尾 -->
+  <section class="slide center tc" data-title="结尾">
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center;">
+      <p class="kicker" data-anim="fade-down">book-distillation V3.2</p>
+      <h1 class="h1 gradient-text" data-anim="fade-up">老老实实读</h1>
+      <h1 class="h1 gradient-text" data-anim="fade-up" style="margin-top:-10px;">扎扎实实练</h1>
+      <p class="lede dim" data-anim="fade-up" style="margin-top:20px;">申论写作八讲 · 精华内参</p>
+      <p class="dim" data-anim="fade-up" style="margin-top:12px;font-size:14px;">按S键查看演讲者备注 · 按T键切换主题</p>
+    </div>
+    <div class="deck-footer"><span>申论写作八讲 · 精华内参</span><span class="slide-number" data-current="30" data-total="30"></span></div>
+    <div class="notes">结尾页</div>
+  </section>
+
+</div>
+<script src="ppt-assets/runtime.js"></script>
+</body>
+</html>
