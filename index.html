@@ -131,7 +131,7 @@
         }
         .stat-grid-5 {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
+            grid-template-columns: repeat(6, 1fr);
         }
         @media (max-width: 768px) {
             .stat-grid-5 { grid-template-columns: repeat(3, 1fr); }
@@ -165,7 +165,7 @@
 <div class="col-span-12 lg:col-span-7 z-10">
 <div class="inline-flex items-center gap-2 px-3 py-1 border border-primary-container text-primary-container font-label-sm uppercase mb-8">
 <span class="w-2 h-2 bg-primary-container animate-pulse"></span>
-                BOOK DISTILLATION • V3.2
+                BOOK DISTILLATION • V4.0
             </div>
 <h1 class="text-[64px] md:text-[84px] leading-[1.1] font-bold mb-8 tracking-tight">
                 用 <span class="text-primary-container">AI 工作流</span><br/>
@@ -173,7 +173,7 @@
                 深度阅读
             </h1>
 <p class="text-on-surface/60 max-w-xl mb-12 text-lg">
-                BOOK DISTILLATION 是一套基于 GraphRAG 与 3-Agent 协作的深度蒸馏系统。将书籍、报告、文档蒸馏为结构化的 HTML 精华内参。
+                BOOK DISTILLATION V4.0 引入 Karpathy Wiki 知识库驱动 + 杂志风视觉引擎。支持 AI 问答级知识库与杂志风 HTML 精华内参双轨输出。
             </p>
 <div class="flex flex-wrap gap-6">
 <a href="https://github.com/XCDaHuiGe/book-distillation" target="_blank" class="bg-primary-container text-black px-8 py-4 font-subheader uppercase flex items-center gap-3 active:scale-95 transition-transform hover:orange-glow">
@@ -232,13 +232,18 @@
 </div>
 <div class="glass-panel p-8 text-center border-none">
 <div class="text-on-surface/40 font-label-sm mb-4 uppercase tracking-[0.2em] border-b border-white/5 pb-2">Themes</div>
-<div class="text-[56px] font-headline-lg text-primary-container leading-none">36</div>
+<div class="text-[56px] font-headline-lg text-primary-container leading-none">37</div>
 <div class="font-subheader text-base uppercase mt-2">PPT主题</div>
 </div>
 <div class="glass-panel p-8 text-center border-none">
 <div class="text-on-surface/40 font-label-sm mb-4 uppercase tracking-[0.2em] border-b border-white/5 pb-2">FX</div>
-<div class="text-[56px] font-headline-lg text-primary leading-none">47</div>
+<div class="text-[56px] font-headline-lg text-primary leading-none">48</div>
 <div class="font-subheader text-base uppercase mt-2">动画特效</div>
+</div>
+<div class="glass-panel p-8 text-center border-none">
+  <div class="text-on-surface/40 font-label-sm mb-4 uppercase tracking-[0.2em] border-b border-white/5 pb-2">Styles</div>
+  <div class="text-[56px] font-headline-lg text-primary-container leading-none">02</div>
+  <div class="font-subheader text-base uppercase mt-2">设计体系</div>
 </div>
 </div>
 </section>
@@ -372,7 +377,7 @@
                 DATA_PROCESSING_ACTIVE
             </div>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
 <div class="glass-panel p-6 border-l-4 border-l-primary-container hover:bg-white/5 transition-all">
 <div class="w-12 h-12 flex items-center justify-center bg-primary-container/10 mb-6">
 <span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">terminal</span>
@@ -401,6 +406,20 @@
 <h3 class="font-subheader text-lg uppercase mb-3 tracking-tight">HTML PPT</h3>
 <p class="text-on-surface/40 text-sm leading-relaxed">36主题 · 47动画 · 演讲者模式 · 响应式阅读 · 一键生成精华内参。</p>
 </div>
+<div class="glass-panel p-6 border-l-4 border-l-primary-container hover:bg-white/5 transition-all">
+  <div class="w-12 h-12 flex items-center justify-center bg-primary-container/10 mb-6">
+    <span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">auto_stories</span>
+  </div>
+  <h3 class="font-subheader text-lg uppercase mb-3 tracking-tight">杂志风主题</h3>
+  <p class="text-on-surface/40 text-sm leading-relaxed">新增长文蒸馏布局/5套主题色/10种布局模板/衬线非衬线等宽三级字体分工，阅读体验媲美电子杂志。</p>
+</div>
+<div class="glass-panel p-6 border-l-4 border-l-secondary-container hover:bg-white/5 transition-all">
+  <div class="w-12 h-12 flex items-center justify-center bg-secondary-container/10 mb-6">
+    <span class="material-symbols-outlined text-secondary-container" style="font-variation-settings: 'FILL' 1;">forum</span>
+  </div>
+  <h3 class="font-subheader text-lg uppercase mb-3 tracking-tight">知识库 AI 问答</h3>
+  <p class="text-on-surface/40 text-sm leading-relaxed">Markdown知识库支持 AI 多轮深度问答，[[双链]] 关联概念推导，边界约束护栏防止误用。</p>
+</div>
 </div>
 </section>
 <!-- CTA Section -->
@@ -424,7 +443,7 @@
 <div class="flex flex-col md:flex-row justify-between items-center px-margin-desktop gap-gutter max-w-full mx-auto">
 <div class="flex flex-col items-center md:items-start gap-4">
 <span class="font-headline-lg text-headline-lg text-on-surface uppercase tracking-tighter">蒸馏系统</span>
-<span class="font-label-sm text-label-sm uppercase text-on-tertiary-container">© 2025 BOOK DISTILLATION V3.2. ALL RIGHTS RESERVED.</span>
+<span class="font-label-sm text-label-sm uppercase text-on-tertiary-container">© 2025 BOOK DISTILLATION V4.0. ALL RIGHTS RESERVED.</span>
 </div>
 <div class="flex gap-8">
 <a class="font-label-sm text-label-sm uppercase text-on-tertiary-container hover:text-primary transition-colors" href="https://github.com/XCDaHuiGe/book-distillation" target="_blank">GitHub</a>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Distillation V4.0 - Karpathy Wiki 优化版 Prompt</title>
+    <style>
+        :root {
+            --bg: #ffffff;
+            --text: #1a1a1a;
+            --code-bg: #f4f4f4;
+            --border: #e0e0e0;
+            --accent: #0066cc;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--bg);
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2, h3 { margin-top: 1.5em; margin-bottom: 0.5em; }
+        h1 { border-bottom: 2px solid var(--border); padding-bottom: 10px; }
+        h2 { color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 5px; }
+        pre {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 12px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+            font-size: 0.9em;
+        }
+        code {
+            background: var(--code-bg);
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+        }
+        blockquote {
+            border-left: 4px solid var(--accent);
+            margin: 1em 0;
+            padding: 0.5em 1em;
+            background: var(--code-bg);
+            color: #555;
+        }
+        ul, ol { padding-left: 20px; }
+        .highlight { background: #fff3cd; padding: 2px 4px; border-radius: 3px; }
+    </style>
+</head>
+<body>
+
+<h1>书籍深度蒸馏 · 认知图谱与智能体内参 (V4.0 Karpathy Wiki Edition)</h1>
+
+<blockquote>
+<p><strong>核心架构升级说明：</strong><br>
+基于您的需求，本次优化彻底重构了产出逻辑。原 V3.2 视 PPT HTML 为唯一终点，现升级为 Karpathy 同款的<strong>“知识库驱动”</strong>模式：<br>
+1. <strong>第一产出物：Markdown 知识库 (Wiki.md)</strong> - 沉淀所有推导与细节，支持客户直接丢给 AI 进行多轮深度问答。<br>
+2. <strong>第二产出物：纯净阅读版 HTML (Plain HTML)</strong> - 剥离所有花哨渲染与 JS 动画，极速输出完整分析结果，适合快速浏览与打印。</p>
+</blockquote>
+
+<h2>一、 核心架构重构：从流水线到三层知识库</h2>
+<p>您的工作流目录需调整为 Karpathy 模式：</p>
+<pre><code>{书名}-kb/
+├── raw/                       # 不可变层：原始章节文本
+├── wiki/                      # LLM 拥有层：沉淀的 Markdown 维基
+│   ├── INDEX.md               # 全局导航索引 (供 AI 路由)
+│   ├── concepts/              # 核心支柱与颠覆认知
+│   ├── actions/               # 落地行动与场景
+│   ├── boundaries/            # 边界约束与避坑
+│   └── entities/              # 核心实体 (人物/概念)
+├── graph/                     # 图谱增强层 (保留原优势)
+└── output/                    # 视图导出层
+    ├── {书名}_精华内参.md     # 产出1：可问答的 Markdown 合集
+    └── {书名}_精华内参.html   # 产出2：纯净速读版 HTML
+</code></pre>
+
+<h2>二、 Prompt 优化点：Phase 0 (全量加载与 Wiki 骨架生成)</h2>
+<p>在原有 Phase 0 逻辑种子生成后，必须增加 Wiki 骨架与 INDEX.md 的生成逻辑，这是支持后续 AI 问答的核心。</p>
+
+<h3>新增 Prompt 指令：Wiki INDEX 生成器</h3>
+<pre><code>你现在是 Wiki 架构师。基于刚刚提取的【逻辑种子】和【体裁自适应判定】，请生成 `wiki/INDEX.md`。
+
+要求：
+1. 这是一个面向 AI 的路由文件，AI 读取此文件后应能迅速定位到详细 Wiki 页面。
+2. 必须包含以下版块，并为每个条目写出一句话摘要：
+   - 🎯 核心支柱 (对应模块2)
+   - 💡 颠覆认知 (对应模块3)
+   - 🪜 落地行动 (对应模块4)
+   - 🚫 边界约束 (对应模块8)
+3. 使用 Markdown 内部链接格式指向具体的 wiki 文件，例如：[安全对话机制](wiki/concepts/安全对话.md)。
+
+输出格式示例：
+# 《书名》知识库导航
+## 🎯 核心支柱
+- [核心支柱1](wiki/concepts/支柱1.md)：一句话解释其本质...
+</code></pre>
+
+<h2>三、 Prompt 优化点：Phase 1 (3-Agent 深度蒸馏)</h2>
+<p>原有 3 个 Agent 的输出必须从"为了 PPT 排版的短平快"转变为"为了知识沉淀的完整推导与双链连接"。</p>
+
+<h3>Agent Alpha (架构师) Prompt 优化</h3>
+<pre><code>你是一位拥有15年经验的知识架构师。
+【变动说明】你的产出不再直接面向 PPT，而是面向一个可生长的 Markdown 知识库。你需要为每个知识点建立独立的 Markdown 页面逻辑。
+
+书名: {书名}
+作者: {作者}
+【逻辑种子】 {逻辑种子全文}
+【可用工具】 Semantic_Search, Graph_Traverse, Multi_Hop_Reason, Deep_Dive
+
+任务: 产出以下三个模块，<strong>严格按照 Markdown 格式，使用 [[双链]] 指向其他概念</strong>。
+
+【四维过滤器】(保留原逻辑)...
+
+## 模块1: 一句话逻辑
+(保留原逻辑)
+
+## 模块2: 核心知识地图
+【深度要求变更】每个支柱不再写连续长文，而是按以下 Markdown 结构输出，方便拆分存储：
+### 支柱名称
+- **本质**：一句话本质
+- **推导过程**：还原作者推导，必须引用原文关键话术（使用 > 引用格式）
+- **逻辑串联**：承接 [[上一个支柱]]，引出 [[下一个支柱]]
+- **关联实体**：使用 Graph_Traverse 找出关联的人物/概念，用 [[实体名]] 表示
+
+## 模块3: 颠覆性认知
+【深度要求变更】每个洞见必须包含可追溯的来源：
+### 洞见标题
+- **观点陈述**：...
+- **常见误解**：...
+- **书中真相**：... (引用原文)
+- **推导路径**：使用 Multi_Hop_Reason 追溯，记录推理链路 (如：因为 [[事件A]] 导致了 [[概念B]])
+</code></pre>
+
+<h3>Agent Beta (实战派) Prompt 优化</h3>
+<pre><code>你是行动教练，专注可执行闭环设计。
+【变动说明】你的产出需要沉淀为结构化的行动清单和场景脚本，便于客户直接查询"我该怎么做"。
+
+书名: {书名}
+【逻辑种子】 {逻辑种子全文}
+【可用工具】 Deep_Dive, Semantic_Search
+
+## 模块4: 落地行动指南
+### 4.1 准备-执行-复盘指南
+【深度要求变更】按步骤拆解，格式如下：
+- **步骤1**：动作名称
+  - 核心审视问题：...
+  - 具体操作：...
+  - 踩坑点：... (关联到 [[边界约束X]])
+  - 原书话术：> "引用原文"
+
+### 4.2 应用场景模拟
+【深度要求变更】以 Markdown 对话体格式输出，方便 AI 演练：
+**场景A：[场景名]**
+- 🙍‍♂️ **对方**："挑衅/困难的话术"
+- 🤦‍♂️ **错误反应**：[常见误区] (内心：...)
+- 🧑‍💼 **理想路径**：[基于方法论的话术] (内心：...)
+</code></pre>
+
+<h3>Agent Gamma (策展人) Prompt 优化</h3>
+<pre><code>你是资深编辑兼学习路径设计师。
+【变动说明】你需要提炼出最锐利的知识碎片，并建立知识的边界。
+
+## 模块8: 边界约束与避坑指南 (核心新增)
+【深度要求】针对分析报告/政策文件/方法论类书籍，提取致命误区与红线，这部分是 AI 问答时最关键的护栏：
+- 🚫 **红线清单**：不可逾越的底线 (格式：❌ 绝对不能做X，因为会导致Y)
+- ⚠️ **致命误区**：常见错误操作 (格式：误区：以为做A就行 → 真相：必须先做B，否则C)
+- 🛡️ **适用边界**：理论/方法的适用条件 (格式：仅在 [条件1] 且 [条件2] 时适用)
+</code></pre>
+
+<h2>四、 Prompt 优化点：Phase 3 (双轨产出：MD 问答库 + 纯净 HTML)</h2>
+<p>替换原版复杂的 html-ppt 渲染流程，改为极速双轨输出。</p>
+
+<h3>产出 1：合并生成 {书名}_精华内参.md</h3>
+<pre><code>你是 Markdown 合并专家。请将前面 3 个 Agent 产出的所有模块，按照以下结构整合成一个完整的 Markdown 文件。
+
+结构要求：
+1. 顶部插入 Phase 0 生成的 `INDEX.md` 作为目录。
+2. 按照模块1-8的顺序排列内容。
+3. 确保所有的 [[双链]] 都保留了双方括号语法，这是后续 AI 问答时解析关联的关键。
+4. 在文件末尾追加一个术语字典 (来自 Phase 0 的 Unique Glossary)。
+
+直接输出完整的 Markdown 文本，不要做任何压缩或删减。
+</code></pre>
+
+<h3>产出 2：生成 {书名}_精华内参.html (极速纯净版)</h3>
+<pre><code>你是 HTML 转换专家。请将上面生成的完整 Markdown 内容，转换为一个极速渲染的纯静态 HTML 页面。
+
+要求：
+1. **零依赖**：不引入任何外部 CSS (如 Tailwind) 或 JS。所有样式内联在 `<style>` 标签中。
+2. **零动画**：没有任何 data-anim、data-fx 或 runtime.js。确保页面打开即呈现全部内容，无需等待渲染。
+3. **纯净排版**：
+   - 使用系统字体：`font-family: -apple-system, sans-serif;`
+   - 最大宽度 `max-width: 800px`，居中显示，行高 `1.8` 以利于阅读。
+   - 引用块 `blockquote` 使用左边框高亮，背景色区分。
+   - 表格使用简洁的横线样式，无需竖线。
+   - 强调标签使用颜色高亮。
+4. **语义化**：保留原有的 h1-h6 层级，确保结构清晰。
+5. **双链显示**：将 [[双链]] 内容使用 `<span class="wikilink">[[内容]]</span>` 包裹，样式设置为浅蓝色下划线，提示其关联性。
+
+请直接输出完整的 HTML 代码，以 `<!DOCTYPE html>` 开头。
+</code></pre>
+
+<h2>五、 Phase 4 交付变更</h2>
+<pre><code>交付物检查：
+1. 确认输出目录下包含 `{书名}_精华内参.md`，且文件大小合理，包含所有推导细节。
+2. 确认输出目录下包含 `{书名}_精华内参.html`，双击打开后 0 秒呈现全部内容，无动画无白屏。
+3. 清理阶段保留 `wiki/` 目录结构，以便未来增量更新 (`--update`) 时，只需读取 `wiki/INDEX.md` 即可对特定模块重新蒸馏。
+</code></pre>
+
+</body>
+</html>
