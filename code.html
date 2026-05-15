@@ -1,216 +1,1311 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="ink">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Distillation V4.0 - Karpathy Wiki 优化版 Prompt</title>
-    <style>
-        :root {
-            --bg: #ffffff;
-            --text: #1a1a1a;
-            --code-bg: #f4f4f4;
-            --border: #e0e0e0;
-            --accent: #0066cc;
-        }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            line-height: 1.6;
-            color: var(--text);
-            background: var(--bg);
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        h1, h2, h3 { margin-top: 1.5em; margin-bottom: 0.5em; }
-        h1 { border-bottom: 2px solid var(--border); padding-bottom: 10px; }
-        h2 { color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 5px; }
-        pre {
-            background: var(--code-bg);
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            padding: 12px;
-            overflow-x: auto;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
-            font-size: 0.9em;
-        }
-        code {
-            background: var(--code-bg);
-            padding: 2px 4px;
-            border-radius: 3px;
-            font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
-        }
-        blockquote {
-            border-left: 4px solid var(--accent);
-            margin: 1em 0;
-            padding: 0.5em 1em;
-            background: var(--code-bg);
-            color: #555;
-        }
-        ul, ol { padding-left: 20px; }
-        .highlight { background: #fff3cd; padding: 2px 4px; border-radius: 3px; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小说深度蒸馏 V5.0 — 从论点压缩到体验复原</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ========== 主题色系统 ========== */
+:root, [data-theme="ink"] {
+  --hero-bg: #0f0e17;
+  --hero-bg2: #1a1832;
+  --light-bg: #f6f1eb;
+  --light-bg2: #ede6dc;
+  --accent: #c23616;
+  --accent-dim: #9b2c14;
+  --accent2: #e8a87c;
+  --heading-dark: #f0e6d6;
+  --text-dark: #b8a99a;
+  --heading-light: #1a1a2e;
+  --text-light: #3d3530;
+  --text-dim: #7a706a;
+  --kicker-color: #c23616;
+  --border-light: #d9cfc4;
+  --callout-bg: rgba(194,54,22,0.07);
+  --stat-bg: rgba(194,54,22,0.05);
+}
+[data-theme="indigo"] {
+  --hero-bg: #0d1b2a;
+  --hero-bg2: #1b2838;
+  --light-bg: #f0f4f8;
+  --light-bg2: #e2e8f0;
+  --accent: #1b6ca8;
+  --accent-dim: #155a8a;
+  --accent2: #7ec8e3;
+  --heading-dark: #e2e8f0;
+  --text-dark: #94a3b8;
+  --heading-light: #0d1b2a;
+  --text-light: #1e293b;
+  --text-dim: #64748b;
+  --kicker-color: #1b6ca8;
+  --border-light: #cbd5e1;
+  --callout-bg: rgba(27,108,168,0.07);
+  --stat-bg: rgba(27,108,168,0.05);
+}
+[data-theme="forest"] {
+  --hero-bg: #0f1a0f;
+  --hero-bg2: #1a2e1a;
+  --light-bg: #f2f5f0;
+  --light-bg2: #e5ebe2;
+  --accent: #4a7c3f;
+  --accent-dim: #3a6230;
+  --accent2: #8fbc8f;
+  --heading-dark: #dce8d8;
+  --text-dark: #8fa888;
+  --heading-light: #1a2e1a;
+  --text-light: #2d3a2a;
+  --text-dim: #5a6e55;
+  --kicker-color: #4a7c3f;
+  --border-light: #c5d4bf;
+  --callout-bg: rgba(74,124,63,0.07);
+  --stat-bg: rgba(74,124,63,0.05);
+}
+[data-theme="leather"] {
+  --hero-bg: #1a140e;
+  --hero-bg2: #2a1f14;
+  --light-bg: #f5efe6;
+  --light-bg2: #ebe3d6;
+  --accent: #a0522d;
+  --accent-dim: #8b4513;
+  --accent2: #d2a679;
+  --heading-dark: #e8ddd0;
+  --text-dark: #a89880;
+  --heading-light: #2a1f14;
+  --text-light: #3a2e20;
+  --text-dim: #7a6e5e;
+  --kicker-color: #a0522d;
+  --border-light: #d4c8b8;
+  --callout-bg: rgba(160,82,45,0.07);
+  --stat-bg: rgba(160,82,45,0.05);
+}
+[data-theme="dune"] {
+  --hero-bg: #1a1714;
+  --hero-bg2: #2a2520;
+  --light-bg: #faf5ef;
+  --light-bg2: #f0e8de;
+  --accent: #c4956a;
+  --accent-dim: #a87d56;
+  --accent2: #e8c9a8;
+  --heading-dark: #f0e4d4;
+  --text-dark: #a89880;
+  --heading-light: #2a2520;
+  --text-light: #3a3530;
+  --text-dim: #7a7060;
+  --kicker-color: #c4956a;
+  --border-light: #d9cfc2;
+  --callout-bg: rgba(196,149,106,0.07);
+  --stat-bg: rgba(196,149,106,0.05);
+}
+
+/* ========== 基础重置 ========== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+body {
+  font-family: 'Noto Sans SC', sans-serif;
+  background: var(--hero-bg);
+  color: var(--text-light);
+  overflow-x: hidden;
+}
+
+/* ========== 字体系统 ========== */
+.ed-display-zh {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 900;
+  font-size: max(min(7vw, 8vh), 36px);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+.ed-h1 {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: max(min(4.5vw, 5.5vh), 28px);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+.ed-h2 {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: max(min(3vw, 3.5vh), 22px);
+  line-height: 1.3;
+}
+.ed-h3 {
+  font-family: 'Noto Sans SC', sans-serif;
+  font-weight: 600;
+  font-size: max(min(1.5vw, 2vh), 15px);
+  line-height: 1.4;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.ed-body {
+  font-family: 'Noto Sans SC', sans-serif;
+  font-weight: 400;
+  font-size: max(min(1.3vw, 1.6vh), 14px);
+  line-height: 1.8;
+}
+.ed-lead {
+  font-family: 'Noto Sans SC', sans-serif;
+  font-weight: 300;
+  font-size: max(min(1.6vw, 2vh), 15px);
+  line-height: 1.75;
+}
+.ed-kicker {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 500;
+  font-size: max(min(1vw, 1.2vh), 11px);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.ed-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 400;
+  font-size: max(min(0.9vw, 1vh), 10px);
+  letter-spacing: 0.1em;
+  opacity: 0.6;
+}
+.ed-big-num {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 900;
+  font-size: max(min(5vw, 6vh), 40px);
+  line-height: 1;
+}
+
+/* ========== Slide 通用 ========== */
+.slide {
+  min-height: 100vh;
+  max-height: 100vh;
+  overflow-y: auto;
+  scroll-snap-align: start;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.slide.hero {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 8vh 8vw;
+}
+.slide.hero.dark {
+  background: linear-gradient(160deg, var(--hero-bg) 0%, var(--hero-bg2) 100%);
+  color: var(--heading-dark);
+}
+.slide.hero.light {
+  background: linear-gradient(180deg, var(--light-bg) 0%, var(--light-bg2) 100%);
+  color: var(--heading-light);
+}
+.slide.light {
+  background: var(--light-bg);
+  color: var(--text-light);
+}
+.slide.dark {
+  background: var(--hero-bg);
+  color: var(--text-dark);
+}
+
+/* ========== Chrome / Foot ========== */
+.chrome {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2vh 4vw;
+  z-index: 10;
+}
+.chrome-left {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: max(min(0.85vw, 1vh), 10px);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.5;
+}
+.chrome-right {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: max(min(0.85vw, 1vh), 10px);
+  opacity: 0.4;
+}
+.foot {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2vh 4vw;
+  z-index: 10;
+}
+.foot-left {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: max(min(0.8vw, 0.9vh), 9px);
+  opacity: 0.35;
+}
+.foot-right {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: max(min(0.8vw, 0.9vh), 9px);
+  opacity: 0.35;
+}
+
+/* ========== 布局：Hero Cover ========== */
+.hero-cover .kicker { color: var(--accent); margin-bottom: 2vh; }
+.hero-cover .title { margin-bottom: 2vh; }
+.hero-cover .subtitle {
+  font-family: 'Noto Sans SC', sans-serif;
+  font-weight: 300;
+  font-size: max(min(2vw, 2.5vh), 16px);
+  opacity: 0.7;
+  margin-bottom: 4vh;
+}
+.hero-cover .meta-strip {
+  display: flex;
+  gap: 3vw;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.hero-cover .meta-item {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: max(min(0.9vw, 1vh), 10px);
+  letter-spacing: 0.1em;
+  opacity: 0.45;
+  text-transform: uppercase;
+}
+
+/* ========== 布局：Act Divider ========== */
+.act-divider {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.act-divider .act-num {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 900;
+  font-size: max(min(12vw, 15vh), 80px);
+  line-height: 1;
+  opacity: 0.08;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.act-divider .kicker { color: var(--accent); margin-bottom: 1.5vh; position: relative; }
+.act-divider .act-title { position: relative; margin-bottom: 2vh; }
+.act-divider .act-sub {
+  font-family: 'Noto Sans SC', sans-serif;
+  font-weight: 300;
+  font-size: max(min(1.5vw, 1.8vh), 14px);
+  opacity: 0.5;
+  position: relative;
+  max-width: 50ch;
+}
+
+/* ========== 布局：Question Page ========== */
+.question-page .q-mark {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 900;
+  font-size: max(min(18vw, 22vh), 120px);
+  line-height: 1;
+  opacity: 0.06;
+  position: absolute;
+  top: 15vh;
+  right: 8vw;
+}
+.question-page .kicker { color: var(--accent); margin-bottom: 2vh; position: relative; }
+.question-page .q-title { position: relative; margin-bottom: 3vh; max-width: 28ch; }
+.question-page .q-sub {
+  position: relative;
+  font-family: 'Noto Sans SC', sans-serif;
+  font-weight: 300;
+  font-size: max(min(1.4vw, 1.7vh), 13px);
+  opacity: 0.5;
+  max-width: 50ch;
+}
+
+/* ========== 布局：Before-After ========== */
+.before-after {
+  padding: 10vh 4vw 8vh;
+}
+.before-after .ba-header {
+  text-align: center;
+  margin-bottom: 5vh;
+}
+.before-after .ba-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3vw;
+  flex: 1;
+}
+.ba-card {
+  padding: 3vh 2.5vw;
+  border: 1px solid var(--border-light);
+  position: relative;
+}
+.ba-card.old {
+  background: rgba(0,0,0,0.03);
+}
+.ba-card.new {
+  background: var(--callout-bg);
+  border-color: var(--accent);
+}
+.ba-card .ba-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: max(min(0.85vw, 1vh), 10px);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 2vh;
+}
+.ba-card.old .ba-label { color: var(--text-dim); }
+.ba-card.new .ba-label { color: var(--accent); }
+.ba-card .ba-title {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: max(min(2.2vw, 2.8vh), 18px);
+  margin-bottom: 2vh;
+  line-height: 1.3;
+}
+.ba-card .ba-items { list-style: none; }
+.ba-card .ba-items li {
+  font-size: max(min(1.1vw, 1.3vh), 12px);
+  line-height: 1.7;
+  padding: 0.6vh 0;
+  border-bottom: 1px solid var(--border-light);
+}
+.ba-card .ba-items li:last-child { border-bottom: none; }
+.ba-card.old .ba-items li { opacity: 0.5; text-decoration: line-through; }
+.ba-card.new .ba-items li { opacity: 0.9; }
+.ba-card.new .ba-items li strong { color: var(--accent); }
+
+/* ========== 布局：Mixed Layout ========== */
+.mixed-layout {
+  padding: 10vh 5vw 8vh;
+}
+.mixed-layout .ml-kicker { color: var(--accent); margin-bottom: 1.5vh; }
+.mixed-layout .ml-title { margin-bottom: 3vh; }
+.mixed-layout .ml-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3vw;
+}
+.mixed-layout .ml-single { max-width: 72ch; }
+.ml-block {
+  margin-bottom: 3vh;
+}
+.ml-block h3 {
+  font-family: 'Noto Sans SC', sans-serif;
+  font-weight: 600;
+  font-size: max(min(1.3vw, 1.5vh), 13px);
+  margin-bottom: 1vh;
+  padding-bottom: 0.5vh;
+  border-bottom: 2px solid var(--accent);
+  display: inline-block;
+}
+.ml-block p, .ml-block ul {
+  font-size: max(min(1.1vw, 1.3vh), 12px);
+  line-height: 1.8;
+}
+.ml-block ul { padding-left: 1.5em; }
+.ml-block ul li { margin-bottom: 0.4vh; }
+
+/* ========== 布局：Pipeline ========== */
+.pipeline-layout {
+  padding: 10vh 6vw 8vh;
+}
+.pipeline-layout .pl-kicker { color: var(--accent); margin-bottom: 1.5vh; }
+.pipeline-layout .pl-title { margin-bottom: 4vh; }
+.pl-steps {
+  position: relative;
+  padding-left: 3vw;
+}
+.pl-steps::before {
+  content: '';
+  position: absolute;
+  left: 0.6vw;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--border-light);
+}
+.pl-step {
+  position: relative;
+  margin-bottom: 3vh;
+  padding-left: 2vw;
+}
+.pl-step::before {
+  content: '';
+  position: absolute;
+  left: -3vw;
+  top: 0.6vh;
+  width: max(min(1.2vw, 1.4vh), 10px);
+  height: max(min(1.2vw, 1.4vh), 10px);
+  border-radius: 50%;
+  background: var(--accent);
+  border: 3px solid var(--light-bg);
+  z-index: 2;
+}
+.pl-step .step-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: max(min(0.85vw, 1vh), 10px);
+  color: var(--accent);
+  letter-spacing: 0.1em;
+  margin-bottom: 0.3vh;
+}
+.pl-step .step-title {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: max(min(1.8vw, 2.2vh), 16px);
+  margin-bottom: 0.6vh;
+}
+.pl-step .step-desc {
+  font-size: max(min(1.05vw, 1.25vh), 12px);
+  line-height: 1.7;
+  opacity: 0.7;
+}
+
+/* ========== 布局：Big Numbers ========== */
+.big-numbers-layout {
+  padding: 10vh 5vw 8vh;
+}
+.big-numbers-layout .bn-kicker { color: var(--accent); margin-bottom: 1.5vh; text-align: center; }
+.big-numbers-layout .bn-title { text-align: center; margin-bottom: 4vh; }
+.bn-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2vw;
+}
+.bn-card {
+  padding: 3vh 2vw;
+  background: var(--stat-bg);
+  border: 1px solid var(--border-light);
+  text-align: center;
+}
+.bn-card .bn-val {
+  color: var(--accent);
+  margin-bottom: 1vh;
+}
+.bn-card .bn-label {
+  font-family: 'Noto Sans SC', sans-serif;
+  font-weight: 600;
+  font-size: max(min(1.1vw, 1.3vh), 12px);
+  margin-bottom: 0.6vh;
+}
+.bn-card .bn-desc {
+  font-size: max(min(0.9vw, 1vh), 10px);
+  opacity: 0.55;
+  line-height: 1.5;
+}
+
+/* ========== 布局：Big Quote ========== */
+.big-quote-layout {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 12vh 10vw;
+}
+.big-quote-layout .bq-mark {
+  font-family: 'Noto Serif SC', serif;
+  font-size: max(min(8vw, 10vh), 60px);
+  line-height: 1;
+  color: var(--accent);
+  opacity: 0.2;
+  margin-bottom: 2vh;
+}
+.big-quote-layout .bq-text {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: max(min(2.8vw, 3.5vh), 22px);
+  line-height: 1.5;
+  max-width: 36ch;
+  margin-bottom: 3vh;
+}
+.big-quote-layout .bq-cite {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: max(min(0.9vw, 1.1vh), 10px);
+  letter-spacing: 0.15em;
+  opacity: 0.4;
+  text-transform: uppercase;
+}
+
+/* ========== Callout ========== */
+.ed-callout {
+  background: var(--callout-bg);
+  border-left: 3px solid var(--accent);
+  padding: 2vh 2vw;
+  margin: 2vh 0;
+  font-size: max(min(1.1vw, 1.3vh), 12px);
+  line-height: 1.7;
+}
+
+/* ========== 场景卡片 ========== */
+.scene-card {
+  background: var(--callout-bg);
+  border: 1px solid var(--accent);
+  padding: 2.5vh 2.5vw;
+  margin-bottom: 2vh;
+}
+.scene-card .sc-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: max(min(0.8vw, 0.9vh), 9px);
+  color: var(--accent);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 1vh;
+}
+.scene-card .sc-field {
+  margin-bottom: 1.2vh;
+  font-size: max(min(1.05vw, 1.2vh), 11px);
+  line-height: 1.7;
+}
+.scene-card .sc-field strong {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* ========== Graph Schema 展示 ========== */
+.schema-row {
+  display: flex;
+  align-items: center;
+  gap: 1vw;
+  margin-bottom: 1vh;
+  font-size: max(min(1vw, 1.2vh), 11px);
+}
+.schema-node {
+  display: inline-block;
+  padding: 0.4vh 1vw;
+  border: 1.5px solid var(--accent);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: max(min(0.9vw, 1vh), 10px);
+  letter-spacing: 0.05em;
+}
+.schema-edge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: max(min(0.8vw, 0.9vh), 9px);
+  color: var(--accent);
+  letter-spacing: 0.05em;
+}
+
+/* ========== 入场动效 ========== */
+[data-anim="fade-up"] {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+[data-anim="fade-right"] {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+[data-anim="fade-left"] {
+  opacity: 0;
+  transform: translateX(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+[data-anim="rise-in"] {
+  opacity: 0;
+  transform: translateY(50px) scale(0.95);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+[data-anim="zoom-pop"] {
+  opacity: 0;
+  transform: scale(0.85);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+[data-anim="stagger-list"] > * {
+  opacity: 0;
+  transform: translateY(15px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.slide.in-view [data-anim] {
+  opacity: 1;
+  transform: translateY(0) translateX(0) scale(1);
+}
+.slide.in-view [data-anim="stagger-list"] > *:nth-child(1) { transition-delay: 0.1s; }
+.slide.in-view [data-anim="stagger-list"] > *:nth-child(2) { transition-delay: 0.2s; }
+.slide.in-view [data-anim="stagger-list"] > *:nth-child(3) { transition-delay: 0.3s; }
+.slide.in-view [data-anim="stagger-list"] > *:nth-child(4) { transition-delay: 0.4s; }
+.slide.in-view [data-anim="stagger-list"] > *:nth-child(5) { transition-delay: 0.5s; }
+.slide.in-view [data-anim="stagger-list"] > *:nth-child(6) { transition-delay: 0.6s; }
+.slide.in-view [data-anim="stagger-list"] > *:nth-child(7) { transition-delay: 0.7s; }
+.slide.in-view [data-anim="stagger-list"] > *:nth-child(8) { transition-delay: 0.8s; }
+
+/* ========== Hero 背景装饰 ========== */
+.hero-bg-decor {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.hero-bg-decor .line {
+  position: absolute;
+  background: var(--accent);
+  opacity: 0.04;
+}
+.hero-bg-decor .line-h {
+  height: 1px;
+  left: 0; right: 0;
+}
+.hero-bg-decor .line-v {
+  width: 1px;
+  top: 0; bottom: 0;
+}
+.hero-bg-decor .dot {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.15;
+}
+.slide > *:not(.hero-bg-decor):not(.chrome):not(.foot) {
+  position: relative;
+  z-index: 1;
+}
+
+/* ========== 响应式 ========== */
+@media (max-width: 768px) {
+  .before-after .ba-grid,
+  .mixed-layout .ml-cols {
+    grid-template-columns: 1fr;
+  }
+  .bn-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .ed-display-zh { font-size: max(7vw, 28px); }
+  .ed-h1 { font-size: max(5vw, 22px); }
+  .slide { padding-left: 6vw !important; padding-right: 6vw !important; }
+}
+
+/* ========== 主题切换提示 ========== */
+.theme-toast {
+  position: fixed;
+  bottom: 4vh;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--hero-bg);
+  color: var(--heading-dark);
+  border: 1px solid var(--accent);
+  padding: 1vh 2vw;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  opacity: 0;
+  transition: opacity 0.3s, transform 0.3s;
+  z-index: 999;
+  pointer-events: none;
+}
+.theme-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ========== 进度条 ========== */
+.progress-bar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  background: var(--accent);
+  z-index: 100;
+  transition: width 0.3s;
+}
+
+/* ========== 导航点 ========== */
+.nav-dots {
+  position: fixed;
+  right: 2vw;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 100;
+}
+.nav-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-dim);
+  opacity: 0.3;
+  cursor: pointer;
+  transition: opacity 0.3s, background 0.3s, transform 0.3s;
+}
+.nav-dot.active {
+  opacity: 1;
+  background: var(--accent);
+  transform: scale(1.4);
+}
+
+/* ========== 键盘提示 ========== */
+.key-hint {
+  position: fixed;
+  bottom: 2vh;
+  right: 3vw;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  opacity: 0.25;
+  z-index: 100;
+  letter-spacing: 0.05em;
+}
+</style>
 </head>
 <body>
 
-<h1>书籍深度蒸馏 · 认知图谱与智能体内参 (V4.0 Karpathy Wiki Edition)</h1>
+<!-- 进度条 -->
+<div class="progress-bar" id="progressBar" style="width:0%"></div>
 
-<blockquote>
-<p><strong>核心架构升级说明：</strong><br>
-基于您的需求，本次优化彻底重构了产出逻辑。原 V3.2 视 PPT HTML 为唯一终点，现升级为 Karpathy 同款的<strong>“知识库驱动”</strong>模式：<br>
-1. <strong>第一产出物：Markdown 知识库 (Wiki.md)</strong> - 沉淀所有推导与细节，支持客户直接丢给 AI 进行多轮深度问答。<br>
-2. <strong>第二产出物：纯净阅读版 HTML (Plain HTML)</strong> - 剥离所有花哨渲染与 JS 动画，极速输出完整分析结果，适合快速浏览与打印。</p>
-</blockquote>
+<!-- 导航点 -->
+<nav class="nav-dots" id="navDots"></nav>
 
-<h2>一、 核心架构重构：从流水线到三层知识库</h2>
-<p>您的工作流目录需调整为 Karpathy 模式：</p>
-<pre><code>{书名}-kb/
-├── raw/                       # 不可变层：原始章节文本
-├── wiki/                      # LLM 拥有层：沉淀的 Markdown 维基
-│   ├── INDEX.md               # 全局导航索引 (供 AI 路由)
-│   ├── concepts/              # 核心支柱与颠覆认知
-│   ├── actions/               # 落地行动与场景
-│   ├── boundaries/            # 边界约束与避坑
-│   └── entities/              # 核心实体 (人物/概念)
-├── graph/                     # 图谱增强层 (保留原优势)
-└── output/                    # 视图导出层
-    ├── {书名}_精华内参.md     # 产出1：可问答的 Markdown 合集
-    └── {书名}_精华内参.html   # 产出2：纯净速读版 HTML
-</code></pre>
+<!-- 键盘提示 -->
+<div class="key-hint">T 切换主题 / 方向键翻页</div>
 
-<h2>二、 Prompt 优化点：Phase 0 (全量加载与 Wiki 骨架生成)</h2>
-<p>在原有 Phase 0 逻辑种子生成后，必须增加 Wiki 骨架与 INDEX.md 的生成逻辑，这是支持后续 AI 问答的核心。</p>
+<!-- 主题切换提示 -->
+<div class="theme-toast" id="themeToast"></div>
 
-<h3>新增 Prompt 指令：Wiki INDEX 生成器</h3>
-<pre><code>你现在是 Wiki 架构师。基于刚刚提取的【逻辑种子】和【体裁自适应判定】，请生成 `wiki/INDEX.md`。
+<!-- ==================== SLIDE 1: 封面 ==================== -->
+<section class="slide hero dark hero-cover" data-title="封面">
+  <div class="hero-bg-decor">
+    <div class="line line-h" style="top:25%"></div>
+    <div class="line line-h" style="top:50%"></div>
+    <div class="line line-h" style="top:75%"></div>
+    <div class="line line-v" style="left:20%"></div>
+    <div class="line line-v" style="left:50%"></div>
+    <div class="line line-v" style="left:80%"></div>
+    <div class="dot" style="top:25%;left:20%"></div>
+    <div class="dot" style="top:50%;left:80%"></div>
+    <div class="dot" style="top:75%;left:50%"></div>
+  </div>
+  <div class="chrome">
+    <span class="chrome-left">Book Distillation</span>
+    <span class="chrome-right">V5.0</span>
+  </div>
+  <p class="ed-kicker kicker" data-anim="fade-up">FICTION DISTILLATION SYSTEM</p>
+  <h1 class="ed-display-zh title" data-anim="rise-in">小说深度蒸馏</h1>
+  <p class="subtitle" data-anim="fade-up">从论点压缩到体验复原 — 叙事文学的全链路重构</p>
+  <div class="meta-strip" data-anim="fade-up">
+    <span class="meta-item">叙事种子</span>
+    <span class="meta-item">场景复原</span>
+    <span class="meta-item">动力链图谱</span>
+    <span class="meta-item">8模块重构</span>
+  </div>
+  <div class="foot">
+    <span class="foot-left">Novel Distillation V5.0</span>
+    <span class="foot-right">1 / 15</span>
+  </div>
+</section>
 
-要求：
-1. 这是一个面向 AI 的路由文件，AI 读取此文件后应能迅速定位到详细 Wiki 页面。
-2. 必须包含以下版块，并为每个条目写出一句话摘要：
-   - 🎯 核心支柱 (对应模块2)
-   - 💡 颠覆认知 (对应模块3)
-   - 🪜 落地行动 (对应模块4)
-   - 🚫 边界约束 (对应模块8)
-3. 使用 Markdown 内部链接格式指向具体的 wiki 文件，例如：[安全对话机制](wiki/concepts/安全对话.md)。
+<!-- ==================== SLIDE 2: 核心问题 ==================== -->
+<section class="slide hero light question-page" data-title="核心问题">
+  <div class="q-mark">?</div>
+  <div class="chrome">
+    <span class="chrome-left">Diagnosis</span>
+    <span class="chrome-right">02</span>
+  </div>
+  <p class="ed-kicker kicker" data-anim="fade-up">ROOT CAUSE</p>
+  <h1 class="ed-h1 q-title" data-anim="rise-in">为什么小说蒸馏<br>总是丢失灵魂？</h1>
+  <p class="q-sub" data-anim="fade-up">现有系统为非虚构论说文设计——小说是被硬塞进去的。8 模块框架、逻辑种子、压缩策略，每一环都在系统性消灭叙事的弥散式信息。</p>
+  <div class="foot">
+    <span class="foot-left">Novel Distillation V5.0</span>
+    <span class="foot-right">2 / 15</span>
+  </div>
+</section>
 
-输出格式示例：
-# 《书名》知识库导航
-## 🎯 核心支柱
-- [核心支柱1](wiki/concepts/支柱1.md)：一句话解释其本质...
-</code></pre>
+<!-- ==================== SLIDE 3: 论点蒸馏 vs 体验复原 ==================== -->
+<section class="slide light before-after" data-title="范式转换">
+  <div class="chrome">
+    <span class="chrome-left">Paradigm Shift</span>
+    <span class="chrome-right">03</span>
+  </div>
+  <div class="ba-header">
+    <p class="ed-kicker" style="color:var(--accent)" data-anim="fade-up">BEFORE vs AFTER</p>
+    <h2 class="ed-h1" data-anim="rise-in">论点蒸馏 / 体验复原</h2>
+  </div>
+  <div class="ba-grid" data-anim="fade-up">
+    <div class="ba-card old">
+      <p class="ba-label">旧范式 — 论点蒸馏</p>
+      <h3 class="ba-title">假设信息密度聚集</h3>
+      <ul class="ba-items">
+        <li>核心论点 + 论据 + 结论</li>
+        <li>20% 段落承载 80% 价值</li>
+        <li>关键段落直传即可</li>
+        <li>章节摘要 500-800 Token</li>
+        <li>逻辑种子 2000-3000 Token</li>
+        <li>图谱关系：因果 / 对比 / 递进</li>
+        <li>一句话逻辑概括全书</li>
+      </ul>
+    </div>
+    <div class="ba-card new">
+      <p class="ba-label">新范式 — 体验复原</p>
+      <h3 class="ba-title">信息密度弥散分布</h3>
+      <ul class="ba-items">
+        <li><strong>欲望 + 阻碍 + 抉择 + 后果</strong></li>
+        <li>100% 段落共同编织体验网</li>
+        <li>场景卡片保底 — 删则塌则留</li>
+        <li>章节叙事摘要 <strong>1000-1500 Token</strong></li>
+        <li>叙事种子 <strong>3000-5000 Token</strong></li>
+        <li>图谱关系：<strong>渴望 / 阻碍 / 触发 / 伏笔</strong></li>
+        <li>一句话叙事动力驱动全书</li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot">
+    <span class="foot-left">Novel Distillation V5.0</span>
+    <span class="foot-right">3 / 15</span>
+  </div>
+</section>
 
-<h2>三、 Prompt 优化点：Phase 1 (3-Agent 深度蒸馏)</h2>
-<p>原有 3 个 Agent 的输出必须从"为了 PPT 排版的短平快"转变为"为了知识沉淀的完整推导与双链连接"。</p>
+<!-- ==================== SLIDE 4: 三大根本矛盾 ==================== -->
+<section class="slide dark mixed-layout" data-title="三大矛盾">
+  <div class="chrome">
+    <span class="chrome-left" style="color:var(--text-dark)">Core Contradictions</span>
+    <span class="chrome-right" style="color:var(--text-dark)">04</span>
+  </div>
+  <p class="ed-kicker ml-kicker" data-anim="fade-up">CONTRADICTIONS</p>
+  <h2 class="ed-h1 ml-title" data-anim="rise-in">三大根本矛盾</h2>
+  <div class="ml-cols" data-anim="stagger-list">
+    <div class="ml-block">
+      <h3 style="color:var(--accent)">01 / 8 模块框架 vs 叙事体</h3>
+      <p style="color:var(--text-dark)">一句话逻辑假设全书有一个核心论点——小说有多重主题层叠。核心知识地图假设支柱并列递进——小说是叙事动力链。落地行动指南对小说几乎无用。</p>
+    </div>
+    <div class="ml-block">
+      <h3 style="color:var(--accent)">02 / 压缩策略的致命伤</h3>
+      <p style="color:var(--text-dark)">逻辑种子找的是论点，不是叙事动力。章节蒸馏 500 Token，小说一章的关键细节就是这个量。关键段落直传只保留 20%，但小说的信息是弥散式的。</p>
+    </div>
+    <div class="ml-block">
+      <h3 style="color:var(--accent)">03 / 抓不住主线的深层原因</h3>
+      <p style="color:var(--text-dark)">主线不是论点，是叙事动力。知识图谱的 Schema 为概念关系设计，不是叙事因果。3-Agent 分工割裂了叙事的整体性——架构师丢情感，实战派丢上下文，策展人丢过程。</p>
+    </div>
+    <div class="ml-block">
+      <h3 style="color:var(--accent)">核心洞察</h3>
+      <div class="ed-callout" style="color:var(--heading-dark)">对非虚构，蒸馏的是论点；对小说，蒸馏的是体验。论点可以压缩，体验必须复原。</div>
+    </div>
+  </div>
+  <div class="foot">
+    <span class="foot-left" style="color:var(--text-dark)">Novel Distillation V5.0</span>
+    <span class="foot-right" style="color:var(--text-dark)">4 / 15</span>
+  </div>
+</section>
 
-<h3>Agent Alpha (架构师) Prompt 优化</h3>
-<pre><code>你是一位拥有15年经验的知识架构师。
-【变动说明】你的产出不再直接面向 PPT，而是面向一个可生长的 Markdown 知识库。你需要为每个知识点建立独立的 Markdown 页面逻辑。
+<!-- ==================== SLIDE 5: ACT 01 叙事种子 ==================== -->
+<section class="slide hero dark act-divider" data-title="叙事种子">
+  <div class="act-num">01</div>
+  <div class="chrome">
+    <span class="chrome-left">Act One</span>
+    <span class="chrome-right">05</span>
+  </div>
+  <p class="ed-kicker kicker" data-anim="fade-up">NARRATIVE SEED</p>
+  <h1 class="ed-display-zh act-title" data-anim="rise-in">叙事种子</h1>
+  <p class="act-sub" data-anim="fade-up">替代逻辑种子的小说专用索引结构 — 不找论点，找什么在驱动故事前进</p>
+  <div class="foot">
+    <span class="foot-left">Novel Distillation V5.0</span>
+    <span class="foot-right">5 / 15</span>
+  </div>
+</section>
 
-书名: {书名}
-作者: {作者}
-【逻辑种子】 {逻辑种子全文}
-【可用工具】 Semantic_Search, Graph_Traverse, Multi_Hop_Reason, Deep_Dive
+<!-- ==================== SLIDE 6: 叙事种子五要素 ==================== -->
+<section class="slide light mixed-layout" data-title="五要素">
+  <div class="chrome">
+    <span class="chrome-left">Narrative Seed</span>
+    <span class="chrome-right">06</span>
+  </div>
+  <p class="ed-kicker ml-kicker" data-anim="fade-up">FIVE ELEMENTS</p>
+  <h2 class="ed-h1 ml-title" data-anim="rise-in">叙事种子五要素</h2>
+  <div class="ml-cols" data-anim="stagger-list">
+    <div class="ml-block">
+      <h3>核心冲突轴</h3>
+      <p>主矛盾的起因、对抗双方、张力来源。次冲突线索。冲突根源——为什么这些冲突不可避免。</p>
+    </div>
+    <div class="ml-block">
+      <h3>人物关系速查</h3>
+      <p>核心角色 + 关系 + 核心欲望 + 关键矛盾 + 弧线方向（上升 / 坠落 / 循环）+ 关键转折章节。</p>
+    </div>
+    <div class="ml-block">
+      <h3>情节线索网</h3>
+      <p>主线起承转合 + N 条支线的起承转合 + 交汇点。标注章节范围和关键节点。追踪线索间的交织。</p>
+    </div>
+    <div class="ml-block">
+      <h3>关键意象表</h3>
+      <p>反复出现的象征物 / 场景 / 句式。首次出现章节 + 演变轨迹 + 指向的主题层。意象是小说的暗线。</p>
+    </div>
+  </div>
+  <div class="ml-block ml-single" data-anim="fade-up">
+    <h3>叙事节奏图</h3>
+    <p>章节张力分布：起 — 铺垫 — 高潮1 — 低谷 — 高潮2 — 尾声。标注每个张力转折的章节位置和驱动事件。</p>
+  </div>
+  <div class="foot">
+    <span class="foot-left">Novel Distillation V5.0</span>
+    <span class="foot-right">6 / 15</span>
+  </div>
+</section>
 
-任务: 产出以下三个模块，<strong>严格按照 Markdown 格式，使用 [[双链]] 指向其他概念</strong>。
+<!-- ==================== SLIDE 7: 8 模块对照 ==================== -->
+<section class="slide light before-after" data-title="模块重构">
+  <div class="chrome">
+    <span class="chrome-left">Module Remap</span>
+    <span class="chrome-right">07</span>
+  </div>
+  <div class="ba-header">
+    <p class="ed-kicker" style="color:var(--accent)" data-anim="fade-up">OLD vs NEW MODULES</p>
+    <h2 class="ed-h1" data-anim="rise-in">8 模块重构对照</h2>
+  </div>
+  <div class="ba-grid" data-anim="fade-up">
+    <div class="ba-card old">
+      <p class="ba-label">旧 8 模块 — 非虚构</p>
+      <ul class="ba-items">
+        <li>M1 一句话逻辑</li>
+        <li>M2 核心知识地图</li>
+        <li>M3 颠覆性认知</li>
+        <li>M4 落地行动指南</li>
+        <li>M5 金句复刻</li>
+        <li>M6 知识蒸馏清单</li>
+        <li>M7 延伸行动地图</li>
+        <li>M8 边界约束</li>
+      </ul>
+    </div>
+    <div class="ba-card new">
+      <p class="ba-label">新 8 模块 — 小说</p>
+      <ul class="ba-items">
+        <li><strong>M1 叙事内核</strong> — 驱动全书的叙事动力</li>
+        <li><strong>M2 人物谱系与弧线</strong> — 角色 / 关系 / 弧线</li>
+        <li><strong>M3 情节线索网</strong> — 主线 + 支线 + 交汇</li>
+        <li><strong>M4 关键场景复原</strong> — 5-8 个决定性场景</li>
+        <li><strong>M5 主题层叠</strong> — 多重主题交织呈现</li>
+        <li><strong>M6 意象与隐喻体系</strong> — 象征演变轨迹</li>
+        <li><strong>M7 金句与遗珠</strong> — 附上下文 + 支线光芒</li>
+        <li><strong>M8 叙事边界</strong> — 不可翻译之处</li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot">
+    <span class="foot-left">Novel Distillation V5.0</span>
+    <span class="foot-right">7 / 15</span>
+  </div>
+</section>
 
-【四维过滤器】(保留原逻辑)...
+<!-- ==================== SLIDE 8: 3-Agent 重新分工 ==================== -->
+<section class="slide dark mixed-layout" data-title="Agent 分工">
+  <div class="chrome">
+    <span class="chrome-left" style="color:var(--text-dark)">Agent Redesign</span>
+    <span class="chrome-right" style="color:var(--text-dark)">08</span>
+  </div>
+  <p class="ed-kicker ml-kicker" data-anim="fade-up">3-AGENT REDESIGN</p>
+  <h2 class="ed-h1 ml-title" data-anim="rise-in">3-Agent 重新分工</h2>
+  <div class="ml-cols" data-anim="stagger-list">
+    <div class="ml-block">
+      <h3 style="color:var(--accent)">Alpha → 叙事分析师</h3>
+      <p style="color:var(--text-dark)">负责 M1 叙事内核 + M2 人物谱系 + M3 情节线索网。不再找论点，追踪人物欲望如何碰撞出情节。重点保留：人物动机的细节、情节转折的因果链、伏笔的埋设与回收。</p>
+    </div>
+    <div class="ml-block">
+      <h3 style="color:var(--accent)">Beta → 场景考古学家</h3>
+      <p style="color:var(--text-dark)">负责 M4 关键场景复原 + M5 主题层叠 + M6 意象体系。不再设计行动闭环，而是复原关键场景。每个场景卡片：上下文 / 对话节选 / 人物内心 / 隐喻层 / 对全局的意义。追踪意象从首次出现到最终演变的完整轨迹。</p>
+    </div>
+    <div class="ml-block">
+      <h3 style="color:var(--accent)">Gamma → 策展人</h3>
+      <p style="color:var(--text-dark)">负责 M7 金句与遗珠 + M8 叙事边界。金句必须附带场景上下文。遗珠重点：被主线遮蔽的支线、被结局覆盖的过程、沉默角色的故事。叙事边界：标注哪些细节一旦丢失，整部小说的解读就会偏移。</p>
+    </div>
+    <div class="ml-block">
+      <h3 style="color:var(--accent)">核心转变</h3>
+      <div class="ed-callout" style="color:var(--heading-dark)">旧：3-Agent 按功能拆解（结构 / 行动 / 策展）<br>新：3-Agent 按叙事层次拆解（动力链 / 场景层 / 边界层）<br>小说需要的是一个完整叙事被不同视角照亮，而不是被不同功能拆解。</div>
+    </div>
+  </div>
+  <div class="foot">
+    <span class="foot-left" style="color:var(--text-dark)">Novel Distillation V5.0</span>
+    <span class="foot-right" style="color:var(--text-dark)">8 / 15</span>
+  </div>
+</section>
 
-## 模块1: 一句话逻辑
-(保留原逻辑)
+<!-- ==================== SLIDE 9: ACT 02 关键场景复原 ==================== -->
+<section class="slide hero dark act-divider" data-title="场景复原">
+  <div class="act-num">02</div>
+  <div class="chrome">
+    <span class="chrome-left">Act Two</span>
+    <span class="chrome-right">09</span>
+  </div>
+  <p class="ed-kicker kicker" data-anim="fade-up">SCENE RESTORATION</p>
+  <h1 class="ed-display-zh act-title" data-anim="rise-in">关键场景复原</h1>
+  <p class="act-sub" data-anim="fade-up">解决细节丢失最关键的模块 — 如果删掉这个场景故事就塌了，那它必须保留</p>
+  <div class="foot">
+    <span class="foot-left">Novel Distillation V5.0</span>
+    <span class="foot-right">9 / 15</span>
+  </div>
+</section>
 
-## 模块2: 核心知识地图
-【深度要求变更】每个支柱不再写连续长文，而是按以下 Markdown 结构输出，方便拆分存储：
-### 支柱名称
-- **本质**：一句话本质
-- **推导过程**：还原作者推导，必须引用原文关键话术（使用 > 引用格式）
-- **逻辑串联**：承接 [[上一个支柱]]，引出 [[下一个支柱]]
-- **关联实体**：使用 Graph_Traverse 找出关联的人物/概念，用 [[实体名]] 表示
+<!-- ==================== SLIDE 10: 场景卡片模板 ==================== -->
+<section class="slide light mixed-layout" data-title="场景卡片">
+  <div class="chrome">
+    <span class="chrome-left">Scene Card Template</span>
+    <span class="chrome-right">10</span>
+  </div>
+  <p class="ed-kicker ml-kicker" data-anim="fade-up">SCENE CARD</p>
+  <h2 class="ed-h1 ml-title" data-anim="rise-in">场景卡片模板</h2>
+  <div class="ml-single" data-anim="fade-up">
+    <div class="scene-card">
+      <p class="sc-label">Scene Card — 决定性场景</p>
+      <div class="sc-field"><strong>位置</strong>：第 N 章 | 叙事位置：铺垫 / 转折 / 高潮 / 回落</div>
+      <div class="sc-field"><strong>在场人物</strong>：人物A, 人物B</div>
+      <div class="sc-field"><strong>叙事功能</strong>：一句话说明这个场景为什么必须存在</div>
+    </div>
+    <div class="scene-card">
+      <p class="sc-label">Layers</p>
+      <div class="sc-field"><strong>原文对话节选</strong>：保留关键对话原声 2-3 段</div>
+      <div class="sc-field"><strong>人物内心层</strong>：此刻各角色的真实想法（根据上下文推断）</div>
+      <div class="sc-field"><strong>隐喻层</strong>：场景中的细节暗示 + 对话潜台词指向</div>
+    </div>
+    <div class="scene-card" style="border-color:var(--accent);background:var(--callout-bg)">
+      <p class="sc-label">Impact Test</p>
+      <div class="sc-field"><strong>对全局的影响</strong>：此场景前 / 此场景后 — 发生了什么不可逆的变化</div>
+      <div class="sc-field"><strong>伏笔追踪</strong>：此处埋设的 X 在第 N 章被回收</div>
+      <div class="sc-field"><strong>如果删掉这个场景</strong>：人物弧线将失去什么 / 主线将在何处断裂 / 读者将无法理解什么</div>
+    </div>
+  </div>
+  <div class="foot">
+    <span class="foot-left">Novel Distillation V5.0</span>
+    <span class="foot-right">10 / 15</span>
+  </div>
+</section>
 
-## 模块3: 颠覆性认知
-【深度要求变更】每个洞见必须包含可追溯的来源：
-### 洞见标题
-- **观点陈述**：...
-- **常见误解**：...
-- **书中真相**：... (引用原文)
-- **推导路径**：使用 Multi_Hop_Reason 追溯，记录推理链路 (如：因为 [[事件A]] 导致了 [[概念B]])
-</code></pre>
+<!-- ==================== SLIDE 11: 核心原则金句 ==================== -->
+<section class="slide hero dark big-quote-layout" data-title="核心原则">
+  <div class="chrome">
+    <span class="chrome-left">Core Principle</span>
+    <span class="chrome-right">11</span>
+  </div>
+  <div class="bq-mark" data-anim="zoom-pop">"</div>
+  <p class="bq-text" data-anim="rise-in">如果删掉这个场景故事就塌了，那它必须保留。如果删掉后故事不塌，那它确实可以被蒸馏。</p>
+  <p class="bq-cite" data-anim="fade-up">场景卡片保底机制 — 细节保留的判定标准</p>
+  <div class="foot">
+    <span class="foot-left">Novel Distillation V5.0</span>
+    <span class="foot-right">11 / 15</span>
+  </div>
+</section>
 
-<h3>Agent Beta (实战派) Prompt 优化</h3>
-<pre><code>你是行动教练，专注可执行闭环设计。
-【变动说明】你的产出需要沉淀为结构化的行动清单和场景脚本，便于客户直接查询"我该怎么做"。
+<!-- ==================== SLIDE 12: ACT 03 图谱与检索 ==================== -->
+<section class="slide hero dark act-divider" data-title="图谱与检索">
+  <div class="act-num">03</div>
+  <div class="chrome">
+    <span class="chrome-left">Act Three</span>
+    <span class="chrome-right">12</span>
+  </div>
+  <p class="ed-kicker kicker" data-anim="fade-up">GRAPH + RETRIEVAL</p>
+  <h1 class="ed-display-zh act-title" data-anim="rise-in">图谱与检索</h1>
+  <p class="act-sub" data-anim="fade-up">Graph Schema 改造 + 压缩策略调整 + Python 检索工具箱</p>
+  <div class="foot">
+    <span class="foot-left">Novel Distillation V5.0</span>
+    <span class="foot-right">12 / 15</span>
+  </div>
+</section>
 
-书名: {书名}
-【逻辑种子】 {逻辑种子全文}
-【可用工具】 Deep_Dive, Semantic_Search
+<!-- ==================== SLIDE 13: Graph Schema + 压缩策略 ==================== -->
+<section class="slide light mixed-layout" data-title="Schema 改造">
+  <div class="chrome">
+    <span class="chrome-left">Graph Schema</span>
+    <span class="chrome-right">13</span>
+  </div>
+  <p class="ed-kicker ml-kicker" data-anim="fade-up">SCHEMA REDESIGN</p>
+  <h2 class="ed-h1 ml-title" data-anim="rise-in">叙事图谱 Schema</h2>
+  <div class="ml-cols" data-anim="stagger-list">
+    <div class="ml-block">
+      <h3>节点类型</h3>
+      <div class="schema-row"><span class="schema-node">character</span> <span style="opacity:0.4;font-size:11px">name / desire / arc_direction / key_chapters</span></div>
+      <div class="schema-row"><span class="schema-node">event</span> <span style="opacity:0.4;font-size:11px">description / chapter / consequences / triggers</span></div>
+      <div class="schema-row"><span class="schema-node">symbol</span> <span style="opacity:0.4;font-size:11px">name / first_appear / last_appear / evolution</span></div>
+      <div class="schema-row"><span class="schema-node">location</span> <span style="opacity:0.4;font-size:11px">name / significance / associated_events</span></div>
+      <div class="schema-row"><span class="schema-node">theme</span> <span style="opacity:0.4;font-size:11px">name / manifestations</span></div>
+    </div>
+    <div class="ml-block">
+      <h3>边类型 — 叙事因果</h3>
+      <div class="schema-row"><span class="schema-node" style="border-color:var(--accent)">A</span> <span class="schema-edge">--desires--&gt;</span> <span class="schema-node" style="border-color:var(--accent)">B</span></div>
+      <div class="schema-row"><span class="schema-node" style="border-color:var(--accent)">A</span> <span class="schema-edge">--obstructs--&gt;</span> <span class="schema-node" style="border-color:var(--accent)">B</span></div>
+      <div class="schema-row"><span class="schema-node" style="border-color:var(--accent)">A</span> <span class="schema-edge">--triggers--&gt;</span> <span class="schema-node" style="border-color:var(--accent)">B</span></div>
+      <div class="schema-row"><span class="schema-node" style="border-color:var(--accent)">A</span> <span class="schema-edge">--leads_to--&gt;</span> <span class="schema-node" style="border-color:var(--accent)">B</span></div>
+      <div class="schema-row"><span class="schema-node" style="border-color:var(--accent)">A</span> <span class="schema-edge">--foreshadows--&gt;</span> <span class="schema-node" style="border-color:var(--accent)">B</span></div>
+      <div class="schema-row"><span class="schema-node" style="border-color:var(--accent)">A</span> <span class="schema-edge">--mirrors--&gt;</span> <span class="schema-node" style="border-color:var(--accent)">B</span></div>
+      <div class="schema-row"><span class="schema-node" style="border-color:var(--accent)">A</span> <span class="schema-edge">--symbolizes--&gt;</span> <span class="schema-node" style="border-color:var(--accent)">B</span></div>
+      <div class="schema-row"><span class="schema-node" style="border-color:var(--accent)">A</span> <span class="schema-edge">--transforms--&gt;</span> <span class="schema-node" style="border-color:var(--accent)">B</span></div>
+    </div>
+  </div>
+  <div class="ed-callout" data-anim="fade-up">
+    <strong>关键新增边：</strong>foreshadows（伏笔 → 回收）跨章节标注 | mirrors（场景/人物间的对称呼应）| transforms（意象演变、角色变化轨迹）
+  </div>
+  <div class="foot">
+    <span class="foot-left">Novel Distillation V5.0</span>
+    <span class="foot-right">13 / 15</span>
+  </div>
+</section>
 
-## 模块4: 落地行动指南
-### 4.1 准备-执行-复盘指南
-【深度要求变更】按步骤拆解，格式如下：
-- **步骤1**：动作名称
-  - 核心审视问题：...
-  - 具体操作：...
-  - 踩坑点：... (关联到 [[边界约束X]])
-  - 原书话术：> "引用原文"
+<!-- ==================== SLIDE 14: 压缩策略 + 检索工具 ==================== -->
+<section class="slide dark mixed-layout" data-title="压缩与检索">
+  <div class="chrome">
+    <span class="chrome-left" style="color:var(--text-dark)">Compression + Retrieval</span>
+    <span class="chrome-right" style="color:var(--text-dark)">14</span>
+  </div>
+  <p class="ed-kicker ml-kicker" data-anim="fade-up">STRATEGY UPGRADE</p>
+  <h2 class="ed-h1 ml-title" data-anim="rise-in">压缩策略 + 检索工具箱</h2>
+  <div class="ml-cols" data-anim="stagger-list">
+    <div class="ml-block">
+      <h3 style="color:var(--accent)">压缩策略调整</h3>
+      <ul style="color:var(--text-dark)">
+        <li>叙事种子 3000-5000 Token（比逻辑种子宽 60%）</li>
+        <li>章节叙事摘要 1000-1500 Token（比非虚构宽 1 倍）</li>
+        <li>强制保留：每章 2-3 段原文对话</li>
+        <li>30-60 万字：增加 15-20 个场景卡片，每个保留原文 300-500 字</li>
+        <li>关键场景不压缩，只标注叙事功能</li>
+      </ul>
+    </div>
+    <div class="ml-block">
+      <h3 style="color:var(--accent)">Python 检索工具箱新增</h3>
+      <ul style="color:var(--text-dark)">
+        <li><strong>search_scene.py</strong> — 按人物 / 情感 / 转折点检索关键场景</li>
+        <li><strong>trace_arc.py</strong> — 追踪某角色的完整弧线（从欲望到结局）</li>
+        <li><strong>find_motif.py</strong> — 追踪某意象 / 母题的演变轨迹</li>
+        <li><strong>check_foreshadow.py</strong> — 验证伏笔埋设与回收的完整性</li>
+      </ul>
+    </div>
+  </div>
+  <div class="ed-callout" data-anim="fade-up" style="color:var(--heading-dark)">
+    <strong>信息密度判定翻转：</strong>非虚构 — 20% 段落承载 80% 论据 → 精准命中。小说 — 100% 段落共同编织体验网 → 删除任何细节可能同时删掉伏笔线、人物侧写、一层隐喻。小说的信息密度分布是弥散式的，不是聚集式的。
+  </div>
+  <div class="foot">
+    <span class="foot-left" style="color:var(--text-dark)">Novel Distillation V5.0</span>
+    <span class="foot-right" style="color:var(--text-dark)">14 / 15</span>
+  </div>
+</section>
 
-### 4.2 应用场景模拟
-【深度要求变更】以 Markdown 对话体格式输出，方便 AI 演练：
-**场景A：[场景名]**
-- 🙍‍♂️ **对方**："挑衅/困难的话术"
-- 🤦‍♂️ **错误反应**：[常见误区] (内心：...)
-- 🧑‍💼 **理想路径**：[基于方法论的话术] (内心：...)
-</code></pre>
+<!-- ==================== SLIDE 15: 收束 ==================== -->
+<section class="slide hero dark hero-cover" data-title="收束">
+  <div class="hero-bg-decor">
+    <div class="line line-h" style="top:25%"></div>
+    <div class="line line-h" style="top:50%"></div>
+    <div class="line line-h" style="top:75%"></div>
+    <div class="line line-v" style="left:20%"></div>
+    <div class="line line-v" style="left:50%"></div>
+    <div class="line line-v" style="left:80%"></div>
+    <div class="dot" style="top:25%;left:80%"></div>
+    <div class="dot" style="top:50%;left:20%"></div>
+    <div class="dot" style="top:75%;left:80%"></div>
+  </div>
+  <div class="chrome">
+    <span class="chrome-left">Conclusion</span>
+    <span class="chrome-right">15</span>
+  </div>
+  <p class="ed-kicker kicker" data-anim="fade-up">ONE THING TO REMEMBER</p>
+  <h1 class="ed-h1" data-anim="rise-in" style="max-width:30ch;margin-bottom:4vh">对非虚构，蒸馏的是论点<br>对小说，蒸馏的是体验</h1>
+  <p class="subtitle" data-anim="fade-up" style="max-width:50ch">论点可以压缩，体验必须复原。叙事种子替代逻辑种子，场景卡片替代行动指南，动力链图谱替代概念图谱——每一环都为弥散式信息重新设计。</p>
+  <div class="meta-strip" data-anim="fade-up" style="margin-top:4vh">
+    <span class="meta-item">叙事种子</span>
+    <span class="meta-item">场景复原</span>
+    <span class="meta-item">动力链图谱</span>
+    <span class="meta-item">8模块重构</span>
+  </div>
+  <div class="foot">
+    <span class="foot-left">Novel Distillation V5.0</span>
+    <span class="foot-right">15 / 15</span>
+  </div>
+</section>
 
-<h3>Agent Gamma (策展人) Prompt 优化</h3>
-<pre><code>你是资深编辑兼学习路径设计师。
-【变动说明】你需要提炼出最锐利的知识碎片，并建立知识的边界。
+<script>
+// ========== 滚动分页 + 进度条 + 导航点 ==========
+const slides = document.querySelectorAll('.slide');
+const progressBar = document.getElementById('progressBar');
+const navDotsContainer = document.getElementById('navDots');
 
-## 模块8: 边界约束与避坑指南 (核心新增)
-【深度要求】针对分析报告/政策文件/方法论类书籍，提取致命误区与红线，这部分是 AI 问答时最关键的护栏：
-- 🚫 **红线清单**：不可逾越的底线 (格式：❌ 绝对不能做X，因为会导致Y)
-- ⚠️ **致命误区**：常见错误操作 (格式：误区：以为做A就行 → 真相：必须先做B，否则C)
-- 🛡️ **适用边界**：理论/方法的适用条件 (格式：仅在 [条件1] 且 [条件2] 时适用)
-</code></pre>
+// 创建导航点
+slides.forEach((slide, i) => {
+  const dot = document.createElement('div');
+  dot.className = 'nav-dot';
+  dot.title = slide.dataset.title || `Slide ${i + 1}`;
+  dot.addEventListener('click', () => {
+    slide.scrollIntoView({ behavior: 'smooth' });
+  });
+  navDotsContainer.appendChild(dot);
+});
+const navDots = document.querySelectorAll('.nav-dot');
 
-<h2>四、 Prompt 优化点：Phase 3 (双轨产出：MD 问答库 + 纯净 HTML)</h2>
-<p>替换原版复杂的 html-ppt 渲染流程，改为极速双轨输出。</p>
+// IntersectionObserver 处理入场动效和导航状态
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('in-view');
+      // 更新导航点
+      const idx = Array.from(slides).indexOf(entry.target);
+      navDots.forEach((d, i) => d.classList.toggle('active', i === idx));
+      // 更新进度条
+      const progress = ((idx + 1) / slides.length) * 100;
+      progressBar.style.width = progress + '%';
+    }
+  });
+}, { threshold: 0.5 });
 
-<h3>产出 1：合并生成 {书名}_精华内参.md</h3>
-<pre><code>你是 Markdown 合并专家。请将前面 3 个 Agent 产出的所有模块，按照以下结构整合成一个完整的 Markdown 文件。
+slides.forEach(slide => observer.observe(slide));
 
-结构要求：
-1. 顶部插入 Phase 0 生成的 `INDEX.md` 作为目录。
-2. 按照模块1-8的顺序排列内容。
-3. 确保所有的 [[双链]] 都保留了双方括号语法，这是后续 AI 问答时解析关联的关键。
-4. 在文件末尾追加一个术语字典 (来自 Phase 0 的 Unique Glossary)。
+// 首页立即显示
+setTimeout(() => {
+  slides[0].classList.add('in-view');
+  navDots[0].classList.add('active');
+  progressBar.style.width = (1 / slides.length * 100) + '%';
+}, 200);
 
-直接输出完整的 Markdown 文本，不要做任何压缩或删减。
-</code></pre>
+// ========== T 键切换主题 ==========
+const themes = ['ink', 'indigo', 'forest', 'leather', 'dune'];
+const themeNames = {
+  ink: '墨水经典',
+  indigo: '靛蓝瓷',
+  forest: '森林墨',
+  leather: '牛皮纸',
+  dune: '沙丘'
+};
+let currentThemeIdx = 0;
+const themeToast = document.getElementById('themeToast');
 
-<h3>产出 2：生成 {书名}_精华内参.html (极速纯净版)</h3>
-<pre><code>你是 HTML 转换专家。请将上面生成的完整 Markdown 内容，转换为一个极速渲染的纯静态 HTML 页面。
+document.addEventListener('keydown', (e) => {
+  if (e.key === 't' || e.key === 'T') {
+    currentThemeIdx = (currentThemeIdx + 1) % themes.length;
+    const newTheme = themes[currentThemeIdx];
+    document.documentElement.setAttribute('data-theme', newTheme);
+    // 显示提示
+    themeToast.textContent = themeNames[newTheme];
+    themeToast.classList.add('show');
+    setTimeout(() => themeToast.classList.remove('show'), 1500);
+  }
+  // 方向键翻页
+  if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === ' ') {
+    e.preventDefault();
+    const currentIdx = getCurrentSlideIndex();
+    if (currentIdx < slides.length - 1) {
+      slides[currentIdx + 1].scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+  if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+    e.preventDefault();
+    const currentIdx = getCurrentSlideIndex();
+    if (currentIdx > 0) {
+      slides[currentIdx - 1].scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+});
 
-要求：
-1. **零依赖**：不引入任何外部 CSS (如 Tailwind) 或 JS。所有样式内联在 `<style>` 标签中。
-2. **零动画**：没有任何 data-anim、data-fx 或 runtime.js。确保页面打开即呈现全部内容，无需等待渲染。
-3. **纯净排版**：
-   - 使用系统字体：`font-family: -apple-system, sans-serif;`
-   - 最大宽度 `max-width: 800px`，居中显示，行高 `1.8` 以利于阅读。
-   - 引用块 `blockquote` 使用左边框高亮，背景色区分。
-   - 表格使用简洁的横线样式，无需竖线。
-   - 强调标签使用颜色高亮。
-4. **语义化**：保留原有的 h1-h6 层级，确保结构清晰。
-5. **双链显示**：将 [[双链]] 内容使用 `<span class="wikilink">[[内容]]</span>` 包裹，样式设置为浅蓝色下划线，提示其关联性。
+function getCurrentSlideIndex() {
+  let idx = 0;
+  slides.forEach((s, i) => {
+    if (s.classList.contains('in-view')) {
+      const rect = s.getBoundingClientRect();
+      if (rect.top >= -100 && rect.top < window.innerHeight / 2) {
+        idx = i;
+      }
+    }
+  });
+  // 更精确的检测
+  const scrollTop = window.scrollY || document.documentElement.scrollTop;
+  const vh = window.innerHeight;
+  const calculatedIdx = Math.round(scrollTop / vh);
+  return Math.min(calculatedIdx, slides.length - 1);
+}
 
-请直接输出完整的 HTML 代码，以 `<!DOCTYPE html>` 开头。
-</code></pre>
-
-<h2>五、 Phase 4 交付变更</h2>
-<pre><code>交付物检查：
-1. 确认输出目录下包含 `{书名}_精华内参.md`，且文件大小合理，包含所有推导细节。
-2. 确认输出目录下包含 `{书名}_精华内参.html`，双击打开后 0 秒呈现全部内容，无动画无白屏。
-3. 清理阶段保留 `wiki/` 目录结构，以便未来增量更新 (`--update`) 时，只需读取 `wiki/INDEX.md` 即可对特定模块重新蒸馏。
-</code></pre>
-
+// ========== 减少动效偏好 ==========
+if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.querySelectorAll('[data-anim]').forEach(el => {
+    el.style.transition = 'none';
+    el.style.opacity = '1';
+    el.style.transform = 'none';
+  });
+}
+</script>
 </body>
 </html>
