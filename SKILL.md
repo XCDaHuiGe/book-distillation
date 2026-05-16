@@ -134,16 +134,63 @@ Agent评估当前信息缺口
 book-distillation/
 ├── assets/
 │   └── template.html           ← HTML 模板（含所有功能）
-├── references/
+├── references/                 ← 设计规范文档
 │   ├── layouts.md              ← 10 种布局骨架
 │   ├── themes.md               ← 氛围系统 + 5 套主题色
 │   ├── style-presets.md        ← 12 种风格预设
-│   ├── semantic-components.md  ← 语义组件系统（V7.0 新增）
+│   ├── semantic-components.md  ← 语义组件系统
 │   ├── animation-patterns.md   ← 动画模式指南
 │   └── image-prompts.md        ← 配图生成指南
+├── design-references/          ← 设计学习资源库（V7.0 新增）
+│   ├── README.md               ← 使用说明
+│   ├── visual-examples/        ← 视觉案例（发布会/网页/杂志）
+│   ├── color-systems/          ← 配色系统（深色/浅色/语义色）
+│   ├── typography/             ← 字体排版（搭配/层级/风格）
+│   ├── animation-effects/      ← 动画特效（入场/交互/切换）
+│   └── layout-patterns/        ← 布局模式（封面/数据/金句）
 └── tools/
     └── ...
 ```
+
+### 设计参考调用机制（V7.0）
+
+生成 PPT 时，按以下顺序查阅设计资源：
+
+```
+┌─────────────────────────────────────────┐
+│  Step 1: 用户偏好                        │
+│  design-references/visual-examples/     │
+│  → user-preferences.md                  │
+├─────────────────────────────────────────┤
+│  Step 2: 内容类型匹配                    │
+│  文学 → 天道金配色                       │
+│  技术 → 科技蓝配色                       │
+│  商业 → 墨水经典配色                     │
+├─────────────────────────────────────────┤
+│  Step 3: 配色系统                        │
+│  design-references/color-systems/       │
+│  → dark-themes.md / light-themes.md     │
+├─────────────────────────────────────────┤
+│  Step 4: 排版参考                        │
+│  design-references/typography/          │
+│  → type-scale.md / editorial-style.md   │
+├─────────────────────────────────────────┤
+│  Step 5: 动画参考                        │
+│  design-references/animation-effects/   │
+│  → entrance-animations.md               │
+├─────────────────────────────────────────┤
+│  Step 6: 布局参考                        │
+│  design-references/layout-patterns/     │
+│  → hero-sections.md / quote-sections.md │
+└─────────────────────────────────────────┘
+```
+
+**如何添加新设计资源**：
+
+1. 给我链接：`学习这个设计：https://xxx.com`
+2. 我会分析并提取设计要点
+3. 写入 `design-references/` 对应目录
+4. 下次生成 PPT 自动调用
 
 ### LaTeX 支持
 
