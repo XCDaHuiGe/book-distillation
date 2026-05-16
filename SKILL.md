@@ -99,12 +99,101 @@ Agent评估当前信息缺口
 
 ---
 
+## HTML 模板系统（V6.0 融合升级）
+
+### 核心特性
+
+融合 **frontend-slides + Slidev + reveal.js + Marp + Magic UI + PptxGenJS** 的最佳实践：
+
+| 特性 | 来源 | 说明 |
+|:---|:---|:---|
+| **零依赖单 HTML** | frontend-slides | 无需构建，浏览器直接打开 |
+| **WebGL 粒子背景** | 自研 | 自动适配 light/dark 主题 |
+| **12 种风格预设** | frontend-slides | 反 AI 审美，抽象形状优先 |
+| **演讲者模式** | Slidev / reveal.js | S 键开启，独立窗口显示备注 |
+| **绘图标注** | Slidev | D 键开启画笔，多色可选 |
+| **LaTeX 数学公式** | Slidev | KaTeX 渲染 |
+| **Mermaid 图表** | Slidev | 文本描述生成流程图 |
+| **Slide Masters 模板** | PptxGenJS | 编程式幻灯片的布局/模板系统理念 |
+
+### 快捷键
+
+| 按键 | 功能 |
+|:---|:---|
+| `←` `→` | 翻页 |
+| `空格` | 下一页 |
+| `Home` / `End` | 首页 / 末页 |
+| `S` | 开启演讲者模式 |
+| `D` | 开启绘图标注 |
+| `滚轮` | 翻页 |
+| `触屏滑动` | 翻页 |
+
+### 文件结构
+
+```
+book-distillation/
+├── assets/
+│   └── template.html           ← HTML 模板（含所有功能）
+├── references/
+│   ├── layouts.md              ← 10 种布局骨架
+│   ├── themes.md               ← 5 套主题色
+│   ├── style-presets.md        ← 12 种风格预设
+│   ├── animation-patterns.md   ← 动画模式指南
+│   └── image-prompts.md        ← 配图生成指南
+└── tools/
+    └── ...
+```
+
+### LaTeX 支持
+
+```html
+<!-- 行内公式 -->
+<span class="latex-inline">E = mc^2</span>
+
+<!-- 块级公式 -->
+<div class="latex-block">\int_0^\infty e^{-x^2} dx = \frac{\sqrt{\pi}}{2}</div>
+```
+
+### Mermaid 图表
+
+```html
+<div class="mermaid-container">
+  <pre class="mermaid">
+    graph LR
+      A[开始] --> B{判断}
+      B -->|是| C[执行]
+      B -->|否| D[结束]
+  </pre>
+</div>
+```
+
+### 演讲者备注
+
+```html
+<section class="slide light">
+  <div class="frame">...</div>
+  <div class="speaker-notes" style="display:none">
+    这是演讲者备注，只在演讲者模式中显示。
+  </div>
+</section>
+```
+
+### Slide Masters 模板系统（来自 PptxGenJS 理念）
+
+PptxGenJS 的核心设计理念——编程式幻灯片生成与 Slide Masters 模板系统——被吸收到 HTML PPT 的布局架构中：
+
+- **布局即代码**：10 种布局骨架（见 `references/layouts.md`）对应 PptxGenJS 的 Slide Masters
+- **编程式组合**：通过组合不同的布局骨架和主题色，快速生成完整 HTML PPT
+- **内容与样式分离**：内容驱动布局选择，主题色控制整体风格
+
+---
+
 ## Python工具链规范
 
 ### 依赖库
 
 ```bash
-pip install sentence-transformers faiss-cpu networkx jieba
+pip install sentence-transformers torch faiss-cpu networkx jieba
 ```
 
 > 如果环境中未安装，Phase 0会自动安装。若安装失败，降级为"主控Agent深度阅读路径"。
@@ -120,12 +209,37 @@ pip install sentence-transformers faiss-cpu networkx jieba
 ├── relations.json         # 关系列表（头实体、尾实体、关系类型、证据段落）
 ├── graph.gpickle          # NetworkX知识图谱（序列化）
 ├── faiss.index            # FAISS向量索引
+├── model_config.json      # 语义模型配置（V4.0新增）
 ├── metadata.json          # 元数据（书名、作者、章节数、总段落数等）
 ├── search.py              # 语义检索脚本
 ├── graph.py               # 图谱检索脚本
 ├── multihop.py            # 多跳推理脚本
 └── build_index.py         # 索引构建脚本（Phase 0调用）
 ```
+
+### 三层检索策略（V4.0核心升级）
+
+```
+┌─────────────────────────────────────────┐
+│  第三层：多跳推理（深度）                  │
+│  发现隐含因果关系、逻辑链条                │
+│  工具：multihop.py + graph.py            │
+├─────────────────────────────────────────┤
+│  第二层：图谱关系验证（精度）              │
+│  验证召回内容的关联性、扩展相关实体        │
+│  工具：graph.py --entity --depth         │
+├─────────────────────────────────────────┤
+│  第一层：语义向量召回（广度）              │
+│  用 embedding 相似度找到语义相关段落       │
+│  工具：search.py（sentence-transformer） │
+└─────────────────────────────────────────┘
+```
+
+**检索工作流：**
+1. Agent 发起查询 → 先用 search.py 语义召回 top 10
+2. 再用 graph.py 验证实体关联
+3. 若需因果推理，用 multihop.py 探索路径
+4. 综合三层结果，引用原文时标注来源段落ID
 
 ### 检索脚本接口规范
 
@@ -136,6 +250,8 @@ python /tmp/book_rag/search.py "<查询文本>" [top_k] [--chapter "章节名"]
 
 # 输出格式（JSON）
 {
+  "query": "查询内容",
+  "index_type": "semantic",
   "results": [
     {"segment_id": 42, "chapter": "第3章", "text": "...", "score": 0.87},
     ...
@@ -930,94 +1046,113 @@ python /tmp/book_rag/multihop.py "起始实体" "目标实体" [max_hops]
 
 ---
 
-#### 路径B：杂志风 HTML PPT 生成
+#### 路径B：杂志风 HTML PPT 生成（V5.0 全新模板系统）
 
-**10 种布局模板详解：**
+**核心升级**：
+- WebGL 粒子背景（自动适配 light/dark 主题）
+- 10 种布局骨架（完整 HTML 代码，直接粘贴）
+- 5 套主题色预设（不允许自定义）
+- 配图生成流程（AI 生成插图）
 
-| 布局类 | 视觉结构 | 最佳内容 | 典型 slide 类 | 溢出策略 |
-|:---|:---|:---|:---|:---|
-| `.hero-cover` | 居中巨标题 + 副标题 + kicker + 底部元数据 | 封面、模块1一句话逻辑 | hero light/dark | 垂直居中，内容超过时 scroll |
-| `.act-divider` | kicker + 超大章节号 + 标题 + 引语 | 章节切换、模块间过渡 | hero dark | 垂直居中，内容超过时 scroll |
-| `.big-numbers` | 3x2 网格 stat-card（数字 + 标签 + 小字说明） | 关键数据、统计、核心指标 | light | 网格自动换行，超过自动 scroll |
-| `.text-image-split` | grid-2-7-5 左文右图（引用 + 说明 + 图片） | 概念解释、支柱展开 | light | 左列文字 scroll，右列固定 |
-| `.image-grid` | 固定 height 的图片网格（2-4 张） | 案例对比、多图展示 | light | 网格固定高度，图片裁切 |
-| `.pipeline` | 垂直流程 + 圆点节点 + 连接线 | 步骤、阶段、方法论流程 | light | 步骤列表 scroll |
-| `.question-page` | 巨型问号 + 大问题 + 引语 | 悬念页、核心问题引出 | hero light | 居中，内容超过 scroll |
-| `.big-quote` | 大号衬线引用 + 作者 + 出处 | 金句、核心引用 | dark | 引用+callout 区域 scroll |
-| `.before-after` | 左右并列对比（旧 vs 新、错误 vs 正确） | 认知对比、方法论前后效果 | light | 双列各自 scroll |
-| `.mixed-layout` | 灵活图文混排（多列 + 引用 + 列表） | 信息密集页、综合内容 | light/dark | 各区域独立 scroll |
+---
 
-**设计约束（硬性规则）：**
-1. 每页 `<section class="slide">` 必须带 light / dark / hero 类
-2. 连续 3 页以上相同主题 = 不允许；必须 light 和 dark 交替编排
-3. 每页使用预定义布局类名（来自 editorial-magazine.css），禁止自定义布局
-4. 字体类必须使用 ed-* 系列：
-   - 标题/数字 → `.ed-display-zh` / `.ed-h1` / `.ed-h2` / `.ed-big-num`
-   - 正文 → `.ed-body`
-   - 元数据 → `.ed-kicker` / `.ed-meta`
-5. 每页必须包含 `.chrome`（页眉：书名 + 章节标记）和 `.foot`（页脚：页码 + 导航信息）
-6. 入场动效：在需要动效的元素上使用 `data-anim` 属性（可选值：fade-up / fade-right / fade-left / rise-in / zoom-pop / stagger-list）
-7. 图片使用 `.ed-frame-img` + 比例类（`.ed-r-16x9` / `.ed-r-16x10` / `.ed-r-4x3` / `.ed-r-3x2` / `.ed-r-1x1`）
-8. 禁止使用 emoji，用文字或符号代替
-9. 禁止自定义渐变、阴影、圆角（继承主题定义）
-10. 引用块使用 `.ed-callout` / `.ed-q-big` / `.ed-cite`
+##### Step 1：拷贝模板
 
-### 布局规范（V2 — 修复溢出与审美问题）
-11. 每页内容不得超过视口高度，超出部分自动滚动（overflow-y: auto）
-12. 每页内容必须使用 `min-height: 100vh; max-height: 100vh;` 确保一页一屏
-13. 每页字体字号必须使用 `max(min(Xvw, Yvh), Zpx)` 语法保证最小可读字数不小于12px
-14. 长文本段落每段不超过5行，超过则分多段
-15. 每页保持内容节奏：kicker + 标题 + 正文 + 引用/数据，内容层次清晰
-16. 文本与容器边缘至少保留 4vw/4vh 的呼吸空间
-17. 如果内容过长放不下，截断后标注"(续)"并拆到下一页
+```bash
+# 创建项目目录
+mkdir -p "{书名}-kb/output/images"
 
-**5 套主题色切换（T 键）：**
+# 拷贝模板
+cp "assets/template.html" "{书名}-kb/output/{书名}_精华内参.html"
+```
 
-| 主题 | data-theme | 适用场景 |
-|:---|:---|:---|
-| 墨水经典 | `ink` | 通用/商业/默认 |
-| 靛蓝瓷 | `indigo` | 科技/研究/数据 |
-| 森林墨 | `forest` | 自然/文化/非虚构 |
-| 牛皮纸 | `leather` | 怀旧/人文/文学 |
-| 沙丘 | `dune` | 艺术/设计/创意 |
+**模板文件**：`assets/template.html`
+- WebGL 粒子背景（Canvas 实现）
+- 翻页系统（键盘 ← → / 滚轮 / 触屏）
+- 字体系统（衬线标题 + 无衬线正文 + 等宽元数据）
+- 动画系统（data-anim 属性控制入场动画）
+- 响应式适配
 
-**页面类型与主题组合规则：**
-- `.slide.hero.light` — 浅色 hero，适合开场封面、问题页
-- `.slide.hero.dark` — 深色 hero，适合幕封、大引用页
-- `.slide.light` — 浅色正文页，适合数据、流程、图文混排
-- `.slide.dark` — 深色正文页，适合引用对比、金句展示
-- hero 页占比约 20-30%，non-hero 页 70-80%，形成阅读节奏
+---
 
-### 主题节奏规划
+##### Step 2：选择主题色
 
-**翻页体验规则：**
-- 每页必须设置 `data-title` 属性（用于目录）
-- 每页必须包含 `.chrome` 页眉（左: 栏目名, 右: 页码）
-- 每页必须包含 `.foot` 页脚（左: 书名, 右: 页号/总数）
-- 禁止在单页内放入超过 600 字的内容
-- 文本过长时，摘要提取 + "(详情见模块X)" 引用
+**从 `references/themes.md` 选择一套主题色**，替换模板中 `:root` 块的变量：
 
-**【小说专项】模块到布局映射（当文本类型=小说时，替代通用布局选择指南）**
+| 主题 | 适用场景 |
+|:---|:---|
+| 🖋 墨水经典 | 通用/商业/默认 |
+| 🌊 靛蓝瓷 | 科技/研究/数据 |
+| 🌿 森林墨 | 自然/文化/非虚构 |
+| 🍂 牛皮纸 | 怀旧/人文/文学 |
+| 🌙 沙丘 | 艺术/设计/创意 |
 
-| 小说模块 | 对应布局 | 推荐 slide 类 | 说明 |
-|:---|:---|:---|:---|
-| M1 叙事内核 | `.hero-cover` / `.question-page` | hero dark/light | 封面展示根本冲突，大问题页引出叙事悬念 |
-| M2 人物谱系 | `.text-image-split` / `.before-after` | light | 每个人物一页，左文右图（或左右对比弧线变化） |
-| M3 情节线索网 | `.pipeline` / `.mixed-layout` | light | 主线弧用 pipeline 展示，支线交汇用 mixed-layout |
-| M4 场景卡片 | `.big-quote` / `.mixed-layout` | dark/light | 每个场景卡片一页，对话用 big-quote，全貌用 mixed |
-| M5 主题层叠 | `.text-image-split` / `.before-after` | light | 每个主题层一页，用对比展示层次差异 |
-| M6 意象体系 | `.pipeline` / `.big-numbers` | light | 意象演变用 pipeline，关键数据用 big-numbers |
-| M7 金句与遗珠 | `.big-quote` / `.mixed-layout` | dark | 金句用 big-quote（暗底），遗珠用 mixed（亮底） |
-| M8 叙事边界 | `.before-after` / `.question-page` | light/dark | 边界对比用 before-after，悬念用 question-page |
+**硬规则**：一份 deck 只用一套主题，不允许自定义 hex 值。
 
-**小说 HTML PPT 特殊约束：**
-- 场景卡片页必须保留原书对话风格（不用缩写）
-- 人物谱系页每页只展示 1 个人物，保证细节完整
-- 金句页必须附带场景上下文（场景卡片编号 + 一句话背景）
-- 叙事边界页使用 🚫 / ⚠️ / 🛡️ 标记区分三类边界
-- 每页的 .foot 标记叙事位置而非页码（如 [起] / [高潮1] / [回落]）
+---
 
-**Phase 3 Prompt（路径B）：**
+##### Step 3：填充布局
+
+**从 `references/layouts.md` 选择布局骨架**，粘贴到 `<!-- SLIDES_HERE -->` 占位符处：
+
+| Layout | 用途 |
+|:---|:---|
+| Layout 1: 开场封面 | 第 1 页 |
+| Layout 2: 章节幕封 | 每幕开场 |
+| Layout 3: 数据大字报 | 抛硬数据 |
+| Layout 4: 左文右图 | 概念/故事 |
+| Layout 5: 图片网格 | 多图对比 |
+| Layout 6: 流水线 | 工作流程 |
+| Layout 7: 问题页 | 悬念收束 |
+| Layout 8: 大引用 | 金句展示 |
+| Layout 9: 前后对比 | 新旧对比 |
+| Layout 10: 图文混排 | 信息密集页 |
+
+**主题节奏规则**：
+- 每页 `<section>` 必须带 `light` / `dark` / `hero light` / `hero dark`
+- 禁止连续 3 页以上相同主题
+- 每 3-4 页插入 1 个 hero 页
+
+---
+
+##### Step 4：生成配图（可选）
+
+**参考 `references/image-prompts.md` 生成配图**：
+
+| 图片类型 | 适合布局 |
+|:---|:---|
+| 人文纪实照片 | 封面、左文右图 |
+| 概念信息图 | 概念解释、流程展示 |
+| 流程图/系统图 | Pipeline 布局 |
+| 对比图 | Before/After 布局 |
+
+**图片比例规范**：
+- 封面/主图：16:9
+- 左文右图：16:10 或 4:3
+- 图片网格：固定高度 `.h-22` / `.h-26`
+
+**图片命名**：`{页号}-{语义}.{ext}`，如 `01-cover.jpg`
+
+---
+
+##### 设计约束（硬性规则）
+
+1. 每页 `<section class="slide">` 必须带 `light` / `dark` / `hero` 类
+2. 连续 3 页以上相同主题 = 不允许
+3. 字体分工：
+   - 标题/数字 → `.h-hero` / `.h-xl` / `.h-sub`（衬线）
+   - 正文 → `.lead` / `.h-md`（无衬线）
+   - 元数据 → `.kicker` / `.meta-row` / `.cite`（等宽）
+4. 每页必须包含 `.chrome`（页眉）和 `.foot`（页脚）
+5. 入场动效：`data-anim` 属性（fade-up / fade-right / rise-in / zoom-pop）
+6. 图片使用 `.frame-img` + 比例类（`.r-16x9` / `.r-16x10` / `.r-4x3`）
+7. 禁止使用 emoji
+8. 禁止自定义渐变、阴影、圆角
+9. 引用块使用 `.callout` / `.q-big` / `.cite`
+
+---
+
+##### Phase 3 Prompt（路径B）
 
 ```markdown
 你是一位杂志排版设计师。基于前面 3-Agent 产出的知识库内容，生成一本杂志风 HTML PPT。
@@ -1025,110 +1160,72 @@ python /tmp/book_rag/multihop.py "起始实体" "目标实体" [max_hops]
 【内容输入】
 {3-Agent 合并输出全文}
 
+【模板文件】
+assets/template.html — 包含 WebGL 背景、翻页系统、字体系统
+
+【布局骨架】
+references/layouts.md — 10 种布局的完整 HTML 代码
+
+【主题色】
+references/themes.md — 5 套预设主题色
+
+【配图指南】
+references/image-prompts.md — 配图生成提示词
+
+【工作流】
+1. 拷贝 assets/template.html 到输出目录
+2. 从 references/themes.md 选择主题色，替换 :root 变量
+3. 从 references/layouts.md 选择布局，粘贴到 <!-- SLIDES_HERE -->
+4. 替换文案和图片路径
+5. 确保主题交替合理（无连续 3 页相同主题）
+
 【设计约束】
-1. 每页 <section class="slide"> 必须带 light / dark / hero 类
-2. 连续 3 页以上相同主题 = 不允许
-3. 每页使用预定义布局类名（来自 editorial-magazine.css）：
-   - .hero-cover / .act-divider / .big-numbers / .text-image-split
-   - .image-grid / .pipeline / .question-page / .big-quote / .before-after / .mixed-layout
-4. 字体类必须使用 ed-* 系列：
-   - 标题/数字 → .ed-display-zh / .ed-h1 / .ed-h2 / .ed-big-num
-   - 正文 → .ed-body
-   - 元数据 → .ed-kicker / .ed-meta
-5. 每页必须包含 .chrome（页眉）和 .foot（页脚）
-6. 入场动效：在需要动效的元素上使用 data-anim 属性
-7. 图片使用 .ed-frame-img + 比例类（.ed-r-16x9 / .ed-r-16x10 等）
-8. 禁止使用 emoji，用文字或符号代替
-9. 禁止自定义渐变、阴影、圆角
-10. 引用块使用 .ed-callout / .ed-q-big / .ed-cite
+- 每页必须带 light / dark / hero 类
+- 字体分工：标题用衬线，正文用无衬线，元数据用等宽
+- 图片使用标准比例类
+- 禁止 emoji、渐变、阴影、圆角
 
-【布局模板选择指南】
-- 封面/大标题页 → .hero-cover
-- 章节切换页 → .act-divider
-- 数据/统计/关键数字 → .big-numbers
-- 概念解释+配图 → .text-image-split
-- 多图展示/案例对比 → .image-grid
-- 流程/步骤/阶段 → .pipeline
-- 悬念/核心问题 → .question-page
-- 金句/核心引用 → .big-quote
-- 前后对比/新旧对比 → .before-after
-- 信息密集/综合页面 → .mixed-layout
-
-【输出格式】一个完整的 HTML 文件，内联引用 editorial-magazine.css 主题。
-
-### 内容分段规则（防溢出）
-- 每个 section 内的文本总长度 ≤ 500 字（中文）
-- 如果模块内容超过 500 字，拆分为多个 section
-- 每个 section 最多包含：1个标题 + 2-3段正文 + 1个引用/数据
-- 数据/统计页最多展示 6 个统计值
-- 支柱/概念页，每个页面只讲 1 个概念
-
-### 视觉层次规则
-- 每页必须有清晰的 4 层视觉节奏：kicker → 标题 → 正文 → 引用/数据
-- kicker 永远在最上方（12px 等宽）
-- 标题字号最大（ed-display-zh / ed-h1）
-- 正文使用 ed-body 或 ed-lead
-- 引用使用 q-big + cite
-- 每层之间至少 1em 间距
-
-### 多页拆分规则
-如果某个 Agent 产出的模块内容较长，按以下方式拆分：
-- 模块2（核心知识地图）：每个支柱单独一页
-- 模块4（落地行动）：每个决策/场景单独一页  
-- 模块8（边界约束）：红线、误区、边界各一页
-- 金句：每个金句单独一页
+【输出格式】
+一个完整的 HTML 文件，可直接浏览器打开。
 ```
 
 ---
 
-#### 路径B（传统风格）：CSS变量体系 + 组件库
+##### 【小说专项】模块到布局映射
 
-当用户指定非杂志风风格时，使用原有 V3.2 的 CSS 变量体系：
-
-默认风格：
-```css
-:root {
-  --bg: #0e1117;
-  --surface: #161b22;
-  --accent: #e63946;
-  --accent-dim: #c5303c;
-  --heading: #f0f6fc;
-  --text: #b1bac4;
-  --text-dim: #6e7681;
-  --border: #21262d;
-  --tag-bg: rgba(230,57,70,0.12);
-}
-```
-
-**组件库：**
-
-| 类名 | 视觉表现 | 适用场景 |
+| 小说模块 | 对应布局 | 推荐 slide 类 |
 |:---|:---|:---|
-| `.hero-box` | 渐变背景 + 巨型文字 + 核心隐喻标签 | 模块1（一句话逻辑） |
-| `.logic-map` | 连线布局 + 章节节点 + 递进箭头 | 模块2（知识地图） |
-| `.graph-view` | 节点连线 + 力导向布局 | 模块2/3（逻辑关系图谱展示） |
-| `.contrast-card` | 红绿/深浅对比色块 | 模块3/4（认知对比/错误vs理想） |
-| `.step-flow` | 垂直进度条 + 阶段标签 + 自审视问题 | 模块4（行动指南） |
-| `.dialogue-box` | 角色标签 + 对白 + 内心独白 | 模块4（场景模拟对话体） |
-| `.decision-tree` | 分支节点 + 判断条件 + 路径线 | 模块4（场景模拟决策树） |
-| `.cycle-diagram` | 环形节点 + 箭头循环 | 模块4（方法论完整循环） |
-| `.quote-glass` | 毛玻璃质感 + 引号装饰 | 模块5（金句） |
-| `.check-table` | 阶段-问题-行动三列表格 | 模块4（自检卡） |
-| `.nav-bar` | 底部导航线 + 百分比进度 | 全局（逻辑旅程位置） |
+| M1 叙事内核 | Layout 1 / Layout 7 | hero dark/light |
+| M2 人物谱系 | Layout 4 / Layout 9 | light |
+| M3 情节线索网 | Layout 6 / Layout 10 | light |
+| M4 场景卡片 | Layout 8 / Layout 10 | dark/light |
+| M5 主题层叠 | Layout 4 / Layout 9 | light |
+| M6 意象体系 | Layout 6 / Layout 3 | light |
+| M7 金句与遗珠 | Layout 8 / Layout 10 | dark |
+| M8 叙事边界 | Layout 9 / Layout 7 | light/dark |
 
-**HTML结构规范：**
-1. 每个模块占1-N个 `.slide`，`min-height:100vh` 全屏分页
-2. `scroll-snap-type: y mandatory` 分页滚动
-3. 纯HTML+内联CSS，零外部依赖
-4. 响应式：`@media (max-width: 768px)` 移动适配
-5. 每页底部 `.nav-bar` 显示逻辑旅程位置
+**小说 HTML PPT 特殊约束**：
+- 场景卡片页保留原文对话风格
+- 人物谱系页每页只展示 1 个人物
+- 金句页附带场景上下文
+- 每页的 .foot 标记叙事位置（[起] / [高潮1] / [回落]）
 
-**排版规则：**
-- `h1`: 衬线体900, 3rem
-- `h2`: 衬线体700, 1.9rem, 左侧强调色边框
-- `h3`: 无衬线体600, 1.05rem, 强调色大写
-- 正文: 无衬线体400, 0.98rem, 行距1.75
-- 关键词: 加粗+强调色
+---
+
+##### 10 种布局速查表
+
+| 布局类 | 视觉结构 | 最佳内容 | 典型 slide 类 |
+|:---|:---|:---|:---|
+| Layout 1 | 居中巨标题 + 副标题 + kicker | 封面、模块1一句话逻辑 | hero dark/light |
+| Layout 2 | kicker + 超大章节号 + 标题 + 引语 | 章节切换、模块间过渡 | hero dark/light |
+| Layout 3 | 3x2 网格 stat-card | 关键数据、统计、核心指标 | light |
+| Layout 4 | grid-2-7-5 左文右图 | 概念解释、支柱展开 | light |
+| Layout 5 | 固定 height 的图片网格 | 案例对比、多图展示 | light |
+| Layout 6 | 垂直流程 + 步骤节点 | 步骤、阶段、方法论流程 | light |
+| Layout 7 | 巨型问题 + 引语 | 悬念页、核心问题引出 | hero dark |
+| Layout 8 | 大号衬线引用 + 作者 | 金句、核心引用 | dark |
+| Layout 9 | 左右并列对比 | 认知对比、方法论前后效果 | light |
+| Layout 10 | 灵活图文混排 | 信息密集页、综合内容 | light/dark |
 
 ---
 

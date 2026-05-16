@@ -4,6 +4,10 @@ networkx>=3.0
 jieba>=0.42.1
 scikit-learn>=1.3.0
 
+# 语义检索依赖
+sentence-transformers>=2.2.0
+torch>=2.0.0
+
 # OCR依赖（用于处理扫描版PDF）
 pytesseract>=0.3.10
 pdf2image>=1.16.3

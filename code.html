@@ -3,1309 +3,568 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>小说深度蒸馏 V5.0 — 从论点压缩到体验复原</title>
+<title>书籍深度蒸馏 V5.0 — 类型分治蒸馏升级方案</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-/* ========== 主题色系统 ========== */
-:root, [data-theme="ink"] {
-  --hero-bg: #0f0e17;
-  --hero-bg2: #1a1832;
-  --light-bg: #f6f1eb;
-  --light-bg2: #ede6dc;
-  --accent: #c23616;
-  --accent-dim: #9b2c14;
-  --accent2: #e8a87c;
-  --heading-dark: #f0e6d6;
-  --text-dark: #b8a99a;
-  --heading-light: #1a1a2e;
-  --text-light: #3d3530;
-  --text-dim: #7a706a;
-  --kicker-color: #c23616;
-  --border-light: #d9cfc4;
-  --callout-bg: rgba(194,54,22,0.07);
-  --stat-bg: rgba(194,54,22,0.05);
-}
-[data-theme="indigo"] {
-  --hero-bg: #0d1b2a;
-  --hero-bg2: #1b2838;
-  --light-bg: #f0f4f8;
-  --light-bg2: #e2e8f0;
-  --accent: #1b6ca8;
-  --accent-dim: #155a8a;
-  --accent2: #7ec8e3;
-  --heading-dark: #e2e8f0;
-  --text-dark: #94a3b8;
-  --heading-light: #0d1b2a;
-  --text-light: #1e293b;
-  --text-dim: #64748b;
-  --kicker-color: #1b6ca8;
-  --border-light: #cbd5e1;
-  --callout-bg: rgba(27,108,168,0.07);
-  --stat-bg: rgba(27,108,168,0.05);
-}
-[data-theme="forest"] {
-  --hero-bg: #0f1a0f;
-  --hero-bg2: #1a2e1a;
-  --light-bg: #f2f5f0;
-  --light-bg2: #e5ebe2;
-  --accent: #4a7c3f;
-  --accent-dim: #3a6230;
-  --accent2: #8fbc8f;
-  --heading-dark: #dce8d8;
-  --text-dark: #8fa888;
-  --heading-light: #1a2e1a;
-  --text-light: #2d3a2a;
-  --text-dim: #5a6e55;
-  --kicker-color: #4a7c3f;
-  --border-light: #c5d4bf;
-  --callout-bg: rgba(74,124,63,0.07);
-  --stat-bg: rgba(74,124,63,0.05);
-}
-[data-theme="leather"] {
-  --hero-bg: #1a140e;
-  --hero-bg2: #2a1f14;
-  --light-bg: #f5efe6;
-  --light-bg2: #ebe3d6;
-  --accent: #a0522d;
-  --accent-dim: #8b4513;
-  --accent2: #d2a679;
-  --heading-dark: #e8ddd0;
-  --text-dark: #a89880;
-  --heading-light: #2a1f14;
-  --text-light: #3a2e20;
-  --text-dim: #7a6e5e;
-  --kicker-color: #a0522d;
-  --border-light: #d4c8b8;
-  --callout-bg: rgba(160,82,45,0.07);
-  --stat-bg: rgba(160,82,45,0.05);
-}
-[data-theme="dune"] {
-  --hero-bg: #1a1714;
-  --hero-bg2: #2a2520;
-  --light-bg: #faf5ef;
-  --light-bg2: #f0e8de;
-  --accent: #c4956a;
-  --accent-dim: #a87d56;
-  --accent2: #e8c9a8;
-  --heading-dark: #f0e4d4;
-  --text-dark: #a89880;
-  --heading-light: #2a2520;
-  --text-light: #3a3530;
-  --text-dim: #7a7060;
-  --kicker-color: #c4956a;
-  --border-light: #d9cfc2;
-  --callout-bg: rgba(196,149,106,0.07);
-  --stat-bg: rgba(196,149,106,0.05);
-}
+:root,[data-theme="ink"]{--hero-bg:#0f0e17;--hero-bg2:#1a1832;--light-bg:#f6f1eb;--light-bg2:#ede6dc;--accent:#c23616;--accent-dim:#9b2c14;--accent2:#e8a87c;--hd:#f0e6d6;--td:#b8a99a;--hl:#1a1a2e;--tl:#3d3530;--tdim:#7a706a;--kick:#c23616;--bdl:#d9cfc4;--call:rgba(194,54,22,0.07);--stat:rgba(194,54,22,0.05)}
+[data-theme="indigo"]{--hero-bg:#0d1b2a;--hero-bg2:#1b2838;--light-bg:#f0f4f8;--light-bg2:#e2e8f0;--accent:#1b6ca8;--accent-dim:#155a8a;--accent2:#7ec8e3;--hd:#e2e8f0;--td:#94a3b8;--hl:#0d1b2a;--tl:#1e293b;--tdim:#64748b;--kick:#1b6ca8;--bdl:#cbd5e1;--call:rgba(27,108,168,0.07);--stat:rgba(27,108,168,0.05)}
+[data-theme="forest"]{--hero-bg:#0f1a0f;--hero-bg2:#1a2e1a;--light-bg:#f2f5f0;--light-bg2:#e5ebe2;--accent:#4a7c3f;--accent-dim:#3a6230;--accent2:#8fbc8f;--hd:#dce8d8;--td:#8fa888;--hl:#1a2e1a;--tl:#2d3a2a;--tdim:#5a6e55;--kick:#4a7c3f;--bdl:#c5d4bf;--call:rgba(74,124,63,0.07);--stat:rgba(74,124,63,0.05)}
+[data-theme="leather"]{--hero-bg:#1a140e;--hero-bg2:#2a1f14;--light-bg:#f5efe6;--light-bg2:#ebe3d6;--accent:#a0522d;--accent-dim:#8b4513;--accent2:#d2a679;--hd:#e8ddd0;--td:#a89880;--hl:#2a1f14;--tl:#3a2e20;--tdim:#7a6e5e;--kick:#a0522d;--bdl:#d4c8b8;--call:rgba(160,82,45,0.07);--stat:rgba(160,82,45,0.05)}
+[data-theme="dune"]{--hero-bg:#1a1714;--hero-bg2:#2a2520;--light-bg:#faf5ef;--light-bg2:#f0e8de;--accent:#c4956a;--accent-dim:#a87d56;--accent2:#e8c9a8;--hd:#f0e4d4;--td:#a89880;--hl:#2a2520;--tl:#3a3530;--tdim:#7a7060;--kick:#c4956a;--bdl:#d9cfc2;--call:rgba(196,149,106,0.07);--stat:rgba(196,149,106,0.05)}
 
-/* ========== 基础重置 ========== */
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
-body {
-  font-family: 'Noto Sans SC', sans-serif;
-  background: var(--hero-bg);
-  color: var(--text-light);
-  overflow-x: hidden;
-}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-snap-type:y mandatory;scroll-behavior:smooth}
+body{font-family:'Noto Sans SC',sans-serif;background:var(--hero-bg);color:var(--tl);overflow-x:hidden}
 
-/* ========== 字体系统 ========== */
-.ed-display-zh {
-  font-family: 'Noto Serif SC', serif;
-  font-weight: 900;
-  font-size: max(min(7vw, 8vh), 36px);
-  line-height: 1.15;
-  letter-spacing: -0.02em;
-}
-.ed-h1 {
-  font-family: 'Noto Serif SC', serif;
-  font-weight: 700;
-  font-size: max(min(4.5vw, 5.5vh), 28px);
-  line-height: 1.25;
-  letter-spacing: -0.01em;
-}
-.ed-h2 {
-  font-family: 'Noto Serif SC', serif;
-  font-weight: 700;
-  font-size: max(min(3vw, 3.5vh), 22px);
-  line-height: 1.3;
-}
-.ed-h3 {
-  font-family: 'Noto Sans SC', sans-serif;
-  font-weight: 600;
-  font-size: max(min(1.5vw, 2vh), 15px);
-  line-height: 1.4;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-.ed-body {
-  font-family: 'Noto Sans SC', sans-serif;
-  font-weight: 400;
-  font-size: max(min(1.3vw, 1.6vh), 14px);
-  line-height: 1.8;
-}
-.ed-lead {
-  font-family: 'Noto Sans SC', sans-serif;
-  font-weight: 300;
-  font-size: max(min(1.6vw, 2vh), 15px);
-  line-height: 1.75;
-}
-.ed-kicker {
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 500;
-  font-size: max(min(1vw, 1.2vh), 11px);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-}
-.ed-meta {
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 400;
-  font-size: max(min(0.9vw, 1vh), 10px);
-  letter-spacing: 0.1em;
-  opacity: 0.6;
-}
-.ed-big-num {
-  font-family: 'Noto Serif SC', serif;
-  font-weight: 900;
-  font-size: max(min(5vw, 6vh), 40px);
-  line-height: 1;
-}
+.ed-display-zh{font-family:'Noto Serif SC',serif;font-weight:900;font-size:max(min(6.5vw,7.5vh),32px);line-height:1.15;letter-spacing:-.02em}
+.ed-h1{font-family:'Noto Serif SC',serif;font-weight:700;font-size:max(min(4vw,5vh),26px);line-height:1.25;letter-spacing:-.01em}
+.ed-h2{font-family:'Noto Serif SC',serif;font-weight:700;font-size:max(min(2.8vw,3.2vh),20px);line-height:1.3}
+.ed-h3{font-family:'Noto Sans SC',sans-serif;font-weight:600;font-size:max(min(1.4vw,1.8vh),14px);line-height:1.4;text-transform:uppercase;letter-spacing:.08em}
+.ed-body{font-family:'Noto Sans SC',sans-serif;font-weight:400;font-size:max(min(1.2vw,1.5vh),13px);line-height:1.8}
+.ed-lead{font-family:'Noto Sans SC',sans-serif;font-weight:300;font-size:max(min(1.5vw,1.9vh),14px);line-height:1.75}
+.ed-kicker{font-family:'JetBrains Mono',monospace;font-weight:500;font-size:max(min(1vw,1.2vh),10px);letter-spacing:.2em;text-transform:uppercase}
+.ed-meta{font-family:'JetBrains Mono',monospace;font-weight:400;font-size:max(min(.85vw,1vh),9px);letter-spacing:.1em;opacity:.55}
+.ed-big-num{font-family:'Noto Serif SC',serif;font-weight:900;font-size:max(min(4.5vw,5.5vh),36px);line-height:1}
 
-/* ========== Slide 通用 ========== */
-.slide {
-  min-height: 100vh;
-  max-height: 100vh;
-  overflow-y: auto;
-  scroll-snap-align: start;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-}
-.slide.hero {
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 8vh 8vw;
-}
-.slide.hero.dark {
-  background: linear-gradient(160deg, var(--hero-bg) 0%, var(--hero-bg2) 100%);
-  color: var(--heading-dark);
-}
-.slide.hero.light {
-  background: linear-gradient(180deg, var(--light-bg) 0%, var(--light-bg2) 100%);
-  color: var(--heading-light);
-}
-.slide.light {
-  background: var(--light-bg);
-  color: var(--text-light);
-}
-.slide.dark {
-  background: var(--hero-bg);
-  color: var(--text-dark);
-}
+.slide{min-height:100vh;max-height:100vh;overflow-y:auto;scroll-snap-align:start;position:relative;display:flex;flex-direction:column}
+.slide.hero{justify-content:center;align-items:center;text-align:center;padding:8vh 8vw}
+.slide.hero.dark{background:linear-gradient(160deg,var(--hero-bg) 0%,var(--hero-bg2) 100%);color:var(--hd)}
+.slide.hero.light{background:linear-gradient(180deg,var(--light-bg) 0%,var(--light-bg2) 100%);color:var(--hl)}
+.slide.light{background:var(--light-bg);color:var(--tl)}
+.slide.dark{background:var(--hero-bg);color:var(--td)}
 
-/* ========== Chrome / Foot ========== */
-.chrome {
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 2vh 4vw;
-  z-index: 10;
-}
-.chrome-left {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: max(min(0.85vw, 1vh), 10px);
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  opacity: 0.5;
-}
-.chrome-right {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: max(min(0.85vw, 1vh), 10px);
-  opacity: 0.4;
-}
-.foot {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 2vh 4vw;
-  z-index: 10;
-}
-.foot-left {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: max(min(0.8vw, 0.9vh), 9px);
-  opacity: 0.35;
-}
-.foot-right {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: max(min(0.8vw, 0.9vh), 9px);
-  opacity: 0.35;
-}
+.chrome{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:2vh 4vw;z-index:10}
+.chrome-l,.chrome-r{font-family:'JetBrains Mono',monospace;font-size:max(min(.8vw,.95vh),9px);letter-spacing:.12em;text-transform:uppercase;opacity:.45}
+.foot{position:absolute;bottom:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:2vh 4vw;z-index:10}
+.foot-l,.foot-r{font-family:'JetBrains Mono',monospace;font-size:max(min(.75vw,.85vh),8px);opacity:.3}
 
-/* ========== 布局：Hero Cover ========== */
-.hero-cover .kicker { color: var(--accent); margin-bottom: 2vh; }
-.hero-cover .title { margin-bottom: 2vh; }
-.hero-cover .subtitle {
-  font-family: 'Noto Sans SC', sans-serif;
-  font-weight: 300;
-  font-size: max(min(2vw, 2.5vh), 16px);
-  opacity: 0.7;
-  margin-bottom: 4vh;
-}
-.hero-cover .meta-strip {
-  display: flex;
-  gap: 3vw;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-.hero-cover .meta-item {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: max(min(0.9vw, 1vh), 10px);
-  letter-spacing: 0.1em;
-  opacity: 0.45;
-  text-transform: uppercase;
-}
+.hero-bg-decor{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.hero-bg-decor .ln{position:absolute;background:var(--accent);opacity:.04}
+.hero-bg-decor .ln-h{height:1px;left:0;right:0}
+.hero-bg-decor .ln-v{width:1px;top:0;bottom:0}
+.hero-bg-decor .dt{position:absolute;width:4px;height:4px;border-radius:50%;background:var(--accent);opacity:.12}
+.slide>*:not(.hero-bg-decor):not(.chrome):not(.foot){position:relative;z-index:1}
 
-/* ========== 布局：Act Divider ========== */
-.act-divider {
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-.act-divider .act-num {
-  font-family: 'Noto Serif SC', serif;
-  font-weight: 900;
-  font-size: max(min(12vw, 15vh), 80px);
-  line-height: 1;
-  opacity: 0.08;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-.act-divider .kicker { color: var(--accent); margin-bottom: 1.5vh; position: relative; }
-.act-divider .act-title { position: relative; margin-bottom: 2vh; }
-.act-divider .act-sub {
-  font-family: 'Noto Sans SC', sans-serif;
-  font-weight: 300;
-  font-size: max(min(1.5vw, 1.8vh), 14px);
-  opacity: 0.5;
-  position: relative;
-  max-width: 50ch;
-}
+.kicker{color:var(--accent);margin-bottom:1.8vh}
+.subtitle{font-family:'Noto Sans SC',sans-serif;font-weight:300;font-size:max(min(1.8vw,2.2vh),14px);opacity:.65;margin-bottom:3vh;max-width:52ch}
+.meta-strip{display:flex;gap:2.5vw;justify-content:center;flex-wrap:wrap}
+.meta-item{font-family:'JetBrains Mono',monospace;font-size:max(min(.85vw,1vh),9px);letter-spacing:.1em;opacity:.4;text-transform:uppercase}
 
-/* ========== 布局：Question Page ========== */
-.question-page .q-mark {
-  font-family: 'Noto Serif SC', serif;
-  font-weight: 900;
-  font-size: max(min(18vw, 22vh), 120px);
-  line-height: 1;
-  opacity: 0.06;
-  position: absolute;
-  top: 15vh;
-  right: 8vw;
-}
-.question-page .kicker { color: var(--accent); margin-bottom: 2vh; position: relative; }
-.question-page .q-title { position: relative; margin-bottom: 3vh; max-width: 28ch; }
-.question-page .q-sub {
-  position: relative;
-  font-family: 'Noto Sans SC', sans-serif;
-  font-weight: 300;
-  font-size: max(min(1.4vw, 1.7vh), 13px);
-  opacity: 0.5;
-  max-width: 50ch;
-}
+.act-num{font-family:'Noto Serif SC',serif;font-weight:900;font-size:max(min(12vw,15vh),80px);line-height:1;opacity:.06;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
+.act-sub{font-family:'Noto Sans SC',sans-serif;font-weight:300;font-size:max(min(1.4vw,1.7vh),13px);opacity:.5;position:relative;max-width:48ch}
 
-/* ========== 布局：Before-After ========== */
-.before-after {
-  padding: 10vh 4vw 8vh;
-}
-.before-after .ba-header {
-  text-align: center;
-  margin-bottom: 5vh;
-}
-.before-after .ba-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3vw;
-  flex: 1;
-}
-.ba-card {
-  padding: 3vh 2.5vw;
-  border: 1px solid var(--border-light);
-  position: relative;
-}
-.ba-card.old {
-  background: rgba(0,0,0,0.03);
-}
-.ba-card.new {
-  background: var(--callout-bg);
-  border-color: var(--accent);
-}
-.ba-card .ba-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: max(min(0.85vw, 1vh), 10px);
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  margin-bottom: 2vh;
-}
-.ba-card.old .ba-label { color: var(--text-dim); }
-.ba-card.new .ba-label { color: var(--accent); }
-.ba-card .ba-title {
-  font-family: 'Noto Serif SC', serif;
-  font-weight: 700;
-  font-size: max(min(2.2vw, 2.8vh), 18px);
-  margin-bottom: 2vh;
-  line-height: 1.3;
-}
-.ba-card .ba-items { list-style: none; }
-.ba-card .ba-items li {
-  font-size: max(min(1.1vw, 1.3vh), 12px);
-  line-height: 1.7;
-  padding: 0.6vh 0;
-  border-bottom: 1px solid var(--border-light);
-}
-.ba-card .ba-items li:last-child { border-bottom: none; }
-.ba-card.old .ba-items li { opacity: 0.5; text-decoration: line-through; }
-.ba-card.new .ba-items li { opacity: 0.9; }
-.ba-card.new .ba-items li strong { color: var(--accent); }
+.q-mark{font-family:'Noto Serif SC',serif;font-weight:900;font-size:max(min(16vw,20vh),110px);line-height:1;opacity:.05;position:absolute;top:12vh;right:8vw}
 
-/* ========== 布局：Mixed Layout ========== */
-.mixed-layout {
-  padding: 10vh 5vw 8vh;
-}
-.mixed-layout .ml-kicker { color: var(--accent); margin-bottom: 1.5vh; }
-.mixed-layout .ml-title { margin-bottom: 3vh; }
-.mixed-layout .ml-cols {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3vw;
-}
-.mixed-layout .ml-single { max-width: 72ch; }
-.ml-block {
-  margin-bottom: 3vh;
-}
-.ml-block h3 {
-  font-family: 'Noto Sans SC', sans-serif;
-  font-weight: 600;
-  font-size: max(min(1.3vw, 1.5vh), 13px);
-  margin-bottom: 1vh;
-  padding-bottom: 0.5vh;
-  border-bottom: 2px solid var(--accent);
-  display: inline-block;
-}
-.ml-block p, .ml-block ul {
-  font-size: max(min(1.1vw, 1.3vh), 12px);
-  line-height: 1.8;
-}
-.ml-block ul { padding-left: 1.5em; }
-.ml-block ul li { margin-bottom: 0.4vh; }
+.ba-header{text-align:center;margin-bottom:3vh}
+.ba-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.5vw}
+.ba-card{padding:2.5vh 2vw;border:1px solid var(--bdl);position:relative}
+.ba-card.old{background:rgba(0,0,0,.03)}
+.ba-card.new{background:var(--call);border-color:var(--accent)}
+.ba-label{font-family:'JetBrains Mono',monospace;font-size:max(min(.8vw,.95vh),9px);letter-spacing:.15em;text-transform:uppercase;margin-bottom:1.5vh}
+.ba-card.old .ba-label{color:var(--tdim)}
+.ba-card.new .ba-label{color:var(--accent)}
+.ba-title{font-family:'Noto Serif SC',serif;font-weight:700;font-size:max(min(2vw,2.5vh),16px);margin-bottom:1.5vh;line-height:1.3}
+.ba-items{list-style:none}
+.ba-items li{font-size:max(min(1vw,1.2vh),11px);line-height:1.7;padding:.5vh 0;border-bottom:1px solid var(--bdl)}
+.ba-items li:last-child{border-bottom:none}
+.ba-card.old .ba-items li{opacity:.45;text-decoration:line-through}
+.ba-card.new .ba-items li{opacity:.85}
+.ba-card.new .ba-items li strong{color:var(--accent)}
 
-/* ========== 布局：Pipeline ========== */
-.pipeline-layout {
-  padding: 10vh 6vw 8vh;
-}
-.pipeline-layout .pl-kicker { color: var(--accent); margin-bottom: 1.5vh; }
-.pipeline-layout .pl-title { margin-bottom: 4vh; }
-.pl-steps {
-  position: relative;
-  padding-left: 3vw;
-}
-.pl-steps::before {
-  content: '';
-  position: absolute;
-  left: 0.6vw;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  background: var(--border-light);
-}
-.pl-step {
-  position: relative;
-  margin-bottom: 3vh;
-  padding-left: 2vw;
-}
-.pl-step::before {
-  content: '';
-  position: absolute;
-  left: -3vw;
-  top: 0.6vh;
-  width: max(min(1.2vw, 1.4vh), 10px);
-  height: max(min(1.2vw, 1.4vh), 10px);
-  border-radius: 50%;
-  background: var(--accent);
-  border: 3px solid var(--light-bg);
-  z-index: 2;
-}
-.pl-step .step-num {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: max(min(0.85vw, 1vh), 10px);
-  color: var(--accent);
-  letter-spacing: 0.1em;
-  margin-bottom: 0.3vh;
-}
-.pl-step .step-title {
-  font-family: 'Noto Serif SC', serif;
-  font-weight: 700;
-  font-size: max(min(1.8vw, 2.2vh), 16px);
-  margin-bottom: 0.6vh;
-}
-.pl-step .step-desc {
-  font-size: max(min(1.05vw, 1.25vh), 12px);
-  line-height: 1.7;
-  opacity: 0.7;
-}
+.ml{padding:9vh 5vw 7vh}
+.ml .ml-kick{color:var(--accent);margin-bottom:1.2vh}
+.ml .ml-title{margin-bottom:2.5vh}
+.ml-cols{display:grid;grid-template-columns:1fr 1fr;gap:2.5vw}
+.ml-single{max-width:68ch}
+.ml-block{margin-bottom:2.5vh}
+.ml-block h3{font-family:'Noto Sans SC',sans-serif;font-weight:600;font-size:max(min(1.2vw,1.4vh),12px);margin-bottom:.8vh;padding-bottom:.4vh;border-bottom:2px solid var(--accent);display:inline-block}
+.ml-block p,.ml-block ul{font-size:max(min(1vw,1.2vh),11px);line-height:1.75}
+.ml-block ul{padding-left:1.2em}
+.ml-block ul li{margin-bottom:.3vh}
 
-/* ========== 布局：Big Numbers ========== */
-.big-numbers-layout {
-  padding: 10vh 5vw 8vh;
-}
-.big-numbers-layout .bn-kicker { color: var(--accent); margin-bottom: 1.5vh; text-align: center; }
-.big-numbers-layout .bn-title { text-align: center; margin-bottom: 4vh; }
-.bn-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2vw;
-}
-.bn-card {
-  padding: 3vh 2vw;
-  background: var(--stat-bg);
-  border: 1px solid var(--border-light);
-  text-align: center;
-}
-.bn-card .bn-val {
-  color: var(--accent);
-  margin-bottom: 1vh;
-}
-.bn-card .bn-label {
-  font-family: 'Noto Sans SC', sans-serif;
-  font-weight: 600;
-  font-size: max(min(1.1vw, 1.3vh), 12px);
-  margin-bottom: 0.6vh;
-}
-.bn-card .bn-desc {
-  font-size: max(min(0.9vw, 1vh), 10px);
-  opacity: 0.55;
-  line-height: 1.5;
-}
+.pl{padding:9vh 6vw 7vh}
+.pl .pl-kick{color:var(--accent);margin-bottom:1.2vh}
+.pl .pl-title{margin-bottom:3vh}
+.pl-steps{position:relative;padding-left:2.5vw}
+.pl-steps::before{content:'';position:absolute;left:.5vw;top:0;bottom:0;width:2px;background:var(--bdl)}
+.pl-step{position:relative;margin-bottom:2.5vh;padding-left:1.8vw}
+.pl-step::before{content:'';position:absolute;left:-2.5vw;top:.5vh;width:max(min(1vw,1.2vh),9px);height:max(min(1vw,1.2vh),9px);border-radius:50%;background:var(--accent);border:3px solid var(--light-bg);z-index:2}
+.pl-step .sn{font-family:'JetBrains Mono',monospace;font-size:max(min(.8vw,.95vh),9px);color:var(--accent);letter-spacing:.1em;margin-bottom:.2vh}
+.pl-step .st{font-family:'Noto Serif SC',serif;font-weight:700;font-size:max(min(1.6vw,2vh),14px);margin-bottom:.4vh}
+.pl-step .sd{font-size:max(min(1vw,1.2vh),11px);line-height:1.65;opacity:.65}
 
-/* ========== 布局：Big Quote ========== */
-.big-quote-layout {
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 12vh 10vw;
-}
-.big-quote-layout .bq-mark {
-  font-family: 'Noto Serif SC', serif;
-  font-size: max(min(8vw, 10vh), 60px);
-  line-height: 1;
-  color: var(--accent);
-  opacity: 0.2;
-  margin-bottom: 2vh;
-}
-.big-quote-layout .bq-text {
-  font-family: 'Noto Serif SC', serif;
-  font-weight: 700;
-  font-size: max(min(2.8vw, 3.5vh), 22px);
-  line-height: 1.5;
-  max-width: 36ch;
-  margin-bottom: 3vh;
-}
-.big-quote-layout .bq-cite {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: max(min(0.9vw, 1.1vh), 10px);
-  letter-spacing: 0.15em;
-  opacity: 0.4;
-  text-transform: uppercase;
-}
+.bn{padding:9vh 5vw 7vh}
+.bn .bn-kick{color:var(--accent);margin-bottom:1.2vh;text-align:center}
+.bn .bn-title{text-align:center;margin-bottom:3vh}
+.bn-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1.2vw}
+.bn-card{padding:2vh 1.2vw;background:var(--stat);border:1px solid var(--bdl);text-align:center}
+.bn-card .bv{color:var(--accent);margin-bottom:.8vh}
+.bn-card .bl{font-family:'Noto Sans SC',sans-serif;font-weight:600;font-size:max(min(.95vw,1.1vh),10px);margin-bottom:.4vh}
+.bn-card .bd{font-size:max(min(.8vw,.9vh),8px);opacity:.5;line-height:1.4}
 
-/* ========== Callout ========== */
-.ed-callout {
-  background: var(--callout-bg);
-  border-left: 3px solid var(--accent);
-  padding: 2vh 2vw;
-  margin: 2vh 0;
-  font-size: max(min(1.1vw, 1.3vh), 12px);
-  line-height: 1.7;
-}
+.bql{justify-content:center;align-items:center;text-align:center;padding:12vh 10vw}
+.bq-mark{font-family:'Noto Serif SC',serif;font-size:max(min(7vw,9vh),55px);line-height:1;color:var(--accent);opacity:.18;margin-bottom:1.5vh}
+.bq-text{font-family:'Noto Serif SC',serif;font-weight:700;font-size:max(min(2.5vw,3.2vh),20px);line-height:1.5;max-width:34ch;margin-bottom:2.5vh}
+.bq-cite{font-family:'JetBrains Mono',monospace;font-size:max(min(.85vw,1vh),9px);letter-spacing:.15em;opacity:.35;text-transform:uppercase}
 
-/* ========== 场景卡片 ========== */
-.scene-card {
-  background: var(--callout-bg);
-  border: 1px solid var(--accent);
-  padding: 2.5vh 2.5vw;
-  margin-bottom: 2vh;
-}
-.scene-card .sc-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: max(min(0.8vw, 0.9vh), 9px);
-  color: var(--accent);
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  margin-bottom: 1vh;
-}
-.scene-card .sc-field {
-  margin-bottom: 1.2vh;
-  font-size: max(min(1.05vw, 1.2vh), 11px);
-  line-height: 1.7;
-}
-.scene-card .sc-field strong {
-  color: var(--accent);
-  font-weight: 600;
-}
+.ed-callout{background:var(--call);border-left:3px solid var(--accent);padding:1.8vh 1.8vw;margin:1.5vh 0;font-size:max(min(1vw,1.2vh),11px);line-height:1.7}
 
-/* ========== Graph Schema 展示 ========== */
-.schema-row {
-  display: flex;
-  align-items: center;
-  gap: 1vw;
-  margin-bottom: 1vh;
-  font-size: max(min(1vw, 1.2vh), 11px);
-}
-.schema-node {
-  display: inline-block;
-  padding: 0.4vh 1vw;
-  border: 1.5px solid var(--accent);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: max(min(0.9vw, 1vh), 10px);
-  letter-spacing: 0.05em;
-}
-.schema-edge {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: max(min(0.8vw, 0.9vh), 9px);
-  color: var(--accent);
-  letter-spacing: 0.05em;
-}
+.type-row{display:grid;grid-template-columns:2fr 1.2fr 1.2fr 1fr 1fr .8fr;gap:.5vw;padding:.8vh 0;border-bottom:1px solid var(--bdl);font-size:max(min(.9vw,1.05vh),10px);line-height:1.5;align-items:center}
+.type-row.head{font-family:'JetBrains Mono',monospace;font-weight:500;letter-spacing:.08em;text-transform:uppercase;opacity:.5;font-size:max(min(.75vw,.85vh),8px);border-bottom:2px solid var(--accent)}
+.type-row .tag{display:inline-block;padding:.2vh .6vw;border:1px solid var(--accent);font-family:'JetBrains Mono',monospace;font-size:max(min(.7vw,.8vh),8px);letter-spacing:.05em;margin-right:.3vw}
+.type-row .tag.a{border-color:var(--accent);color:var(--accent)}
+.type-row .tag.b{border-color:#2a7a4a;color:#2a7a4a}
+.type-row .tag.c{border-color:#6a4aa8;color:#6a4aa8}
+.type-row .tag.d{border-color:#a87d2a;color:#a87d2a)
 
-/* ========== 入场动效 ========== */
-[data-anim="fade-up"] {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-}
-[data-anim="fade-right"] {
-  opacity: 0;
-  transform: translateX(-30px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-}
-[data-anim="fade-left"] {
-  opacity: 0;
-  transform: translateX(30px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-}
-[data-anim="rise-in"] {
-  opacity: 0;
-  transform: translateY(50px) scale(0.95);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-}
-[data-anim="zoom-pop"] {
-  opacity: 0;
-  transform: scale(0.85);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-[data-anim="stagger-list"] > * {
-  opacity: 0;
-  transform: translateY(15px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
-}
-.slide.in-view [data-anim] {
-  opacity: 1;
-  transform: translateY(0) translateX(0) scale(1);
-}
-.slide.in-view [data-anim="stagger-list"] > *:nth-child(1) { transition-delay: 0.1s; }
-.slide.in-view [data-anim="stagger-list"] > *:nth-child(2) { transition-delay: 0.2s; }
-.slide.in-view [data-anim="stagger-list"] > *:nth-child(3) { transition-delay: 0.3s; }
-.slide.in-view [data-anim="stagger-list"] > *:nth-child(4) { transition-delay: 0.4s; }
-.slide.in-view [data-anim="stagger-list"] > *:nth-child(5) { transition-delay: 0.5s; }
-.slide.in-view [data-anim="stagger-list"] > *:nth-child(6) { transition-delay: 0.6s; }
-.slide.in-view [data-anim="stagger-list"] > *:nth-child(7) { transition-delay: 0.7s; }
-.slide.in-view [data-anim="stagger-list"] > *:nth-child(8) { transition-delay: 0.8s; }
+[data-anim="fade-up"]{opacity:0;transform:translateY(25px);transition:opacity .65s ease,transform .65s ease}
+[data-anim="rise-in"]{opacity:0;transform:translateY(40px) scale(.96);transition:opacity .75s ease,transform .75s ease}
+[data-anim="zoom-pop"]{opacity:0;transform:scale(.88);transition:opacity .55s ease,transform .55s ease}
+[data-anim="stagger-list"]>*{opacity:0;transform:translateY(12px);transition:opacity .45s ease,transform .45s ease}
+.slide.iv [data-anim]{opacity:1;transform:translateY(0) translateX(0) scale(1)}
+.slide.iv [data-anim="stagger-list"]>*:nth-child(1){transition-delay:.08s}
+.slide.iv [data-anim="stagger-list"]>*:nth-child(2){transition-delay:.16s}
+.slide.iv [data-anim="stagger-list"]>*:nth-child(3){transition-delay:.24s}
+.slide.iv [data-anim="stagger-list"]>*:nth-child(4){transition-delay:.32s}
+.slide.iv [data-anim="stagger-list"]>*:nth-child(5){transition-delay:.4s}
+.slide.iv [data-anim="stagger-list"]>*:nth-child(6){transition-delay:.48s}
+.slide.iv [data-anim="stagger-list"]>*:nth-child(7){transition-delay:.56s}
+.slide.iv [data-anim="stagger-list"]>*:nth-child(8){transition-delay:.64s}
+.slide.iv [data-anim="stagger-list"]>*:nth-child(9){transition-delay:.72s}
+.slide.iv [data-anim="stagger-list"]>*:nth-child(10){transition-delay:.8s}
 
-/* ========== Hero 背景装饰 ========== */
-.hero-bg-decor {
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 0;
-}
-.hero-bg-decor .line {
-  position: absolute;
-  background: var(--accent);
-  opacity: 0.04;
-}
-.hero-bg-decor .line-h {
-  height: 1px;
-  left: 0; right: 0;
-}
-.hero-bg-decor .line-v {
-  width: 1px;
-  top: 0; bottom: 0;
-}
-.hero-bg-decor .dot {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: var(--accent);
-  opacity: 0.15;
-}
-.slide > *:not(.hero-bg-decor):not(.chrome):not(.foot) {
-  position: relative;
-  z-index: 1;
-}
+.pbar{position:fixed;top:0;left:0;height:2px;background:var(--accent);z-index:100;transition:width .3s}
+.ndots{position:fixed;right:1.8vw;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:6px;z-index:100}
+.ndot{width:5px;height:5px;border-radius:50%;background:var(--tdim);opacity:.25;cursor:pointer;transition:opacity .3s,background .3s,transform .3s}
+.ndot.active{opacity:1;background:var(--accent);transform:scale(1.5)}
+.khint{position:fixed;bottom:1.8vh;right:2.5vw;font-family:'JetBrains Mono',monospace;font-size:9px;opacity:.2;z-index:100;letter-spacing:.04em}
+.ttoast{position:fixed;bottom:3.5vh;left:50%;transform:translateX(-50%) translateY(15px);background:var(--hero-bg);color:var(--hd);border:1px solid var(--accent);padding:.8vh 1.8vw;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;opacity:0;transition:opacity .3s,transform .3s;z-index:999;pointer-events:none}
+.ttoast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-/* ========== 响应式 ========== */
-@media (max-width: 768px) {
-  .before-after .ba-grid,
-  .mixed-layout .ml-cols {
-    grid-template-columns: 1fr;
-  }
-  .bn-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-  .ed-display-zh { font-size: max(7vw, 28px); }
-  .ed-h1 { font-size: max(5vw, 22px); }
-  .slide { padding-left: 6vw !important; padding-right: 6vw !important; }
-}
-
-/* ========== 主题切换提示 ========== */
-.theme-toast {
-  position: fixed;
-  bottom: 4vh;
-  left: 50%;
-  transform: translateX(-50%) translateY(20px);
-  background: var(--hero-bg);
-  color: var(--heading-dark);
-  border: 1px solid var(--accent);
-  padding: 1vh 2vw;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
-  letter-spacing: 0.1em;
-  opacity: 0;
-  transition: opacity 0.3s, transform 0.3s;
-  z-index: 999;
-  pointer-events: none;
-}
-.theme-toast.show {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-}
-
-/* ========== 进度条 ========== */
-.progress-bar {
-  position: fixed;
-  top: 0; left: 0;
-  height: 2px;
-  background: var(--accent);
-  z-index: 100;
-  transition: width 0.3s;
-}
-
-/* ========== 导航点 ========== */
-.nav-dots {
-  position: fixed;
-  right: 2vw;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  z-index: 100;
-}
-.nav-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--text-dim);
-  opacity: 0.3;
-  cursor: pointer;
-  transition: opacity 0.3s, background 0.3s, transform 0.3s;
-}
-.nav-dot.active {
-  opacity: 1;
-  background: var(--accent);
-  transform: scale(1.4);
-}
-
-/* ========== 键盘提示 ========== */
-.key-hint {
-  position: fixed;
-  bottom: 2vh;
-  right: 3vw;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  opacity: 0.25;
-  z-index: 100;
-  letter-spacing: 0.05em;
+@media(max-width:768px){
+.ba-grid,.ml-cols{grid-template-columns:1fr}
+.bn-grid{grid-template-columns:repeat(3,1fr)}
+.type-row{grid-template-columns:1fr;font-size:10px}
+.slide{padding-left:5vw!important;padding-right:5vw!important}
 }
 </style>
 </head>
 <body>
+<div class="pbar" id="pb" style="width:0%"></div>
+<nav class="ndots" id="nd"></nav>
+<div class="khint">T / Arrow Keys</div>
+<div class="ttoast" id="tt"></div>
 
-<!-- 进度条 -->
-<div class="progress-bar" id="progressBar" style="width:0%"></div>
-
-<!-- 导航点 -->
-<nav class="nav-dots" id="navDots"></nav>
-
-<!-- 键盘提示 -->
-<div class="key-hint">T 切换主题 / 方向键翻页</div>
-
-<!-- 主题切换提示 -->
-<div class="theme-toast" id="themeToast"></div>
-
-<!-- ==================== SLIDE 1: 封面 ==================== -->
-<section class="slide hero dark hero-cover" data-title="封面">
-  <div class="hero-bg-decor">
-    <div class="line line-h" style="top:25%"></div>
-    <div class="line line-h" style="top:50%"></div>
-    <div class="line line-h" style="top:75%"></div>
-    <div class="line line-v" style="left:20%"></div>
-    <div class="line line-v" style="left:50%"></div>
-    <div class="line line-v" style="left:80%"></div>
-    <div class="dot" style="top:25%;left:20%"></div>
-    <div class="dot" style="top:50%;left:80%"></div>
-    <div class="dot" style="top:75%;left:50%"></div>
-  </div>
-  <div class="chrome">
-    <span class="chrome-left">Book Distillation</span>
-    <span class="chrome-right">V5.0</span>
-  </div>
-  <p class="ed-kicker kicker" data-anim="fade-up">FICTION DISTILLATION SYSTEM</p>
-  <h1 class="ed-display-zh title" data-anim="rise-in">小说深度蒸馏</h1>
-  <p class="subtitle" data-anim="fade-up">从论点压缩到体验复原 — 叙事文学的全链路重构</p>
-  <div class="meta-strip" data-anim="fade-up">
-    <span class="meta-item">叙事种子</span>
-    <span class="meta-item">场景复原</span>
-    <span class="meta-item">动力链图谱</span>
-    <span class="meta-item">8模块重构</span>
-  </div>
-  <div class="foot">
-    <span class="foot-left">Novel Distillation V5.0</span>
-    <span class="foot-right">1 / 15</span>
-  </div>
+<!-- S1 封面 -->
+<section class="slide hero dark" data-title="封面">
+<div class="hero-bg-decor"><div class="ln ln-h" style="top:25%"></div><div class="ln ln-h" style="top:50%"></div><div class="ln ln-h" style="top:75%"></div><div class="ln ln-v" style="left:20%"></div><div class="ln ln-v" style="left:50%"></div><div class="ln ln-v" style="left:80%"></div><div class="dt" style="top:25%;left:20%"></div><div class="dt" style="top:50%;left:80%"></div><div class="dt" style="top:75%;left:50%"></div></div>
+<div class="chrome"><span class="chrome-l">Book Distillation</span><span class="chrome-r">V5.0</span></div>
+<p class="ed-kicker kicker" data-anim="fade-up">TYPE-AWARE DISTILLATION SYSTEM</p>
+<h1 class="ed-display-zh" data-anim="rise-in">类型分治蒸馏</h1>
+<p class="subtitle" data-anim="fade-up">十大图书类型 x 四大蒸馏范式 x 全链路 Prompt 重构</p>
+<div class="meta-strip" data-anim="fade-up"><span class="meta-item">类型识别</span><span class="meta-item">范式分治</span><span class="meta-item">种子重构</span><span class="meta-item">Agent 重配</span><span class="meta-item">Prompt 升级</span></div>
+<div class="foot"><span class="foot-l">Book Distillation V5.0</span><span class="foot-r">1 / 18</span></div>
 </section>
 
-<!-- ==================== SLIDE 2: 核心问题 ==================== -->
-<section class="slide hero light question-page" data-title="核心问题">
-  <div class="q-mark">?</div>
-  <div class="chrome">
-    <span class="chrome-left">Diagnosis</span>
-    <span class="chrome-right">02</span>
-  </div>
-  <p class="ed-kicker kicker" data-anim="fade-up">ROOT CAUSE</p>
-  <h1 class="ed-h1 q-title" data-anim="rise-in">为什么小说蒸馏<br>总是丢失灵魂？</h1>
-  <p class="q-sub" data-anim="fade-up">现有系统为非虚构论说文设计——小说是被硬塞进去的。8 模块框架、逻辑种子、压缩策略，每一环都在系统性消灭叙事的弥散式信息。</p>
-  <div class="foot">
-    <span class="foot-left">Novel Distillation V5.0</span>
-    <span class="foot-right">2 / 15</span>
-  </div>
+<!-- S2 核心问题 -->
+<section class="slide hero light" data-title="核心问题">
+<div class="q-mark">?</div>
+<div class="chrome"><span class="chrome-l">Diagnosis</span><span class="chrome-r">02</span></div>
+<p class="ed-kicker kicker" data-anim="fade-up">ROOT CAUSE</p>
+<h1 class="ed-h1" data-anim="rise-in" style="max-width:26ch">一刀切蒸馏的代价：<br>细节丢失 + 主线迷失</h1>
+<p class="subtitle" data-anim="fade-up">V4.0 隐含假设：所有书的信息密度都是聚集式的，主线都是逻辑链式的，细节都是可压缩的。这个假设只对一类书成立——论说实用型。</p>
+<div class="foot"><span class="foot-l">Book Distillation V5.0</span><span class="foot-r">2 / 18</span></div>
 </section>
 
-<!-- ==================== SLIDE 3: 论点蒸馏 vs 体验复原 ==================== -->
-<section class="slide light before-after" data-title="范式转换">
-  <div class="chrome">
-    <span class="chrome-left">Paradigm Shift</span>
-    <span class="chrome-right">03</span>
-  </div>
-  <div class="ba-header">
-    <p class="ed-kicker" style="color:var(--accent)" data-anim="fade-up">BEFORE vs AFTER</p>
-    <h2 class="ed-h1" data-anim="rise-in">论点蒸馏 / 体验复原</h2>
-  </div>
-  <div class="ba-grid" data-anim="fade-up">
-    <div class="ba-card old">
-      <p class="ba-label">旧范式 — 论点蒸馏</p>
-      <h3 class="ba-title">假设信息密度聚集</h3>
-      <ul class="ba-items">
-        <li>核心论点 + 论据 + 结论</li>
-        <li>20% 段落承载 80% 价值</li>
-        <li>关键段落直传即可</li>
-        <li>章节摘要 500-800 Token</li>
-        <li>逻辑种子 2000-3000 Token</li>
-        <li>图谱关系：因果 / 对比 / 递进</li>
-        <li>一句话逻辑概括全书</li>
-      </ul>
-    </div>
-    <div class="ba-card new">
-      <p class="ba-label">新范式 — 体验复原</p>
-      <h3 class="ba-title">信息密度弥散分布</h3>
-      <ul class="ba-items">
-        <li><strong>欲望 + 阻碍 + 抉择 + 后果</strong></li>
-        <li>100% 段落共同编织体验网</li>
-        <li>场景卡片保底 — 删则塌则留</li>
-        <li>章节叙事摘要 <strong>1000-1500 Token</strong></li>
-        <li>叙事种子 <strong>3000-5000 Token</strong></li>
-        <li>图谱关系：<strong>渴望 / 阻碍 / 触发 / 伏笔</strong></li>
-        <li>一句话叙事动力驱动全书</li>
-      </ul>
-    </div>
-  </div>
-  <div class="foot">
-    <span class="foot-left">Novel Distillation V5.0</span>
-    <span class="foot-right">3 / 15</span>
-  </div>
+<!-- S3 十大类型总览 -->
+<section class="slide light bn" data-title="十大类型">
+<div class="chrome"><span class="chrome-l">Type Spectrum</span><span class="chrome-r">03</span></div>
+<p class="ed-kicker bn-kick" data-anim="fade-up">TEN BOOK TYPES</p>
+<h2 class="ed-h1 bn-title" data-anim="rise-in">十大图书类型光谱</h2>
+<div class="bn-grid" data-anim="stagger-list">
+<div class="bn-card"><div class="ed-big-num bv">01</div><div class="bl">论说实用型</div><div class="bd">聚集密度 / 逻辑链 / 范式A</div></div>
+<div class="bn-card"><div class="ed-big-num bv">02</div><div class="bl">叙事虚构型</div><div class="bd">弥散密度 / 动力链 / 范式B</div></div>
+<div class="bn-card"><div class="ed-big-num bv">03</div><div class="bl">叙事非虚构</div><div class="bd">混合密度 / 双轨 / B+C</div></div>
+<div class="bn-card"><div class="ed-big-num bv">04</div><div class="bl">学术体系型</div><div class="bd">结构聚集 / 知识树 / 范式C</div></div>
+<div class="bn-card"><div class="ed-big-num bv">05</div><div class="bl">思想哲学型</div><div class="bd">螺旋密度 / 辩证链 / 范式C</div></div>
+<div class="bn-card"><div class="ed-big-num bv">06</div><div class="bl">对话访谈型</div><div class="bd">间歇密度 / 话题线 / 范式D</div></div>
+<div class="bn-card"><div class="ed-big-num bv">07</div><div class="bl">诗歌散文型</div><div class="bd">极致弥散 / 情感流 / 范式B</div></div>
+<div class="bn-card"><div class="ed-big-num bv">08</div><div class="bl">科普通识型</div><div class="bd">阶梯密度 / 升级路 / A+C</div></div>
+<div class="bn-card"><div class="ed-big-num bv">09</div><div class="bl">混合跨界型</div><div class="bd">双轨密度 / 壳核 / 混合</div></div>
+<div class="bn-card"><div class="ed-big-num bv">10</div><div class="bl">工具参考型</div><div class="bd">离散密度 / 分类 / 不蒸馏</div></div>
+</div>
+<div class="foot"><span class="foot-l">Book Distillation V5.0</span><span class="foot-r">3 / 18</span></div>
 </section>
 
-<!-- ==================== SLIDE 4: 三大根本矛盾 ==================== -->
-<section class="slide dark mixed-layout" data-title="三大矛盾">
-  <div class="chrome">
-    <span class="chrome-left" style="color:var(--text-dark)">Core Contradictions</span>
-    <span class="chrome-right" style="color:var(--text-dark)">04</span>
-  </div>
-  <p class="ed-kicker ml-kicker" data-anim="fade-up">CONTRADICTIONS</p>
-  <h2 class="ed-h1 ml-title" data-anim="rise-in">三大根本矛盾</h2>
-  <div class="ml-cols" data-anim="stagger-list">
-    <div class="ml-block">
-      <h3 style="color:var(--accent)">01 / 8 模块框架 vs 叙事体</h3>
-      <p style="color:var(--text-dark)">一句话逻辑假设全书有一个核心论点——小说有多重主题层叠。核心知识地图假设支柱并列递进——小说是叙事动力链。落地行动指南对小说几乎无用。</p>
-    </div>
-    <div class="ml-block">
-      <h3 style="color:var(--accent)">02 / 压缩策略的致命伤</h3>
-      <p style="color:var(--text-dark)">逻辑种子找的是论点，不是叙事动力。章节蒸馏 500 Token，小说一章的关键细节就是这个量。关键段落直传只保留 20%，但小说的信息是弥散式的。</p>
-    </div>
-    <div class="ml-block">
-      <h3 style="color:var(--accent)">03 / 抓不住主线的深层原因</h3>
-      <p style="color:var(--text-dark)">主线不是论点，是叙事动力。知识图谱的 Schema 为概念关系设计，不是叙事因果。3-Agent 分工割裂了叙事的整体性——架构师丢情感，实战派丢上下文，策展人丢过程。</p>
-    </div>
-    <div class="ml-block">
-      <h3 style="color:var(--accent)">核心洞察</h3>
-      <div class="ed-callout" style="color:var(--heading-dark)">对非虚构，蒸馏的是论点；对小说，蒸馏的是体验。论点可以压缩，体验必须复原。</div>
-    </div>
-  </div>
-  <div class="foot">
-    <span class="foot-left" style="color:var(--text-dark)">Novel Distillation V5.0</span>
-    <span class="foot-right" style="color:var(--text-dark)">4 / 15</span>
-  </div>
+<!-- S4 对比矩阵 -->
+<section class="slide dark ml" data-title="对比矩阵">
+<div class="chrome"><span class="chrome-l" style="color:var(--td)">Comparison Matrix</span><span class="chrome-r" style="color:var(--td)">04</span></div>
+<p class="ed-kicker ml-kick" data-anim="fade-up">CROSS-TYPE COMPARISON</p>
+<h2 class="ed-h1 ml-title" data-anim="rise-in">类型特征交叉对比</h2>
+<div data-anim="fade-up">
+<div class="type-row head"><span>类型</span><span>密度分布</span><span>价值载体</span><span>主线</span><span>细节重要性</span><span>V4适配</span></div>
+<div class="type-row"><span style="font-weight:600">论说实用型</span><span>聚集式</span><span>论点+方法论</span><span>逻辑链</span><span>低</span><span class="tag a">95%</span></div>
+<div class="type-row"><span style="font-weight:600;color:var(--accent)">叙事虚构型</span><span>弥散式</span><span>命运+体验</span><span>动力链</span><span>极高</span><span class="tag b">15%</span></div>
+<div class="type-row"><span style="font-weight:600">叙事非虚构</span><span>混合式</span><span>故事+洞察</span><span>双轨</span><span>中高</span><span class="tag b">45%</span></div>
+<div class="type-row"><span style="font-weight:600">学术体系型</span><span>结构聚集</span><span>概念+推导</span><span>知识树</span><span>中</span><span class="tag d">60%</span></div>
+<div class="type-row"><span style="font-weight:600">思想哲学型</span><span>螺旋式</span><span>思维路径</span><span>辩证递进</span><span>高</span><span class="tag b">25%</span></div>
+<div class="type-row"><span style="font-weight:600">对话访谈型</span><span>间歇式</span><span>思考过程</span><span>话题线索</span><span>中</span><span class="tag d">40%</span></div>
+<div class="type-row"><span style="font-weight:600">诗歌散文型</span><span>极致弥散</span><span>语言本身</span><span>情感流动</span><span>极高</span><span class="tag b">5%</span></div>
+<div class="type-row"><span style="font-weight:600">科普通识型</span><span>阶梯式</span><span>概念+类比</span><span>认知升级</span><span>中</span><span class="tag d">70%</span></div>
+<div class="type-row"><span style="font-weight:600">混合跨界型</span><span>双轨式</span><span>壳核关系</span><span>交织</span><span>中高</span><span class="tag d">55%</span></div>
+<div class="type-row"><span style="font-weight:600">工具参考型</span><span>离散式</span><span>检索+精确</span><span>分类</span><span>极高</span><span class="tag b">10%</span></div>
+</div>
+<div class="ed-callout" data-anim="fade-up" style="color:var(--hd);margin-top:1.5vh"><strong>关键发现：</strong>现有系统对 6/10 类型的适配度低于 50%。叙事类（虚构/非虚构/诗歌）几乎全部失配——这正是"细节丢失、主线迷失"的根源。</div>
+<div class="foot"><span class="foot-l" style="color:var(--td)">Book Distillation V5.0</span><span class="foot-r" style="color:var(--td)">4 / 18</span></div>
 </section>
 
-<!-- ==================== SLIDE 5: ACT 01 叙事种子 ==================== -->
-<section class="slide hero dark act-divider" data-title="叙事种子">
-  <div class="act-num">01</div>
-  <div class="chrome">
-    <span class="chrome-left">Act One</span>
-    <span class="chrome-right">05</span>
-  </div>
-  <p class="ed-kicker kicker" data-anim="fade-up">NARRATIVE SEED</p>
-  <h1 class="ed-display-zh act-title" data-anim="rise-in">叙事种子</h1>
-  <p class="act-sub" data-anim="fade-up">替代逻辑种子的小说专用索引结构 — 不找论点，找什么在驱动故事前进</p>
-  <div class="foot">
-    <span class="foot-left">Novel Distillation V5.0</span>
-    <span class="foot-right">5 / 15</span>
-  </div>
+<!-- S5 范式分水岭 -->
+<section class="slide hero dark" data-title="范式分水岭">
+<div class="act-num">I</div>
+<div class="chrome"><span class="chrome-l">Paradigm Fork</span><span class="chrome-r">05</span></div>
+<p class="ed-kicker kicker" data-anim="fade-up">FOUR PARADIGMS</p>
+<h1 class="ed-display-zh" data-anim="rise-in" style="font-size:max(min(5vw,6vh),28px)">四大蒸馏范式</h1>
+<p class="act-sub" data-anim="fade-up">范式A 压缩论点 / 范式B 复原体验 / 范式C 重建路径 / 范式D 保留语境</p>
+<div class="foot"><span class="foot-l">Book Distillation V5.0</span><span class="foot-r">5 / 18</span></div>
 </section>
 
-<!-- ==================== SLIDE 6: 叙事种子五要素 ==================== -->
-<section class="slide light mixed-layout" data-title="五要素">
-  <div class="chrome">
-    <span class="chrome-left">Narrative Seed</span>
-    <span class="chrome-right">06</span>
-  </div>
-  <p class="ed-kicker ml-kicker" data-anim="fade-up">FIVE ELEMENTS</p>
-  <h2 class="ed-h1 ml-title" data-anim="rise-in">叙事种子五要素</h2>
-  <div class="ml-cols" data-anim="stagger-list">
-    <div class="ml-block">
-      <h3>核心冲突轴</h3>
-      <p>主矛盾的起因、对抗双方、张力来源。次冲突线索。冲突根源——为什么这些冲突不可避免。</p>
-    </div>
-    <div class="ml-block">
-      <h3>人物关系速查</h3>
-      <p>核心角色 + 关系 + 核心欲望 + 关键矛盾 + 弧线方向（上升 / 坠落 / 循环）+ 关键转折章节。</p>
-    </div>
-    <div class="ml-block">
-      <h3>情节线索网</h3>
-      <p>主线起承转合 + N 条支线的起承转合 + 交汇点。标注章节范围和关键节点。追踪线索间的交织。</p>
-    </div>
-    <div class="ml-block">
-      <h3>关键意象表</h3>
-      <p>反复出现的象征物 / 场景 / 句式。首次出现章节 + 演变轨迹 + 指向的主题层。意象是小说的暗线。</p>
-    </div>
-  </div>
-  <div class="ml-block ml-single" data-anim="fade-up">
-    <h3>叙事节奏图</h3>
-    <p>章节张力分布：起 — 铺垫 — 高潮1 — 低谷 — 高潮2 — 尾声。标注每个张力转折的章节位置和驱动事件。</p>
-  </div>
-  <div class="foot">
-    <span class="foot-left">Novel Distillation V5.0</span>
-    <span class="foot-right">6 / 15</span>
-  </div>
+<!-- S6 范式A -->
+<section class="slide light pl" data-title="范式A">
+<div class="chrome"><span class="chrome-l">Paradigm A</span><span class="chrome-r">06</span></div>
+<p class="ed-kicker pl-kick" data-anim="fade-up">COMPRESSION</p>
+<h2 class="ed-h1 pl-title" data-anim="rise-in">范式A：论点蒸馏（压缩式）</h2>
+<div class="pl-steps" data-anim="stagger-list">
+<div class="pl-step"><div class="sn">适用类型</div><div class="st">论说实用型 / 科普通识型</div><div class="sd">信息密度聚集，20%段落承载80%论据，核心论点可独立于论据存在</div></div>
+<div class="pl-step"><div class="sn">种子结构</div><div class="st">逻辑种子（2000-3000 Token）</div><div class="sd">Unique Glossary + Logic Thread + Meta-Value + Density Map — 与V4一致</div></div>
+<div class="pl-step"><div class="sn">Agent分工</div><div class="st">架构师 + 实战派 + 策展人</div><div class="sd">与V4一致 — 这是最成熟的路径，无需修改</div></div>
+<div class="pl-step"><div class="sn">压缩策略</div><div class="st">论据可压缩为标签，方法论步骤必须完整保留</div><div class="sd">章节摘要500-800 Token，关键段落直传20% — 与V4一致</div></div>
+<div class="pl-step"><div class="sn">质量标准</div><div class="st">一句话逻辑精确到不可替换；行动闭环完整</div><div class="sd">与V4一致 — 这就是V4的设计目标</div></div>
+</div>
+<div class="ed-callout" data-anim="fade-up">V4 系统在此范式下已近乎完美。不需要改动。</div>
+<div class="foot"><span class="foot-l">Book Distillation V5.0</span><span class="foot-r">6 / 18</span></div>
 </section>
 
-<!-- ==================== SLIDE 7: 8 模块对照 ==================== -->
-<section class="slide light before-after" data-title="模块重构">
-  <div class="chrome">
-    <span class="chrome-left">Module Remap</span>
-    <span class="chrome-right">07</span>
-  </div>
-  <div class="ba-header">
-    <p class="ed-kicker" style="color:var(--accent)" data-anim="fade-up">OLD vs NEW MODULES</p>
-    <h2 class="ed-h1" data-anim="rise-in">8 模块重构对照</h2>
-  </div>
-  <div class="ba-grid" data-anim="fade-up">
-    <div class="ba-card old">
-      <p class="ba-label">旧 8 模块 — 非虚构</p>
-      <ul class="ba-items">
-        <li>M1 一句话逻辑</li>
-        <li>M2 核心知识地图</li>
-        <li>M3 颠覆性认知</li>
-        <li>M4 落地行动指南</li>
-        <li>M5 金句复刻</li>
-        <li>M6 知识蒸馏清单</li>
-        <li>M7 延伸行动地图</li>
-        <li>M8 边界约束</li>
-      </ul>
-    </div>
-    <div class="ba-card new">
-      <p class="ba-label">新 8 模块 — 小说</p>
-      <ul class="ba-items">
-        <li><strong>M1 叙事内核</strong> — 驱动全书的叙事动力</li>
-        <li><strong>M2 人物谱系与弧线</strong> — 角色 / 关系 / 弧线</li>
-        <li><strong>M3 情节线索网</strong> — 主线 + 支线 + 交汇</li>
-        <li><strong>M4 关键场景复原</strong> — 5-8 个决定性场景</li>
-        <li><strong>M5 主题层叠</strong> — 多重主题交织呈现</li>
-        <li><strong>M6 意象与隐喻体系</strong> — 象征演变轨迹</li>
-        <li><strong>M7 金句与遗珠</strong> — 附上下文 + 支线光芒</li>
-        <li><strong>M8 叙事边界</strong> — 不可翻译之处</li>
-      </ul>
-    </div>
-  </div>
-  <div class="foot">
-    <span class="foot-left">Novel Distillation V5.0</span>
-    <span class="foot-right">7 / 15</span>
-  </div>
+<!-- S7 范式B -->
+<section class="slide light pl" data-title="范式B">
+<div class="chrome"><span class="chrome-l">Paradigm B</span><span class="chrome-r">07</span></div>
+<p class="ed-kicker pl-kick" data-anim="fade-up">RESTORATION</p>
+<h2 class="ed-h1 pl-title" data-anim="rise-in">范式B：体验复原（保底式）</h2>
+<div class="pl-steps" data-anim="stagger-list">
+<div class="pl-step"><div class="sn">适用类型</div><div class="st">叙事虚构型 / 诗歌散文型 / 叙事非虚构型</div><div class="sd">信息密度弥散，100%段落共同编织体验网，删一细节可能断一条伏笔线</div></div>
+<div class="pl-step"><div class="sn">种子结构</div><div class="st">叙事种子（3000-5000 Token）— 比逻辑种子宽60%</div><div class="sd">冲突轴 + 人物速查 + 线索网 + 意象表 + 节奏图 — 不找论点，找什么在驱动故事前进</div></div>
+<div class="pl-step"><div class="sn">Agent分工</div><div class="st">叙事分析师 + 场景考古学家 + 策展人</div><div class="sd">不再按功能拆解（结构/行动/策展），按叙事层次拆解（动力链/场景层/边界层）</div></div>
+<div class="pl-step"><div class="sn">压缩策略</div><div class="st">场景卡片保底 — 删则塌则留</div><div class="sd">章节摘要1000-1500 Token，强制保留原文对话，场景卡片保留原文300-500字</div></div>
+<div class="pl-step"><div class="sn">核心判定</div><div class="st">如果删掉这个场景故事就塌了，那它必须保留</div><div class="sd">不再用"是否承载论据"判定信息价值，改用"删掉后叙事是否塌方"判定</div></div>
+</div>
+<div class="foot"><span class="foot-l">Book Distillation V5.0</span><span class="foot-r">7 / 18</span></div>
 </section>
 
-<!-- ==================== SLIDE 8: 3-Agent 重新分工 ==================== -->
-<section class="slide dark mixed-layout" data-title="Agent 分工">
-  <div class="chrome">
-    <span class="chrome-left" style="color:var(--text-dark)">Agent Redesign</span>
-    <span class="chrome-right" style="color:var(--text-dark)">08</span>
-  </div>
-  <p class="ed-kicker ml-kicker" data-anim="fade-up">3-AGENT REDESIGN</p>
-  <h2 class="ed-h1 ml-title" data-anim="rise-in">3-Agent 重新分工</h2>
-  <div class="ml-cols" data-anim="stagger-list">
-    <div class="ml-block">
-      <h3 style="color:var(--accent)">Alpha → 叙事分析师</h3>
-      <p style="color:var(--text-dark)">负责 M1 叙事内核 + M2 人物谱系 + M3 情节线索网。不再找论点，追踪人物欲望如何碰撞出情节。重点保留：人物动机的细节、情节转折的因果链、伏笔的埋设与回收。</p>
-    </div>
-    <div class="ml-block">
-      <h3 style="color:var(--accent)">Beta → 场景考古学家</h3>
-      <p style="color:var(--text-dark)">负责 M4 关键场景复原 + M5 主题层叠 + M6 意象体系。不再设计行动闭环，而是复原关键场景。每个场景卡片：上下文 / 对话节选 / 人物内心 / 隐喻层 / 对全局的意义。追踪意象从首次出现到最终演变的完整轨迹。</p>
-    </div>
-    <div class="ml-block">
-      <h3 style="color:var(--accent)">Gamma → 策展人</h3>
-      <p style="color:var(--text-dark)">负责 M7 金句与遗珠 + M8 叙事边界。金句必须附带场景上下文。遗珠重点：被主线遮蔽的支线、被结局覆盖的过程、沉默角色的故事。叙事边界：标注哪些细节一旦丢失，整部小说的解读就会偏移。</p>
-    </div>
-    <div class="ml-block">
-      <h3 style="color:var(--accent)">核心转变</h3>
-      <div class="ed-callout" style="color:var(--heading-dark)">旧：3-Agent 按功能拆解（结构 / 行动 / 策展）<br>新：3-Agent 按叙事层次拆解（动力链 / 场景层 / 边界层）<br>小说需要的是一个完整叙事被不同视角照亮，而不是被不同功能拆解。</div>
-    </div>
-  </div>
-  <div class="foot">
-    <span class="foot-left" style="color:var(--text-dark)">Novel Distillation V5.0</span>
-    <span class="foot-right" style="color:var(--text-dark)">8 / 15</span>
-  </div>
+<!-- S8 范式C+D -->
+<section class="slide dark pl" data-title="范式C+D">
+<div class="chrome"><span class="chrome-l" style="color:var(--td)">Paradigm C+D</span><span class="chrome-r" style="color:var(--td)">08</span></div>
+<p class="ed-kicker pl-kick" data-anim="fade-up">RECONSTRUCTION + CONTEXT</p>
+<h2 class="ed-h1 pl-title" data-anim="rise-in">范式C：路径重建 + 范式D：语境保留</h2>
+<div class="ml-cols" data-anim="stagger-list">
+<div class="ml-block">
+<h3 style="color:var(--accent)">范式C 路径重建（跟踪式）</h3>
+<p style="color:var(--td)"><strong>适用：</strong>思想哲学型 / 学术体系型</p>
+<ul style="color:var(--td)">
+<li>辩证种子（3000-5000 Token）：核心追问 + 辩证结构 + 概念创造清单 + 反驳预见 + 思维路径图</li>
+<li>种子关注"作者如何一步步逼近问题"，不是"回答了什么"</li>
+<li>推导链条不可跳步 — "因为A且B所以C"不能压缩为"C"</li>
+<li>螺旋结构禁止压平为线性 — 必须保留每轮辩证的新维度</li>
+<li>Agent分工：思维追踪者 + 概念考古 + 策展人</li>
+</ul>
+</div>
+<div class="ml-block">
+<h3 style="color:var(--accent)">范式D 语境保留（标注式）</h3>
+<p style="color:var(--td)"><strong>适用：</strong>对话访谈型</p>
+<ul style="color:var(--td)">
+<li>声音种子（2000-3000 Token）：对话者档案 + 立场差异图 + 语境标记 + 即兴洞见索引</li>
+<li>每个洞见必须附带"在什么对话语境中产生的"</li>
+<li>即兴表达的语言风格本身是信息 — 不可改写</li>
+<li>必须保留立场差异 — 不同对话者对同一问题的不同态度</li>
+<li>Agent分工：语境捕手 + 洞见提取者 + 策展人</li>
+</ul>
+</div>
+</div>
+<div class="ed-callout" data-anim="fade-up" style="color:var(--hd)">范式C的核心：读者要能重走作者的思维路径，不是只看终点。范式D的核心：洞见不是孤立的，语境是它的一部分。</div>
+<div class="foot"><span class="foot-l" style="color:var(--td)">Book Distillation V5.0</span><span class="foot-r" style="color:var(--td)">8 / 18</span></div>
 </section>
 
-<!-- ==================== SLIDE 9: ACT 02 关键场景复原 ==================== -->
-<section class="slide hero dark act-divider" data-title="场景复原">
-  <div class="act-num">02</div>
-  <div class="chrome">
-    <span class="chrome-left">Act Two</span>
-    <span class="chrome-right">09</span>
-  </div>
-  <p class="ed-kicker kicker" data-anim="fade-up">SCENE RESTORATION</p>
-  <h1 class="ed-display-zh act-title" data-anim="rise-in">关键场景复原</h1>
-  <p class="act-sub" data-anim="fade-up">解决细节丢失最关键的模块 — 如果删掉这个场景故事就塌了，那它必须保留</p>
-  <div class="foot">
-    <span class="foot-left">Novel Distillation V5.0</span>
-    <span class="foot-right">9 / 15</span>
-  </div>
+<!-- S9 Phase 0升级 -->
+<section class="slide hero dark" data-title="Phase 0 升级">
+<div class="act-num">II</div>
+<div class="chrome"><span class="chrome-l">Phase 0 Upgrade</span><span class="chrome-r">09</span></div>
+<p class="ed-kicker kicker" data-anim="fade-up">TYPE DETECTION</p>
+<h1 class="ed-display-zh" data-anim="rise-in" style="font-size:max(min(5vw,6vh),28px)">Phase 0 升级：类型识别</h1>
+<p class="act-sub" data-anim="fade-up">在全局扫描之后、种子生成之前，插入书籍类型判定步骤</p>
+<div class="foot"><span class="foot-l">Book Distillation V5.0</span><span class="foot-r">9 / 18</span></div>
 </section>
 
-<!-- ==================== SLIDE 10: 场景卡片模板 ==================== -->
-<section class="slide light mixed-layout" data-title="场景卡片">
-  <div class="chrome">
-    <span class="chrome-left">Scene Card Template</span>
-    <span class="chrome-right">10</span>
-  </div>
-  <p class="ed-kicker ml-kicker" data-anim="fade-up">SCENE CARD</p>
-  <h2 class="ed-h1 ml-title" data-anim="rise-in">场景卡片模板</h2>
-  <div class="ml-single" data-anim="fade-up">
-    <div class="scene-card">
-      <p class="sc-label">Scene Card — 决定性场景</p>
-      <div class="sc-field"><strong>位置</strong>：第 N 章 | 叙事位置：铺垫 / 转折 / 高潮 / 回落</div>
-      <div class="sc-field"><strong>在场人物</strong>：人物A, 人物B</div>
-      <div class="sc-field"><strong>叙事功能</strong>：一句话说明这个场景为什么必须存在</div>
-    </div>
-    <div class="scene-card">
-      <p class="sc-label">Layers</p>
-      <div class="sc-field"><strong>原文对话节选</strong>：保留关键对话原声 2-3 段</div>
-      <div class="sc-field"><strong>人物内心层</strong>：此刻各角色的真实想法（根据上下文推断）</div>
-      <div class="sc-field"><strong>隐喻层</strong>：场景中的细节暗示 + 对话潜台词指向</div>
-    </div>
-    <div class="scene-card" style="border-color:var(--accent);background:var(--callout-bg)">
-      <p class="sc-label">Impact Test</p>
-      <div class="sc-field"><strong>对全局的影响</strong>：此场景前 / 此场景后 — 发生了什么不可逆的变化</div>
-      <div class="sc-field"><strong>伏笔追踪</strong>：此处埋设的 X 在第 N 章被回收</div>
-      <div class="sc-field"><strong>如果删掉这个场景</strong>：人物弧线将失去什么 / 主线将在何处断裂 / 读者将无法理解什么</div>
-    </div>
-  </div>
-  <div class="foot">
-    <span class="foot-left">Novel Distillation V5.0</span>
-    <span class="foot-right">10 / 15</span>
-  </div>
+<!-- S10 类型判定决策树 -->
+<section class="slide light ml" data-title="判定决策树">
+<div class="chrome"><span class="chrome-l">Decision Tree</span><span class="chrome-r">10</span></div>
+<p class="ed-kicker ml-kick" data-anim="fade-up">TYPE DETECTION LOGIC</p>
+<h2 class="ed-h1 ml-title" data-anim="rise-in">类型判定决策树</h2>
+<div class="ml-single" data-anim="fade-up" style="font-size:max(min(1vw,1.2vh),11px);line-height:2">
+<p style="margin-bottom:.5vh"><strong>Step 0</strong> 全局扫描后追加类型判定：</p>
+<p>对话占比 > 40%? → 是 → <strong style="color:var(--accent)">对话访谈型 → 范式D</strong></p>
+<p>描写句占比 > 50% 且有虚构标记? → 是 → <strong style="color:var(--accent)">叙事虚构型 → 范式B</strong></p>
+<p>章节标题含"第X章"且无明确论点? → 是 → <strong style="color:var(--accent)">叙事非虚构型 → B+C混合</strong></p>
+<p>同一概念在不同章节反复深化? → 是 → <strong style="color:var(--accent)">思想哲学型 → 范式C</strong></p>
+<p>概念层级清晰且有推导链条? → 是 → <strong style="color:var(--accent)">学术体系型 → 范式C</strong></p>
+<p>大量类比且有认知升级路径? → 是 → <strong style="color:var(--accent)">科普通识型 → A+C混合</strong></p>
+<p>语言本身即价值且改写即损坏? → 是 → <strong style="color:var(--accent)">诗歌散文型 → 范式B(特殊)</strong></p>
+<p>条目独立且无递进关系? → 是 → <strong style="color:var(--accent)">工具参考型 → 不蒸馏，改索引</strong></p>
+<p>有叙事壳包裹论点核? → 是 → <strong style="color:var(--accent)">混合跨界型 → 先判壳核</strong></p>
+<p>默认 → <strong>论说实用型 → 范式A</strong></p>
+</div>
+<div class="ed-callout" data-anim="fade-up"><strong>判定维度：</strong>文本结构特征（章节标题类型）/ 语言风格特征（论断/描写/对话占比）/ 信息密度分布 / 章节间关系（递进/推进/螺旋/独立）</div>
+<div class="foot"><span class="foot-l">Book Distillation V5.0</span><span class="foot-r">10 / 18</span></div>
 </section>
 
-<!-- ==================== SLIDE 11: 核心原则金句 ==================== -->
-<section class="slide hero dark big-quote-layout" data-title="核心原则">
-  <div class="chrome">
-    <span class="chrome-left">Core Principle</span>
-    <span class="chrome-right">11</span>
-  </div>
-  <div class="bq-mark" data-anim="zoom-pop">"</div>
-  <p class="bq-text" data-anim="rise-in">如果删掉这个场景故事就塌了，那它必须保留。如果删掉后故事不塌，那它确实可以被蒸馏。</p>
-  <p class="bq-cite" data-anim="fade-up">场景卡片保底机制 — 细节保留的判定标准</p>
-  <div class="foot">
-    <span class="foot-left">Novel Distillation V5.0</span>
-    <span class="foot-right">11 / 15</span>
-  </div>
+<!-- S11 种子结构升级 -->
+<section class="slide dark ml" data-title="种子结构升级">
+<div class="chrome"><span class="chrome-l" style="color:var(--td)">Seed Architecture</span><span class="chrome-r" style="color:var(--td)">11</span></div>
+<p class="ed-kicker ml-kick" data-anim="fade-up">SEED STRUCTURE UPGRADE</p>
+<h2 class="ed-h1 ml-title" data-anim="rise-in">四种种子结构</h2>
+<div class="ml-cols" data-anim="stagger-list">
+<div class="ml-block">
+<h3 style="color:var(--accent)">叙事种子（范式B）</h3>
+<ul style="color:var(--td)">
+<li><strong>核心冲突轴</strong> — 主冲突+次冲突+冲突根源</li>
+<li><strong>人物关系速查</strong> — 欲望/矛盾/弧线方向/转折章节</li>
+<li><strong>情节线索网</strong> — 主线+支线起承转合+交汇点</li>
+<li><strong>关键意象表</strong> — 首次出现/演变轨迹/指向主题</li>
+<li><strong>叙事节奏图</strong> — 张力分布+高潮低谷章节位置</li>
+</ul>
+</div>
+<div class="ml-block">
+<h3 style="color:var(--accent)">辩证种子（范式C）</h3>
+<ul style="color:var(--td)">
+<li><strong>核心追问</strong> — 在追查什么（不是回答了什么）</li>
+<li><strong>辩证结构</strong> — 每轮正题/反题/合题/新维度</li>
+<li><strong>概念创造清单</strong> — 为何发明/替代了什么/边界</li>
+<li><strong>反驳预见</strong> — 预见的反对意见+如何回应</li>
+<li><strong>思维路径图</strong> — 追问起点→转向→突破→立场</li>
+</ul>
+</div>
+<div class="ml-block">
+<h3 style="color:var(--accent)">体系种子（范式C）</h3>
+<ul style="color:var(--td)">
+<li><strong>知识树结构</strong> — 根→分支→叶，完整层级</li>
+<li><strong>前置知识图</strong> — 读懂第N章需先懂什么</li>
+<li><strong>推导链条清单</strong> — 起点→中间步骤→终点</li>
+<li><strong>概念边界表</strong> — 定义/什么不是它/前提条件</li>
+<li><strong>例证索引</strong> — 概念/原书例证/例证类型</li>
+</ul>
+</div>
+<div class="ml-block">
+<h3 style="color:var(--accent)">声音种子（范式D）</h3>
+<ul style="color:var(--td)">
+<li><strong>对话者档案</strong> — 表达习惯/思维偏好/价值立场</li>
+<li><strong>立场差异图</strong> — 同一问题的不同态度</li>
+<li><strong>语境标记</strong> — 触发洞见的对话场景</li>
+<li><strong>即兴洞见索引</strong> — 洞见/产生语境/人物</li>
+<li><strong>声音档案</strong> — 每人的表达习惯和思维偏好</li>
+</ul>
+</div>
+</div>
+<div class="foot"><span class="foot-l" style="color:var(--td)">Book Distillation V5.0</span><span class="foot-r" style="color:var(--td)">11 / 18</span></div>
 </section>
 
-<!-- ==================== SLIDE 12: ACT 03 图谱与检索 ==================== -->
-<section class="slide hero dark act-divider" data-title="图谱与检索">
-  <div class="act-num">03</div>
-  <div class="chrome">
-    <span class="chrome-left">Act Three</span>
-    <span class="chrome-right">12</span>
-  </div>
-  <p class="ed-kicker kicker" data-anim="fade-up">GRAPH + RETRIEVAL</p>
-  <h1 class="ed-display-zh act-title" data-anim="rise-in">图谱与检索</h1>
-  <p class="act-sub" data-anim="fade-up">Graph Schema 改造 + 压缩策略调整 + Python 检索工具箱</p>
-  <div class="foot">
-    <span class="foot-left">Novel Distillation V5.0</span>
-    <span class="foot-right">12 / 15</span>
-  </div>
+<!-- S12 Phase 1升级 -->
+<section class="slide hero dark" data-title="Phase 1 升级">
+<div class="act-num">III</div>
+<div class="chrome"><span class="chrome-l">Phase 1 Upgrade</span><span class="chrome-r">12</span></div>
+<p class="ed-kicker kicker" data-anim="fade-up">AGENT RECONFIGURATION</p>
+<h1 class="ed-display-zh" data-anim="rise-in" style="font-size:max(min(5vw,6vh),28px)">Phase 1 升级：Agent 重配</h1>
+<p class="act-sub" data-anim="fade-up">根据书籍类型切换 Agent 人设、模块定义和产出模板</p>
+<div class="foot"><span class="foot-l">Book Distillation V5.0</span><span class="foot-r">12 / 18</span></div>
 </section>
 
-<!-- ==================== SLIDE 13: Graph Schema + 压缩策略 ==================== -->
-<section class="slide light mixed-layout" data-title="Schema 改造">
-  <div class="chrome">
-    <span class="chrome-left">Graph Schema</span>
-    <span class="chrome-right">13</span>
-  </div>
-  <p class="ed-kicker ml-kicker" data-anim="fade-up">SCHEMA REDESIGN</p>
-  <h2 class="ed-h1 ml-title" data-anim="rise-in">叙事图谱 Schema</h2>
-  <div class="ml-cols" data-anim="stagger-list">
-    <div class="ml-block">
-      <h3>节点类型</h3>
-      <div class="schema-row"><span class="schema-node">character</span> <span style="opacity:0.4;font-size:11px">name / desire / arc_direction / key_chapters</span></div>
-      <div class="schema-row"><span class="schema-node">event</span> <span style="opacity:0.4;font-size:11px">description / chapter / consequences / triggers</span></div>
-      <div class="schema-row"><span class="schema-node">symbol</span> <span style="opacity:0.4;font-size:11px">name / first_appear / last_appear / evolution</span></div>
-      <div class="schema-row"><span class="schema-node">location</span> <span style="opacity:0.4;font-size:11px">name / significance / associated_events</span></div>
-      <div class="schema-row"><span class="schema-node">theme</span> <span style="opacity:0.4;font-size:11px">name / manifestations</span></div>
-    </div>
-    <div class="ml-block">
-      <h3>边类型 — 叙事因果</h3>
-      <div class="schema-row"><span class="schema-node" style="border-color:var(--accent)">A</span> <span class="schema-edge">--desires--&gt;</span> <span class="schema-node" style="border-color:var(--accent)">B</span></div>
-      <div class="schema-row"><span class="schema-node" style="border-color:var(--accent)">A</span> <span class="schema-edge">--obstructs--&gt;</span> <span class="schema-node" style="border-color:var(--accent)">B</span></div>
-      <div class="schema-row"><span class="schema-node" style="border-color:var(--accent)">A</span> <span class="schema-edge">--triggers--&gt;</span> <span class="schema-node" style="border-color:var(--accent)">B</span></div>
-      <div class="schema-row"><span class="schema-node" style="border-color:var(--accent)">A</span> <span class="schema-edge">--leads_to--&gt;</span> <span class="schema-node" style="border-color:var(--accent)">B</span></div>
-      <div class="schema-row"><span class="schema-node" style="border-color:var(--accent)">A</span> <span class="schema-edge">--foreshadows--&gt;</span> <span class="schema-node" style="border-color:var(--accent)">B</span></div>
-      <div class="schema-row"><span class="schema-node" style="border-color:var(--accent)">A</span> <span class="schema-edge">--mirrors--&gt;</span> <span class="schema-node" style="border-color:var(--accent)">B</span></div>
-      <div class="schema-row"><span class="schema-node" style="border-color:var(--accent)">A</span> <span class="schema-edge">--symbolizes--&gt;</span> <span class="schema-node" style="border-color:var(--accent)">B</span></div>
-      <div class="schema-row"><span class="schema-node" style="border-color:var(--accent)">A</span> <span class="schema-edge">--transforms--&gt;</span> <span class="schema-node" style="border-color:var(--accent)">B</span></div>
-    </div>
-  </div>
-  <div class="ed-callout" data-anim="fade-up">
-    <strong>关键新增边：</strong>foreshadows（伏笔 → 回收）跨章节标注 | mirrors（场景/人物间的对称呼应）| transforms（意象演变、角色变化轨迹）
-  </div>
-  <div class="foot">
-    <span class="foot-left">Novel Distillation V5.0</span>
-    <span class="foot-right">13 / 15</span>
-  </div>
+<!-- S13 范式B Agent -->
+<section class="slide light ml" data-title="范式B Agent">
+<div class="chrome"><span class="chrome-l">Paradigm B Agents</span><span class="chrome-r">13</span></div>
+<p class="ed-kicker ml-kick" data-anim="fade-up">FICTION AGENT TRIO</p>
+<h2 class="ed-h1 ml-title" data-anim="rise-in">范式B：小说专属 3-Agent</h2>
+<div class="ml-cols" data-anim="stagger-list">
+<div class="ml-block">
+<h3>Alpha → 叙事分析师</h3>
+<p><strong>M1 叙事内核</strong> — 驱动全书的叙事动力（替代一句话逻辑）</p>
+<p><strong>M2 人物谱系与弧线</strong> — 每个核心角色的完整弧线+关系网+关键场景（替代核心知识地图）</p>
+<p><strong>M3 情节线索网</strong> — 主线+支线起承转合+交汇点+伏笔回收（新增）</p>
+</div>
+<div class="ml-block">
+<h3>Beta → 场景考古学家</h3>
+<p><strong>M4 关键场景复原</strong> — 5-8个决定性场景的详细还原（替代落地行动指南）</p>
+<p>每个场景卡片包含：位置/人物/叙事功能/原文对话节选/人物内心层/隐喻层/对全局的影响/伏笔追踪/删掉测试</p>
+<p><strong>M5 主题层叠</strong> — 多重主题如何通过叙事交织呈现（替代颠覆性认知）</p>
+<p><strong>M6 意象与隐喻体系</strong> — 反复出现的象征及其演变轨迹（新增）</p>
+</div>
+<div class="ml-block">
+<h3>Gamma → 策展人</h3>
+<p><strong>M7 金句与遗珠</strong> — 金句附场景上下文+被主线遮蔽的支线光芒（合并原M5+M6）</p>
+<p><strong>M8 叙事边界</strong> — 这部小说的"不可翻译之处"，什么丢失了故事就塌了（替代边界约束）</p>
+</div>
+<div class="ml-block">
+<h3>核心转变</h3>
+<div class="ed-callout">旧：3-Agent按功能拆解（结构/行动/策展）<br>新：3-Agent按叙事层次拆解（动力链/场景层/边界层）<br><br>小说需要的是一个完整叙事被不同视角照亮，<strong>不是被不同功能拆解</strong>。</div>
+</div>
+</div>
+<div class="foot"><span class="foot-l">Book Distillation V5.0</span><span class="foot-r">13 / 18</span></div>
 </section>
 
-<!-- ==================== SLIDE 14: 压缩策略 + 检索工具 ==================== -->
-<section class="slide dark mixed-layout" data-title="压缩与检索">
-  <div class="chrome">
-    <span class="chrome-left" style="color:var(--text-dark)">Compression + Retrieval</span>
-    <span class="chrome-right" style="color:var(--text-dark)">14</span>
-  </div>
-  <p class="ed-kicker ml-kicker" data-anim="fade-up">STRATEGY UPGRADE</p>
-  <h2 class="ed-h1 ml-title" data-anim="rise-in">压缩策略 + 检索工具箱</h2>
-  <div class="ml-cols" data-anim="stagger-list">
-    <div class="ml-block">
-      <h3 style="color:var(--accent)">压缩策略调整</h3>
-      <ul style="color:var(--text-dark)">
-        <li>叙事种子 3000-5000 Token（比逻辑种子宽 60%）</li>
-        <li>章节叙事摘要 1000-1500 Token（比非虚构宽 1 倍）</li>
-        <li>强制保留：每章 2-3 段原文对话</li>
-        <li>30-60 万字：增加 15-20 个场景卡片，每个保留原文 300-500 字</li>
-        <li>关键场景不压缩，只标注叙事功能</li>
-      </ul>
-    </div>
-    <div class="ml-block">
-      <h3 style="color:var(--accent)">Python 检索工具箱新增</h3>
-      <ul style="color:var(--text-dark)">
-        <li><strong>search_scene.py</strong> — 按人物 / 情感 / 转折点检索关键场景</li>
-        <li><strong>trace_arc.py</strong> — 追踪某角色的完整弧线（从欲望到结局）</li>
-        <li><strong>find_motif.py</strong> — 追踪某意象 / 母题的演变轨迹</li>
-        <li><strong>check_foreshadow.py</strong> — 验证伏笔埋设与回收的完整性</li>
-      </ul>
-    </div>
-  </div>
-  <div class="ed-callout" data-anim="fade-up" style="color:var(--heading-dark)">
-    <strong>信息密度判定翻转：</strong>非虚构 — 20% 段落承载 80% 论据 → 精准命中。小说 — 100% 段落共同编织体验网 → 删除任何细节可能同时删掉伏笔线、人物侧写、一层隐喻。小说的信息密度分布是弥散式的，不是聚集式的。
-  </div>
-  <div class="foot">
-    <span class="foot-left" style="color:var(--text-dark)">Novel Distillation V5.0</span>
-    <span class="foot-right" style="color:var(--text-dark)">14 / 15</span>
-  </div>
+<!-- S14 场景卡片 -->
+<section class="slide dark ml" data-title="场景卡片">
+<div class="chrome"><span class="chrome-l" style="color:var(--td)">Scene Card</span><span class="chrome-r" style="color:var(--td)">14</span></div>
+<p class="ed-kicker ml-kick" data-anim="fade-up">CRITICAL SCENE RESTORATION</p>
+<h2 class="ed-h1 ml-title" data-anim="rise-in">场景卡片模板 — 细节保底机制</h2>
+<div class="ml-single" data-anim="fade-up">
+<div style="background:var(--call);border:1px solid var(--accent);padding:2vh 2vw;margin-bottom:1.5vh">
+<p style="font-family:'JetBrains Mono',monospace;font-size:max(min(.75vw,.9vh),8px);color:var(--accent);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.8vh">Scene Card</p>
+<p style="font-size:max(min(.95vw,1.1vh),10px);line-height:1.7;color:var(--td)"><strong style="color:var(--accent)">位置</strong>：第N章 | 叙事位置：铺垫/转折/高潮/回落</p>
+<p style="font-size:max(min(.95vw,1.1vh),10px);line-height:1.7;color:var(--td)"><strong style="color:var(--accent)">在场人物</strong>：人物A, 人物B</p>
+<p style="font-size:max(min(.95vw,1.1vh),10px);line-height:1.7;color:var(--td)"><strong style="color:var(--accent)">叙事功能</strong>：一句话说明这个场景为什么必须存在</p>
+</div>
+<div style="background:var(--call);border:1px solid var(--accent);padding:2vh 2vw;margin-bottom:1.5vh">
+<p style="font-family:'JetBrains Mono',monospace;font-size:max(min(.75vw,.9vh),8px);color:var(--accent);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.8vh">Layers</p>
+<p style="font-size:max(min(.95vw,1.1vh),10px);line-height:1.7;color:var(--td)"><strong style="color:var(--accent)">原文对话节选</strong>：保留关键对话原声2-3段</p>
+<p style="font-size:max(min(.95vw,1.1vh),10px);line-height:1.7;color:var(--td)"><strong style="color:var(--accent)">人物内心层</strong>：此刻各角色的真实想法</p>
+<p style="font-size:max(min(.95vw,1.1vh),10px);line-height:1.7;color:var(--td)"><strong style="color:var(--accent)">隐喻层</strong>：场景中的细节暗示+对话潜台词指向</p>
+</div>
+<div style="background:var(--call);border:2px solid var(--accent);padding:2vh 2vw">
+<p style="font-family:'JetBrains Mono',monospace;font-size:max(min(.75vw,.9vh),8px);color:var(--accent);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.8vh">Impact Test — 删掉测试</p>
+<p style="font-size:max(min(.95vw,1.1vh),10px);line-height:1.7;color:var(--td)"><strong style="color:var(--accent)">对全局的影响</strong>：此场景前/后，发生了什么不可逆的变化</p>
+<p style="font-size:max(min(.95vw,1.1vh),10px);line-height:1.7;color:var(--td)"><strong style="color:var(--accent)">伏笔追踪</strong>：此处埋设的X在第N章被回收</p>
+<p style="font-size:max(min(.95vw,1.1vh),10px);line-height:1.7;color:var(--hd)"><strong style="color:var(--accent)">如果删掉这个场景</strong>：人物弧线失去什么 / 主线在何处断裂 / 读者无法理解什么</p>
+</div>
+</div>
+<div class="foot"><span class="foot-l" style="color:var(--td)">Book Distillation V5.0</span><span class="foot-r" style="color:var(--td)">14 / 18</span></div>
 </section>
 
-<!-- ==================== SLIDE 15: 收束 ==================== -->
-<section class="slide hero dark hero-cover" data-title="收束">
-  <div class="hero-bg-decor">
-    <div class="line line-h" style="top:25%"></div>
-    <div class="line line-h" style="top:50%"></div>
-    <div class="line line-h" style="top:75%"></div>
-    <div class="line line-v" style="left:20%"></div>
-    <div class="line line-v" style="left:50%"></div>
-    <div class="line line-v" style="left:80%"></div>
-    <div class="dot" style="top:25%;left:80%"></div>
-    <div class="dot" style="top:50%;left:20%"></div>
-    <div class="dot" style="top:75%;left:80%"></div>
-  </div>
-  <div class="chrome">
-    <span class="chrome-left">Conclusion</span>
-    <span class="chrome-right">15</span>
-  </div>
-  <p class="ed-kicker kicker" data-anim="fade-up">ONE THING TO REMEMBER</p>
-  <h1 class="ed-h1" data-anim="rise-in" style="max-width:30ch;margin-bottom:4vh">对非虚构，蒸馏的是论点<br>对小说，蒸馏的是体验</h1>
-  <p class="subtitle" data-anim="fade-up" style="max-width:50ch">论点可以压缩，体验必须复原。叙事种子替代逻辑种子，场景卡片替代行动指南，动力链图谱替代概念图谱——每一环都为弥散式信息重新设计。</p>
-  <div class="meta-strip" data-anim="fade-up" style="margin-top:4vh">
-    <span class="meta-item">叙事种子</span>
-    <span class="meta-item">场景复原</span>
-    <span class="meta-item">动力链图谱</span>
-    <span class="meta-item">8模块重构</span>
-  </div>
-  <div class="foot">
-    <span class="foot-left">Novel Distillation V5.0</span>
-    <span class="foot-right">15 / 15</span>
-  </div>
+<!-- S15 Graph Schema -->
+<section class="slide light ml" data-title="Graph Schema">
+<div class="chrome"><span class="chrome-l">Graph Schema</span><span class="chrome-r">15</span></div>
+<p class="ed-kicker ml-kick" data-anim="fade-up">NARRATIVE GRAPH SCHEMA</p>
+<h2 class="ed-h1 ml-title" data-anim="rise-in">叙事图谱 Schema — 范式B核心</h2>
+<div class="ml-cols" data-anim="stagger-list">
+<div class="ml-block">
+<h3>节点类型</h3>
+<p><span style="display:inline-block;padding:.2vh .8vw;border:1px solid var(--accent);font-family:'JetBrains Mono',monospace;font-size:max(min(.75vw,.85vh),8px);margin-right:.3vw">character</span> name / desire / arc_direction / key_chapters</p>
+<p><span style="display:inline-block;padding:.2vh .8vw;border:1px solid var(--accent);font-family:'JetBrains Mono',monospace;font-size:max(min(.75vw,.85vh),8px);margin-right:.3vw">event</span> description / chapter / consequences / triggers</p>
+<p><span style="display:inline-block;padding:.2vh .8vw;border:1px solid var(--accent);font-family:'JetBrains Mono',monospace;font-size:max(min(.75vw,.85vh),8px);margin-right:.3vw">symbol</span> name / first_appear / last_appear / evolution</p>
+<p><span style="display:inline-block;padding:.2vh .8vw;border:1px solid var(--accent);font-family:'JetBrains Mono',monospace;font-size:max(min(.75vw,.85vh),8px);margin-right:.3vw">location</span> name / significance / associated_events</p>
+<p><span style="display:inline-block;padding:.2vh .8vw;border:1px solid var(--accent);font-family:'JetBrains Mono',monospace;font-size:max(min(.75vw,.85vh),8px);margin-right:.3vw">theme</span> name / manifestations</p>
+</div>
+<div class="ml-block">
+<h3>边类型 — 叙事因果（V4新增）</h3>
+<p><strong style="color:var(--accent)">desires</strong> — A渴望B（角色→目标）</p>
+<p><strong style="color:var(--accent)">obstructs</strong> — A阻碍B（角色/事件→角色/目标）</p>
+<p><strong style="color:var(--accent)">triggers</strong> — A触发B（事件→抉择/事件）</p>
+<p><strong style="color:var(--accent)">leads_to</strong> — A导致B（抉择→后果）</p>
+<p><strong style="color:var(--accent)">foreshadows</strong> — A伏笔B（早期细节→后期揭示）</p>
+<p><strong style="color:var(--accent)">mirrors</strong> — A呼应B（场景/人物间对称）</p>
+<p><strong style="color:var(--accent)">symbolizes</strong> — A象征B（物件/场景→主题）</p>
+<p><strong style="color:var(--accent)">transforms</strong> — A转变B（意象演变/角色变化）</p>
+</div>
+</div>
+<div class="ed-callout" data-anim="fade-up"><strong>关键新增边：</strong>foreshadows（伏笔→回收）跨章节标注 | mirrors（场景/人物对称呼应）| transforms（意象演变轨迹） — 这三种边是叙事图谱区别于概念图谱的核心。</div>
+<div class="foot"><span class="foot-l">Book Distillation V5.0</span><span class="foot-r">15 / 18</span></div>
+</section>
+
+<!-- S16 Prompt升级核心 -->
+<section class="slide hero dark bql" data-title="Prompt核心">
+<div class="chrome"><span class="chrome-l">Prompt Core</span><span class="chrome-r">16</span></div>
+<div class="bq-mark" data-anim="zoom-pop">"</div>
+<p class="bq-text" data-anim="rise-in">对非虚构，蒸馏的是论点；对小说，蒸馏的是体验；对哲学，蒸馏的是路径；对对话，蒸馏的是语境。</p>
+<p class="bq-cite" data-anim="fade-up">V5.0 Prompt 设计核心原则 — 四种范式，四种蒸馏逻辑</p>
+<div class="foot"><span class="foot-l">Book Distillation V5.0</span><span class="foot-r">16 / 18</span></div>
+</section>
+
+<!-- S17 升级总览 -->
+<section class="slide light ml" data-title="升级总览">
+<div class="chrome"><span class="chrome-l">Upgrade Summary</span><span class="chrome-r">17</span></div>
+<p class="ed-kicker ml-kick" data-anim="fade-up">FULL STACK UPGRADE</p>
+<h2 class="ed-h1 ml-title" data-anim="rise-in">V4 → V5 升级清单</h2>
+<div class="ml-cols" data-anim="stagger-list">
+<div class="ml-block">
+<h3>Phase 0 升级</h3>
+<ul>
+<li>新增 Step 0：书籍类型判定（决策树）</li>
+<li>4种种子结构替代1种逻辑种子</li>
+<li>Wiki 骨架按类型定制目录</li>
+<li>Graph Schema 按类型定制节点/边</li>
+<li>压缩策略按类型调整参数</li>
+</ul>
+</div>
+<div class="ml-block">
+<h3>Phase 1 升级</h3>
+<ul>
+<li>4套 Agent 人设替代1套通用</li>
+<li>8模块按类型重构（小说8模块/哲学8模块/...）</li>
+<li>Prompt 模板按类型定制</li>
+<li>检索工具按类型定制（场景检索/弧线追踪/...）</li>
+<li>质量标准按类型定制</li>
+</ul>
+</div>
+<div class="ml-block">
+<h3>Phase 2 升级</h3>
+<ul>
+<li>一致性检查按范式定制</li>
+<li>叙事一致性：场景间因果/伏笔回收/人物弧线连续</li>
+<li>辩证一致性：推导链条无跳步/辩证轮次完整</li>
+<li>语境一致性：洞见不离语境/立场差异保留</li>
+</ul>
+</div>
+<div class="ml-block">
+<h3>Phase 3+4 升级</h3>
+<ul>
+<li>杂志风模板增加叙事专用布局</li>
+<li>场景卡片页 / 人物弧线页 / 伏笔地图页</li>
+<li>质量检查按范式定制P0/P1标准</li>
+<li>交付摘要增加类型信息+范式路径</li>
+</ul>
+</div>
+</div>
+<div class="foot"><span class="foot-l">Book Distillation V5.0</span><span class="foot-r">17 / 18</span></div>
+</section>
+
+<!-- S18 收束 -->
+<section class="slide hero dark" data-title="收束">
+<div class="hero-bg-decor"><div class="ln ln-h" style="top:25%"></div><div class="ln ln-h" style="top:50%"></div><div class="ln ln-h" style="top:75%"></div><div class="ln ln-v" style="left:20%"></div><div class="ln ln-v" style="left:50%"></div><div class="ln ln-v" style="left:80%"></div><div class="dt" style="top:25%;left:80%"></div><div class="dt" style="top:50%;left:20%"></div><div class="dt" style="top:75%;left:80%"></div></div>
+<div class="chrome"><span class="chrome-l">Conclusion</span><span class="chrome-r">18</span></div>
+<p class="ed-kicker kicker" data-anim="fade-up">V5.0 DESIGN PRINCIPLE</p>
+<h1 class="ed-h1" data-anim="rise-in" style="max-width:30ch;margin-bottom:3vh">不同类型的书，<br>需要不同类型的蒸馏</h1>
+<p class="subtitle" data-anim="fade-up">论点可以压缩，体验必须复原，路径必须重建，语境必须保留。类型识别是第一步，范式分治是核心，种子/Agent/Prompt 三层联动是落地路径。</p>
+<div class="meta-strip" data-anim="fade-up" style="margin-top:3vh">
+<span class="meta-item">10 Types</span>
+<span class="meta-item">4 Paradigms</span>
+<span class="meta-item">4 Seeds</span>
+<span class="meta-item">4 Agent Teams</span>
+<span class="meta-item">Full Prompt Stack</span>
+</div>
+<div class="foot"><span class="foot-l">Book Distillation V5.0</span><span class="foot-r">18 / 18</span></div>
 </section>
 
 <script>
-// ========== 滚动分页 + 进度条 + 导航点 ==========
-const slides = document.querySelectorAll('.slide');
-const progressBar = document.getElementById('progressBar');
-const navDotsContainer = document.getElementById('navDots');
+const slides=document.querySelectorAll('.slide'),pb=document.getElementById('pb'),nd=document.getElementById('nd');
+slides.forEach((s,i)=>{const d=document.createElement('div');d.className='ndot';d.title=s.dataset.title||`Slide ${i+1}`;d.addEventListener('click',()=>s.scrollIntoView({behavior:'smooth'}));nd.appendChild(d)});
+const dots=document.querySelectorAll('.ndot');
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('iv');const i=Array.from(slides).indexOf(e.target);dots.forEach((d,j)=>d.classList.toggle('active',j===i));pb.style.width=((i+1)/slides.length*100)+'%'}})},{threshold:.45});
+slides.forEach(s=>obs.observe(s));
+setTimeout(()=>{slides[0].classList.add('iv');dots[0].classList.add('active');pb.style.width=(1/slides.length*100)+'%'},150);
 
-// 创建导航点
-slides.forEach((slide, i) => {
-  const dot = document.createElement('div');
-  dot.className = 'nav-dot';
-  dot.title = slide.dataset.title || `Slide ${i + 1}`;
-  dot.addEventListener('click', () => {
-    slide.scrollIntoView({ behavior: 'smooth' });
-  });
-  navDotsContainer.appendChild(dot);
+const themes=['ink','indigo','forest','leather','dune'],tn={ink:'墨水经典',indigo:'靛蓝瓷',forest:'森林墨',leather:'牛皮纸',dune:'沙丘'};
+let ti=0;const tt=document.getElementById('tt');
+document.addEventListener('keydown',e=>{
+if(e.key==='t'||e.key==='T'){ti=(ti+1)%themes.length;document.documentElement.setAttribute('data-theme',themes[ti]);tt.textContent=tn[themes[ti]];tt.classList.add('show');setTimeout(()=>tt.classList.remove('show'),1400)}
+if(e.key==='ArrowDown'||e.key==='ArrowRight'||e.key===' '){e.preventDefault();const c=ci();if(c<slides.length-1)slides[c+1].scrollIntoView({behavior:'smooth'})}
+if(e.key==='ArrowUp'||e.key==='ArrowLeft'){e.preventDefault();const c=ci();if(c>0)slides[c-1].scrollIntoView({behavior:'smooth'})}
 });
-const navDots = document.querySelectorAll('.nav-dot');
-
-// IntersectionObserver 处理入场动效和导航状态
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('in-view');
-      // 更新导航点
-      const idx = Array.from(slides).indexOf(entry.target);
-      navDots.forEach((d, i) => d.classList.toggle('active', i === idx));
-      // 更新进度条
-      const progress = ((idx + 1) / slides.length) * 100;
-      progressBar.style.width = progress + '%';
-    }
-  });
-}, { threshold: 0.5 });
-
-slides.forEach(slide => observer.observe(slide));
-
-// 首页立即显示
-setTimeout(() => {
-  slides[0].classList.add('in-view');
-  navDots[0].classList.add('active');
-  progressBar.style.width = (1 / slides.length * 100) + '%';
-}, 200);
-
-// ========== T 键切换主题 ==========
-const themes = ['ink', 'indigo', 'forest', 'leather', 'dune'];
-const themeNames = {
-  ink: '墨水经典',
-  indigo: '靛蓝瓷',
-  forest: '森林墨',
-  leather: '牛皮纸',
-  dune: '沙丘'
-};
-let currentThemeIdx = 0;
-const themeToast = document.getElementById('themeToast');
-
-document.addEventListener('keydown', (e) => {
-  if (e.key === 't' || e.key === 'T') {
-    currentThemeIdx = (currentThemeIdx + 1) % themes.length;
-    const newTheme = themes[currentThemeIdx];
-    document.documentElement.setAttribute('data-theme', newTheme);
-    // 显示提示
-    themeToast.textContent = themeNames[newTheme];
-    themeToast.classList.add('show');
-    setTimeout(() => themeToast.classList.remove('show'), 1500);
-  }
-  // 方向键翻页
-  if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === ' ') {
-    e.preventDefault();
-    const currentIdx = getCurrentSlideIndex();
-    if (currentIdx < slides.length - 1) {
-      slides[currentIdx + 1].scrollIntoView({ behavior: 'smooth' });
-    }
-  }
-  if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
-    e.preventDefault();
-    const currentIdx = getCurrentSlideIndex();
-    if (currentIdx > 0) {
-      slides[currentIdx - 1].scrollIntoView({ behavior: 'smooth' });
-    }
-  }
-});
-
-function getCurrentSlideIndex() {
-  let idx = 0;
-  slides.forEach((s, i) => {
-    if (s.classList.contains('in-view')) {
-      const rect = s.getBoundingClientRect();
-      if (rect.top >= -100 && rect.top < window.innerHeight / 2) {
-        idx = i;
-      }
-    }
-  });
-  // 更精确的检测
-  const scrollTop = window.scrollY || document.documentElement.scrollTop;
-  const vh = window.innerHeight;
-  const calculatedIdx = Math.round(scrollTop / vh);
-  return Math.min(calculatedIdx, slides.length - 1);
-}
-
-// ========== 减少动效偏好 ==========
-if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  document.querySelectorAll('[data-anim]').forEach(el => {
-    el.style.transition = 'none';
-    el.style.opacity = '1';
-    el.style.transform = 'none';
-  });
-}
+function ci(){const st=window.scrollY,vh=window.innerHeight;return Math.min(Math.round(st/vh),slides.length-1)}
+if(window.matchMedia('(prefers-reduced-motion:reduce)').matches){document.querySelectorAll('[data-anim]').forEach(el=>{el.style.transition='none';el.style.opacity='1';el.style.transform='none'})}
 </script>
 </body>
 </html>
