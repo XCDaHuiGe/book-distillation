@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>设计学习成果 | 霓虹赛博朋克风格展示</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@200;400;500;700;900&family=Noto+Serif+SC:wght@400;700;900&family=Orbitron:wght@400;700;900&family=Cormorant+Garamond:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #050508;
+      --bg-elevated: #0a0a10;
+      --bg-card: #12121a;
+      --fg: #f5f5f7;
+      --fg-muted: #6a6a7a;
+      --neon-cyan: #00ffff;
+      --neon-pink: #ff00ff;
+      --neon-purple: #8b5cf6;
+      --neon-green: #00ff88;
+      --neon-orange: #ff6b35;
+      --neon-red: #ff3366;
+      --neon-blue: #0088ff;
+      --gold: #c9a227;
+      --glow-cyan: rgba(0, 255, 255, 0.7);
+      --glow-pink: rgba(255, 0, 255, 0.7);
+      --glow-purple: rgba(139, 92, 246, 0.7);
+    }
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    html { scroll-behavior: smooth; }
+    
+    body {
+      font-family: 'Noto Sans SC', sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    
+    ::selection {
+      background: var(--neon-pink);
+      color: var(--bg);
+    }
+    
+    #particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+    
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+    
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      position: relative;
+    }
+    
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(ellipse at 20% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(255, 0, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(0, 255, 255, 0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    
+    .hero-glitch {
+      position: absolute;
+      top: 2rem;
+      right: 2rem;
+      font-family: 'Orbitron', monospace;
+      font-size: 0.7rem;
+      color: var(--neon-green);
+      letter-spacing: 0.1em;
+      animation: glitch 2s infinite;
+    }
+    
+    @keyframes glitch {
+      0%, 90%, 100% { opacity: 1; transform: translate(0); }
+      92% { opacity: 0.8; transform: translate(-2px, 1px); }
+      94% { opacity: 0.9; transform: translate(2px, -1px); }
+      96% { opacity: 0.7; transform: translate(-1px, 2px); }
+    }
+    
+    .hero-label {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--neon-cyan);
+      margin-bottom: 2rem;
+      animation: fadeInUp 0.8s ease-out;
+      text-shadow: 0 0 10px var(--glow-cyan);
+    }
+    
+    .hero-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: clamp(2.5rem, 12vw, 9rem);
+      font-weight: 900;
+      line-height: 1;
+      margin-bottom: 2rem;
+      animation: fadeInUp 0.8s ease-out 0.2s both;
+    }
+    
+    .hero-title .line1 {
+      display: block;
+      background: linear-gradient(90deg, var(--neon-cyan), var(--neon-blue), var(--neon-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradientShift 3s ease infinite;
+      background-size: 200% 100%;
+    }
+    
+    .hero-title .line2 {
+      display: block;
+      background: linear-gradient(90deg, var(--neon-pink), var(--neon-purple), var(--neon-cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradientShift 3s ease infinite 0.5s;
+      background-size: 200% 100%;
+    }
+    
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    
+    .hero-subtitle {
+      font-size: clamp(1rem, 2vw, 1.3rem);
+      color: var(--fg-muted);
+      max-width: 700px;
+      margin-bottom: 3rem;
+      animation: fadeInUp 0.8s ease-out 0.4s both;
+    }
+    
+    .typing-text {
+      display: inline;
+      border-right: 2px solid var(--neon-cyan);
+      animation: blink 0.7s infinite;
+    }
+    
+    @keyframes blink {
+      0%, 50% { border-color: var(--neon-cyan); }
+      51%, 100% { border-color: transparent; }
+    }
+    
+    .hero-stats {
+      display: flex;
+      gap: 4rem;
+      margin-bottom: 3rem;
+      animation: fadeInUp 0.8s ease-out 0.5s both;
+    }
+    
+    .stat-item {
+      text-align: center;
+    }
+    
+    .stat-value {
+      font-family: 'Orbitron', monospace;
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--neon-cyan);
+      text-shadow: 0 0 20px var(--glow-cyan);
+    }
+    
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--fg-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+    }
+    
+    .hero-cta {
+      display: flex;
+      gap: 1.5rem;
+      animation: fadeInUp 0.8s ease-out 0.6s both;
+    }
+    
+    .btn {
+      padding: 1rem 2.5rem;
+      border-radius: 4px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s ease;
+    }
+    
+    .btn:hover::before {
+      left: 100%;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-blue));
+      color: var(--bg);
+      border: none;
+      font-weight: 700;
+    }
+    
+    .btn-primary:hover {
+      box-shadow: 0 0 40px var(--glow-cyan), 0 0 80px rgba(0, 255, 255, 0.3);
+      transform: translateY(-3px);
+    }
+    
+    .btn-outline {
+      background: transparent;
+      color: var(--fg);
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    
+    .btn-outline:hover {
+      border-color: var(--neon-pink);
+      box-shadow: 0 0 30px var(--glow-pink);
+      color: var(--neon-pink);
+    }
+    
+    .section {
+      padding: 8rem 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    
+    .section-header {
+      text-align: center;
+      margin-bottom: 5rem;
+    }
+    
+    .section-label {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--neon-pink);
+      margin-bottom: 1rem;
+      text-shadow: 0 0 10px var(--glow-pink);
+    }
+    
+    .section-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: clamp(2rem, 5vw, 4rem);
+      font-weight: 900;
+    }
+    
+    .style-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 2rem;
+    }
+    
+    .style-card {
+      background: var(--bg-card);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+      position: relative;
+    }
+    
+    .style-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 12px;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+    }
+    
+    .style-card:hover {
+      transform: translateY(-12px) scale(1.02);
+      border-color: transparent;
+    }
+    
+    .style-card:hover::after {
+      opacity: 1;
+    }
+    
+    .style-card.cyber:hover::after {
+      box-shadow: inset 0 0 60px rgba(255, 0, 255, 0.1), 0 0 40px rgba(255, 0, 255, 0.3);
+    }
+    
+    .style-card.hmi:hover::after {
+      box-shadow: inset 0 0 60px rgba(0, 212, 170, 0.1), 0 0 40px rgba(0, 212, 170, 0.3);
+    }
+    
+    .style-card.data:hover::after {
+      box-shadow: inset 0 0 60px rgba(0, 255, 255, 0.1), 0 0 40px rgba(0, 255, 255, 0.3);
+    }
+    
+    .style-card.tiandao:hover::after {
+      box-shadow: inset 0 0 60px rgba(201, 162, 39, 0.1), 0 0 40px rgba(201, 162, 39, 0.3);
+    }
+    
+    .style-preview {
+      height: 220px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .style-preview::before {
+      content: '';
+      position: absolute;
+      width: 200%;
+      height: 200%;
+      background: inherit;
+      filter: blur(60px);
+      opacity: 0.4;
+    }
+    
+    .preview-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .preview-text {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 2.2rem;
+      font-weight: 900;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .preview-sub {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      opacity: 0.6;
+      margin-top: 0.5rem;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .style-cyber {
+      background: linear-gradient(135deg, #0a0015 0%, #1a0030 50%, #0a0015 100%);
+    }
+    .style-cyber .preview-text {
+      color: var(--neon-pink);
+      text-shadow: 0 0 30px var(--glow-pink), 0 0 60px var(--glow-pink);
+    }
+    .style-cyber .preview-icon { filter: drop-shadow(0 0 20px var(--glow-pink)); }
+    
+    .style-hmi {
+      background: linear-gradient(135deg, #001510 0%, #002820 50%, #001510 100%);
+    }
+    .style-hmi .preview-text {
+      color: #00ffaa;
+      text-shadow: 0 0 30px rgba(0, 255, 170, 0.7);
+    }
+    .style-hmi .preview-icon { filter: drop-shadow(0 0 20px rgba(0, 255, 170, 0.7)); }
+    
+    .style-data {
+      background: linear-gradient(135deg, #001020 0%, #002040 50%, #001020 100%);
+    }
+    .style-data .preview-text {
+      color: var(--neon-cyan);
+      text-shadow: 0 0 30px var(--glow-cyan);
+    }
+    .style-data .preview-icon { filter: drop-shadow(0 0 20px var(--glow-cyan)); }
+    
+    .style-tiandao {
+      background: linear-gradient(135deg, #0a0800 0%, #1a1500 50%, #0a0800 100%);
+    }
+    .style-tiandao .preview-text {
+      color: var(--gold);
+      text-shadow: 0 0 30px rgba(201, 162, 39, 0.7);
+    }
+    .style-tiandao .preview-icon { filter: drop-shadow(0 0 20px rgba(201, 162, 39, 0.7)); }
+    
+    .style-info {
+      padding: 1.5rem;
+    }
+    
+    .style-name {
+      font-weight: 700;
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .style-desc {
+      color: var(--fg-muted);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      line-height: 1.7;
+    }
+    
+    .style-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    
+    .tag {
+      background: rgba(255,255,255,0.03);
+      padding: 0.35rem 0.9rem;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      color: var(--fg-muted);
+      border: 1px solid rgba(255,255,255,0.08);
+      letter-spacing: 0.05em;
+    }
+    
+    .quote-section {
+      padding: 10rem 2rem;
+      text-align: center;
+      position: relative;
+      background: var(--bg-elevated);
+    }
+    
+    .quote-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(ellipse at 30% 50%, rgba(255, 0, 255, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 50%, rgba(0, 255, 255, 0.08) 0%, transparent 50%);
+    }
+    
+    .quote-mark {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 8rem;
+      line-height: 0;
+      color: var(--neon-purple);
+      opacity: 0.3;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .quote-text {
+      font-family: 'Noto Serif SC', serif;
+      font-size: clamp(2.5rem, 7vw, 6rem);
+      font-weight: 900;
+      line-height: 1.2;
+      margin: -2rem 0 2rem;
+      color: var(--neon-cyan);
+      text-shadow: 0 0 40px var(--glow-cyan), 0 0 80px var(--glow-cyan);
+      position: relative;
+      z-index: 1;
+    }
+    
+    .quote-author {
+      font-size: 1rem;
+      color: var(--fg-muted);
+      letter-spacing: 0.15em;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .quote-source {
+      font-size: 0.8rem;
+      color: var(--neon-pink);
+      margin-top: 0.5rem;
+      opacity: 0.7;
+    }
+    
+    .demo-section {
+      padding: 8rem 2rem;
+    }
+    
+    .demo-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+      gap: 2rem;
+    }
+    
+    .demo-slide {
+      background: var(--bg-card);
+      border-radius: 12px;
+      padding: 2.5rem;
+      border: 1px solid rgba(255,255,255,0.08);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s ease;
+    }
+    
+    .demo-slide:hover {
+      border-color: rgba(255,255,255,0.15);
+      transform: translateY(-5px);
+    }
+    
+    .demo-slide::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+    }
+    
+    .demo-slide.rise::before {
+      background: linear-gradient(180deg, var(--neon-green), var(--neon-cyan));
+      box-shadow: 0 0 30px var(--neon-green);
+    }
+    
+    .demo-slide.fall::before {
+      background: linear-gradient(180deg, var(--neon-orange), var(--neon-red));
+      box-shadow: 0 0 30px var(--neon-red);
+    }
+    
+    .demo-slide.neutral::before {
+      background: linear-gradient(180deg, var(--neon-purple), var(--neon-pink));
+      box-shadow: 0 0 30px var(--neon-purple);
+    }
+    
+    .demo-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1rem;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      margin-bottom: 1.5rem;
+    }
+    
+    .demo-slide.rise .demo-badge {
+      background: rgba(0, 255, 136, 0.1);
+      color: var(--neon-green);
+      border: 1px solid rgba(0, 255, 136, 0.3);
+    }
+    
+    .demo-slide.fall .demo-badge {
+      background: rgba(255, 51, 102, 0.1);
+      color: var(--neon-red);
+      border: 1px solid rgba(255, 51, 102, 0.3);
+    }
+    
+    .demo-slide.neutral .demo-badge {
+      background: rgba(139, 92, 246, 0.1);
+      color: var(--neon-purple);
+      border: 1px solid rgba(139, 92, 246, 0.3);
+    }
+    
+    .demo-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1.8rem;
+      font-weight: 900;
+      margin-bottom: 1rem;
+    }
+    
+    .demo-content {
+      color: var(--fg-muted);
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+    
+    .demo-meta {
+      display: flex;
+      gap: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    
+    .meta-item {
+      text-align: center;
+    }
+    
+    .meta-value {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+    
+    .demo-slide.rise .meta-value { color: var(--neon-green); }
+    .demo-slide.fall .meta-value { color: var(--neon-red); }
+    .demo-slide.neutral .meta-value { color: var(--neon-purple); }
+    
+    .meta-label {
+      font-size: 0.65rem;
+      color: var(--fg-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+    }
+    
+    .palette-section {
+      padding: 8rem 2rem;
+      background: var(--bg-elevated);
+    }
+    
+    .palette-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .palette-item {
+      text-align: center;
+      cursor: pointer;
+    }
+    
+    .palette-swatch {
+      width: 100%;
+      height: 120px;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .palette-swatch::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.6s ease;
+    }
+    
+    .palette-item:hover .palette-swatch {
+      transform: translateY(-8px) scale(1.05);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    }
+    
+    .palette-item:hover .palette-swatch::after {
+      left: 150%;
+    }
+    
+    .palette-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 0.25rem;
+    }
+    
+    .palette-hex {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.7rem;
+      color: var(--fg-muted);
+      letter-spacing: 0.05em;
+    }
+    
+    .code-section {
+      padding: 8rem 2rem;
+    }
+    
+    .code-container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    
+    .code-block {
+      background: var(--bg);
+      border-radius: 12px;
+      padding: 2rem;
+      border: 1px solid rgba(255,255,255,0.08);
+      overflow-x: auto;
+      position: relative;
+    }
+    
+    .code-header {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    
+    .code-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    
+    .code-block pre {
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+      line-height: 2;
+      color: var(--fg);
+    }
+    
+    .code-block .comment { color: var(--fg-muted); }
+    .code-block .property { color: var(--neon-cyan); }
+    .code-block .value { color: var(--neon-pink); }
+    .code-block .selector { color: var(--neon-purple); }
+    
+    .features-section {
+      padding: 8rem 2rem;
+      background: var(--bg-elevated);
+    }
+    
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .feature-card {
+      background: var(--bg-card);
+      border-radius: 12px;
+      padding: 2rem;
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: all 0.4s ease;
+    }
+    
+    .feature-card:hover {
+      border-color: var(--neon-cyan);
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.1);
+    }
+    
+    .feature-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .feature-title {
+      font-weight: 700;
+      font-size: 1.2rem;
+      margin-bottom: 0.75rem;
+    }
+    
+    .feature-desc {
+      color: var(--fg-muted);
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+    
+    footer {
+      padding: 5rem 2rem;
+      text-align: center;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    
+    .footer-logo {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.5rem;
+      font-weight: 900;
+      background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+    }
+    
+    .footer-text {
+      color: var(--fg-muted);
+      font-size: 0.85rem;
+    }
+    
+    .footer-link {
+      color: var(--neon-cyan);
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    
+    .footer-link:hover {
+      text-shadow: 0 0 10px var(--glow-cyan);
+    }
+    
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .reveal {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    @media (max-width: 768px) {
+      .hero-stats { flex-direction: column; gap: 2rem; }
+      .hero-cta { flex-direction: column; width: 100%; max-width: 280px; }
+      .btn { width: 100%; text-align: center; }
+      .demo-grid { grid-template-columns: 1fr; }
+      .demo-meta { flex-wrap: wrap; gap: 1.5rem; }
+    }
+    
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="particles"></canvas>
+  
+  <div class="content">
+    <section class="hero">
+      <div class="hero-glitch">SYS.V7.0.3 // ONLINE</div>
+      <div class="hero-label">Design Learning System</div>
+      <h1 class="hero-title">
+        <span class="line1">霓虹赛博</span>
+        <span class="line2">朋克设计</span>
+      </h1>
+      <p class="hero-subtitle">
+        <span class="typing-text" id="typing"></span>
+      </p>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-value" data-count="6">0</div>
+          <div class="stat-label">设计作品</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value" data-count="4">0</div>
+          <div class="stat-label">核心风格</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value" data-count="12">0</div>
+          <div class="stat-label">配色方案</div>
+        </div>
+      </div>
+      <div class="hero-cta">
+        <a href="#styles" class="btn btn-primary">探索设计风格</a>
+        <a href="#demo" class="btn btn-outline">查看演示</a>
+      </div>
+    </section>
+    
+    <section class="section" id="styles">
+      <div class="section-header reveal">
+        <div class="section-label">Design Styles</div>
+        <h2 class="section-title">四种核心设计风格</h2>
+      </div>
+      
+      <div class="style-grid">
+        <div class="style-card cyber reveal">
+          <div class="style-preview style-cyber">
+            <div class="preview-icon">◈</div>
+            <div class="preview-text">霓虹赛博</div>
+            <div class="preview-sub">NEON CYBERPUNK</div>
+          </div>
+          <div class="style-info">
+            <div class="style-name">霓虹赛博朋克</div>
+            <div class="style-desc">暗黑背景 + 霓虹粉/青/紫 + 发光效果，视觉冲击力强，适合科技、游戏、未来主题内容。强调光晕与渐变的戏剧性对比。</div>
+            <div class="style-tags">
+              <span class="tag">科技</span>
+              <span class="tag">游戏</span>
+              <span class="tag">创意</span>
+              <span class="tag">未来</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="style-card hmi reveal">
+          <div class="style-preview style-hmi">
+            <div class="preview-icon">◎</div>
+            <div class="preview-text">HMI科技</div>
+            <div class="preview-sub">AUTOMOTIVE TECH</div>
+          </div>
+          <div class="style-info">
+            <div class="style-name">HMI科技风</div>
+            <div class="style-desc">深黑背景 + 青色强调，专业感强，适合汽车、工业、技术分享场景。界面元素精密，信息层级清晰。</div>
+            <div class="style-tags">
+              <span class="tag">汽车</span>
+              <span class="tag">工业</span>
+              <span class="tag">技术</span>
+              <span class="tag">专业</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="style-card data reveal">
+          <div class="style-preview style-data">
+            <div class="preview-icon">◇</div>
+            <div class="preview-text">数据可视</div>
+            <div class="preview-sub">DATA VISUALIZATION</div>
+          </div>
+          <div class="style-info">
+            <div class="style-name">数据可视化</div>
+            <div class="style-desc">深蓝背景 + 多色数据点，信息密度高但不乱，适合数据报告、分析类内容。色彩编码精准，图表动效流畅。</div>
+            <div class="style-tags">
+              <span class="tag">数据</span>
+              <span class="tag">报告</span>
+              <span class="tag">分析</span>
+              <span class="tag">图表</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="style-card tiandao reveal">
+          <div class="style-preview style-tiandao">
+            <div class="preview-icon">✧</div>
+            <div class="preview-text">天道金</div>
+            <div class="preview-sub">TIANDAO GOLD</div>
+          </div>
+          <div class="style-info">
+            <div class="style-name">天道金</div>
+            <div class="style-desc">暖黑背景 + 金色强调，庄重典雅，适合哲学、文学、人文类内容。东方美学与现代设计融合。</div>
+            <div class="style-tags">
+              <span class="tag">哲学</span>
+              <span class="tag">文学</span>
+              <span class="tag">人文</span>
+              <span class="tag">东方</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section class="quote-section">
+      <div class="quote-mark">"</div>
+      <div class="quote-text" id="randomQuote"></div>
+      <div class="quote-author" id="quoteAuthor"></div>
+      <div class="quote-source" id="quoteSource"></div>
+    </section>
+    
+    <section class="demo-section" id="demo">
+      <div class="demo-container">
+        <div class="section-header reveal">
+          <div class="section-label">Live Demo</div>
+          <h2 class="section-title">PPT 页面演示</h2>
+        </div>
+        
+        <div class="demo-grid">
+          <div class="demo-slide rise reveal">
+            <div class="demo-badge">▲ 上升弧 CHARACTER ARC</div>
+            <h3 class="demo-title">芮小丹 — 天生自在的得道者</h3>
+            <p class="demo-content">
+              核心欲望：追求"自在"的生存状态，不受他人定义。从警察到觉悟者再到殉道者，
+              她的人格弧线始终向上，最终以"当生则生，当死则死"完成对天道的最高践行。
+            </p>
+            <div class="demo-meta">
+              <div class="meta-item">
+                <div class="meta-value">3</div>
+                <div class="meta-label">关键转折</div>
+              </div>
+              <div class="meta-item">
+                <div class="meta-value">Ch6-42</div>
+                <div class="meta-label">弧线跨度</div>
+              </div>
+              <div class="meta-item">
+                <div class="meta-value">↑</div>
+                <div class="meta-label">上升弧</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="demo-slide fall reveal">
+            <div class="demo-badge">▼ 坠落弧 CHARACTER ARC</div>
+            <h3 class="demo-title">刘冰 — 弱势文化的终极样本</h3>
+            <p class="demo-content">
+              核心欲望：破格获取，不付出代价就获得利益和尊重。从唱片店老板到格律诗办公室主任，
+              再到退股者、拿白纸要挟的小丑，最终跳楼自杀——他的每一步都在验证"文化属性决定命运"。
+            </p>
+            <div class="demo-meta">
+              <div class="meta-item">
+                <div class="meta-value">4</div>
+                <div class="meta-label">关键转折</div>
+              </div>
+              <div class="meta-item">
+                <div class="meta-value">Ch17-45</div>
+                <div class="meta-label">弧线跨度</div>
+              </div>
+              <div class="meta-item">
+                <div class="meta-value">↓</div>
+                <div class="meta-label">坠落弧</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="demo-slide neutral reveal">
+            <div class="demo-badge">◆ 平行弧 CHARACTER ARC</div>
+            <h3 class="demo-title">丁元英 — 觉悟者的孤独守望</h3>
+            <p class="demo-content">
+              核心欲望：在出世与入世之间寻找平衡。他早已看透"天道"，却选择以"杀富济贫"的方式
+              完成一次文化实验。他的弧线近乎水平，因为他始终站在更高的维度俯视众生。
+            </p>
+            <div class="demo-meta">
+              <div class="meta-item">
+                <div class="meta-value">2</div>
+                <div class="meta-label">关键转折</div>
+              </div>
+              <div class="meta-item">
+                <div class="meta-value">Ch1-45</div>
+                <div class="meta-label">弧线跨度</div>
+              </div>
+              <div class="meta-item">
+                <div class="meta-value">→</div>
+                <div class="meta-label">平行弧</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="demo-slide rise reveal">
+            <div class="demo-badge">▲ 上升弧 CHARACTER ARC</div>
+            <h3 class="demo-title">欧阳雪 — 守正出奇的实干家</h3>
+            <p class="demo-content">
+              核心欲望：守住自己的"一亩三分地"，在变化中保持定力。从饭店老板到格律诗股东，
+              她始终知道自己要什么、能做什么。她的弧线稳步向上，是"强势文化"的另一个样本。
+            </p>
+            <div class="demo-meta">
+              <div class="meta-item">
+                <div class="meta-value">2</div>
+                <div class="meta-label">关键转折</div>
+              </div>
+              <div class="meta-item">
+                <div class="meta-value">Ch15-42</div>
+                <div class="meta-label">弧线跨度</div>
+              </div>
+              <div class="meta-item">
+                <div class="meta-value">↑</div>
+                <div class="meta-label">上升弧</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section class="features-section">
+      <div class="section-header reveal">
+        <div class="section-label">5D Method</div>
+        <h2 class="section-title">五维升维法</h2>
+      </div>
+      
+      <div class="features-grid">
+        <div class="feature-card reveal">
+          <div class="feature-icon">🎭</div>
+          <div class="feature-title">主题感官化</div>
+          <div class="feature-desc">将抽象主题转化为可感知的视觉符号，用色彩、形状、动效传递情绪，让观众"感觉"到内容而非仅仅"阅读"内容。</div>
+        </div>
+        
+        <div class="feature-card reveal">
+          <div class="feature-icon">🎬</div>
+          <div class="feature-title">剧场式切分</div>
+          <div class="feature-desc">每页PPT都是一个"场景"，有开场、高潮、收尾。用视觉节奏控制观众注意力，像电影一样讲述故事。</div>
+        </div>
+        
+        <div class="feature-card reveal">
+          <div class="feature-icon">📱</div>
+          <div class="feature-title">发布会级排版</div>
+          <div class="feature-desc">借鉴苹果发布会的极简美学：大字、大图、大量留白。每页只讲一件事，但讲得震撼。</div>
+        </div>
+        
+        <div class="feature-card reveal">
+          <div class="feature-icon">🧩</div>
+          <div class="feature-title">语义组件降维</div>
+          <div class="feature-desc">将复杂信息拆解为语义组件：card-rise（上升）、card-fall（坠落）、warning-box（警示）、ok-box（成功），让信息自带情绪。</div>
+        </div>
+        
+        <div class="feature-card reveal">
+          <div class="feature-icon">🎯</div>
+          <div class="feature-title">焦点入场导演</div>
+          <div class="feature-desc">控制每个元素的入场时机和方式：淡入、滑入、缩放、闪烁。让观众的视线跟随你的节奏移动。</div>
+        </div>
+        
+        <div class="feature-card reveal">
+          <div class="feature-icon">✨</div>
+          <div class="feature-title">霓虹光效系统</div>
+          <div class="feature-desc">建立可复用的光效库：文字发光、边框发光、背景光晕、粒子动画。一键应用，风格统一。</div>
+        </div>
+      </div>
+    </section>
+    
+    <section class="palette-section">
+      <div class="section-header reveal">
+        <div class="section-label">Color System</div>
+        <h2 class="section-title">霓虹配色系统</h2>
+      </div>
+      
+      <div class="palette-grid reveal">
+        <div class="palette-item">
+          <div class="palette-swatch" style="background: linear-gradient(135deg, #00ffff, #00d4ff);"></div>
+          <div class="palette-name">霓虹青</div>
+          <div class="palette-hex">#00FFFF</div>
+        </div>
+        <div class="palette-item">
+          <div class="palette-swatch" style="background: linear-gradient(135deg, #ff00ff, #ff69b4);"></div>
+          <div class="palette-name">霓虹粉</div>
+          <div class="palette-hex">#FF00FF</div>
+        </div>
+        <div class="palette-item">
+          <div class="palette-swatch" style="background: linear-gradient(135deg, #8b5cf6, #a855f7);"></div>
+          <div class="palette-name">霓虹紫</div>
+          <div class="palette-hex">#8B5CF6</div>
+        </div>
+        <div class="palette-item">
+          <div class="palette-swatch" style="background: linear-gradient(135deg, #00ff88, #00ffaa);"></div>
+          <div class="palette-name">霓虹绿</div>
+          <div class="palette-hex">#00FF88</div>
+        </div>
+        <div class="palette-item">
+          <div class="palette-swatch" style="background: linear-gradient(135deg, #ff6b35, #ff8c42);"></div>
+          <div class="palette-name">霓虹橙</div>
+          <div class="palette-hex">#FF6B35</div>
+        </div>
+        <div class="palette-item">
+          <div class="palette-swatch" style="background: linear-gradient(135deg, #ff3366, #ff5c8a);"></div>
+          <div class="palette-name">霓虹红</div>
+          <div class="palette-hex">#FF3366</div>
+        </div>
+        <div class="palette-item">
+          <div class="palette-swatch" style="background: linear-gradient(135deg, #0088ff, #00aaff);"></div>
+          <div class="palette-name">霓虹蓝</div>
+          <div class="palette-hex">#0088FF</div>
+        </div>
+        <div class="palette-item">
+          <div class="palette-swatch" style="background: linear-gradient(135deg, #c9a227, #fbbf24);"></div>
+          <div class="palette-name">天道金</div>
+          <div class="palette-hex">#C9A227</div>
+        </div>
+      </div>
+    </section>
+    
+    <section class="code-section">
+      <div class="code-container">
+        <div class="section-header reveal">
+          <div class="section-label">CSS Code</div>
+          <h2 class="section-title">可复用代码</h2>
+        </div>
+        
+        <div class="code-block reveal">
+          <div class="code-header">
+            <div class="code-dot" style="background: #ff5f56;"></div>
+            <div class="code-dot" style="background: #ffbd2e;"></div>
+            <div class="code-dot" style="background: #27ca40;"></div>
+          </div>
+          <pre><span class="comment">/* 霓虹赛博朋克配色系统 */</span>
+<span class="selector">:root</span> {
+  <span class="property">--bg</span>: <span class="value">#050508</span>;
+  <span class="property">--neon-cyan</span>: <span class="value">#00ffff</span>;
+  <span class="property">--neon-pink</span>: <span class="value">#ff00ff</span>;
+  <span class="property">--neon-purple</span>: <span class="value">#8b5cf6</span>;
+  <span class="property">--glow-cyan</span>: <span class="value">rgba(0, 255, 255, 0.7)</span>;
+}
+
+<span class="comment">/* 霓虹文字发光效果 */</span>
+<span class="selector">.neon-text</span> {
+  <span class="property">color</span>: <span class="value">var(--neon-cyan)</span>;
+  <span class="property">text-shadow</span>: 
+    <span class="value">0 0 5px var(--glow-cyan)</span>,
+    <span class="value">0 0 10px var(--glow-cyan)</span>,
+    <span class="value">0 0 20px var(--glow-cyan)</span>,
+    <span class="value">0 0 40px var(--glow-cyan)</span>;
+}
+
+<span class="comment">/* 霓虹边框发光效果 */</span>
+<span class="selector">.neon-border</span> {
+  <span class="property">border</span>: <span class="value">1px solid var(--neon-cyan)</span>;
+  <span class="property">box-shadow</span>: 
+    <span class="value">0 0 5px var(--glow-cyan)</span>,
+    <span class="value">0 0 10px var(--glow-cyan)</span>,
+    <span class="value">inset 0 0 5px var(--glow-cyan)</span>;
+}
+
+<span class="comment">/* 渐变文字动画 */</span>
+<span class="selector">.gradient-text</span> {
+  <span class="property">background</span>: <span class="value">linear-gradient(90deg, #00ffff, #ff00ff)</span>;
+  <span class="property">-webkit-background-clip</span>: <span class="value">text</span>;
+  <span class="property">-webkit-text-fill-color</span>: <span class="value">transparent</span>;
+  <span class="property">animation</span>: <span class="value">gradientShift 3s ease infinite</span>;
+}</pre>
+        </div>
+      </div>
+    </section>
+    
+    <footer>
+      <div class="footer-logo">BOOK DISTILLATION</div>
+      <p class="footer-text">
+        V7.0 · 设计学习资源库<br>
+        学习来源：<a href="https://www.zcool.com.cn" class="footer-link" target="_blank">站酷</a>
+      </p>
+    </footer>
+  </div>
+  
+  <script>
+    const quotes = [
+      { text: '大爱不爱', author: '智玄大师', source: '《遥远的救世主》第20章' },
+      { text: '当生则生，当死则死', author: '芮小丹', source: '《遥远的救世主》第42章' },
+      { text: '更高级的哲人独处着，这并不是因为他想孤独，而是因为在他的周围找不到他的同类', author: '尼采', source: '《遥远的救世主》引言' },
+      { text: '天下之道，论到极致，百姓的柴米油盐', author: '丁元英', source: '《遥远的救世主》第15章' },
+      { text: '神即道，道法自然，如来', author: '丁元英', source: '《遥远的救世主》第5章' },
+      { text: '强势文化造就强者，弱势文化造就弱者', author: '丁元英', source: '《遥远的救世主》第7章' },
+      { text: '这世上原来就没有什么神话，所谓的神话不过是常人的思维所不易理解的平常事', author: '丁元英', source: '《遥远的救世主》第12章' }
+    ];
+    
+    const typingTexts = [
+      '从站酷6个优秀设计作品中学习霓虹科技风、赛博朋克、数据可视化配色',
+      '将文本报告转化为电影级发布会风格的HTML PPT',
+      '融合5维升维法：主题感官化、剧场式切分、发布会级排版',
+      '语义组件系统：card-rise、card-fall、warning-box、ok-box',
+      '霓虹光效系统：文字发光、边框发光、背景光晕、粒子动画'
+    ];
+    
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let mouseX = 0;
+    let mouseY = 0;
+    
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    
+    function createParticles() {
+      particles = [];
+      const count = Math.min(100, Math.floor(window.innerWidth / 15));
+      for (let i = 0; i < count; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          size: Math.random() * 2 + 0.5,
+          speedX: (Math.random() - 0.5) * 0.3,
+          speedY: (Math.random() - 0.5) * 0.3,
+          color: ['#00ffff', '#ff00ff', '#8b5cf6', '#00ff88'][Math.floor(Math.random() * 4)]
+        });
+      }
+    }
+    
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      particles.forEach((p, i) => {
+        p.x += p.speedX;
+        p.y += p.speedY;
+        
+        const dx = mouseX - p.x;
+        const dy = mouseY - p.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 150) {
+          p.x -= dx * 0.01;
+          p.y -= dy * 0.01;
+        }
+        
+        if (p.x < 0) p.x = canvas.width;
+        if (p.x > canvas.width) p.x = 0;
+        if (p.y < 0) p.y = canvas.height;
+        if (p.y > canvas.height) p.y = 0;
+        
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = p.color;
+        ctx.fill();
+        
+        particles.slice(i + 1).forEach(p2 => {
+          const dx = p.x - p2.x;
+          const dy = p.y - p2.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 100) {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.strokeStyle = `rgba(255, 255, 255, ${0.1 * (1 - dist / 100)})`;
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        });
+      });
+      
+      requestAnimationFrame(animate);
+    }
+    
+    document.addEventListener('mousemove', e => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+    
+    resize();
+    createParticles();
+    animate();
+    
+    window.addEventListener('resize', () => {
+      resize();
+      createParticles();
+    });
+    
+    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+    document.getElementById('randomQuote').textContent = randomQuote.text;
+    document.getElementById('quoteAuthor').textContent = `— ${randomQuote.author}`;
+    document.getElementById('quoteSource').textContent = randomQuote.source;
+    
+    let textIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    const typingEl = document.getElementById('typing');
+    
+    function typeText() {
+      const currentText = typingTexts[textIndex];
+      
+      if (isDeleting) {
+        typingEl.textContent = currentText.substring(0, charIndex - 1);
+        charIndex--;
+      } else {
+        typingEl.textContent = currentText.substring(0, charIndex + 1);
+        charIndex++;
+      }
+      
+      if (!isDeleting && charIndex === currentText.length) {
+        setTimeout(() => isDeleting = true, 2000);
+      } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        textIndex = (textIndex + 1) % typingTexts.length;
+      }
+      
+      setTimeout(typeText, isDeleting ? 30 : 60);
+    }
+    
+    typeText();
+    
+    document.querySelectorAll('.stat-value').forEach(el => {
+      const target = parseInt(el.dataset.count);
+      let current = 0;
+      const increment = target / 50;
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+          el.textContent = target;
+          clearInterval(timer);
+        } else {
+          el.textContent = Math.floor(current);
+        }
+      }, 30);
+    });
+    
+    const reveals = document.querySelectorAll('.reveal');
+    
+    function checkReveal() {
+      reveals.forEach(el => {
+        const top = el.getBoundingClientRect().top;
+        if (top < window.innerHeight * 0.85) {
+          el.classList.add('visible');
+        }
+      });
+    }
+    
+    window.addEventListener('scroll', checkReveal);
+    checkReveal();
+    
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

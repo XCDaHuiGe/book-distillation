@@ -1,1816 +1,1805 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>遥远的救世主 · 精华内参</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --ink:#0a0a0b;--ink-rgb:10,10,11;
-  --paper:#f1efea;--paper-rgb:241,239,234;
-  --paper-tint:#e8e5de;--ink-tint:#18181a;
-  --accent:#c9a227;--accent-rgb:201,162,39;
-  --radius:6px;--ease:cubic-bezier(.25,.46,.45,.94);
-  --font-serif:'Noto Serif SC',Georgia,serif;
-  --font-sans:'Noto Sans SC',system-ui,sans-serif;
-  --font-mono:'JetBrains Mono',monospace;
-}
-html,body{height:100%;overflow:hidden;font-family:var(--font-sans);background:var(--ink);color:var(--paper)}
-body.light-bg{background:var(--paper);color:var(--ink)}
-body.light-bg .webgl-canvas{opacity:.15}
-
-.webgl-canvas{position:fixed;inset:0;width:100%;height:100%;z-index:0;opacity:.4;pointer-events:none;transition:opacity .6s var(--ease)}
-.webgl-canvas.dark{opacity:.4}
-.webgl-canvas.light{opacity:.12}
-
-.deck{position:relative;z-index:1;height:100vh;overflow:hidden}
-.slide{position:absolute;inset:0;display:none;min-height:100vh;max-height:100vh;overflow-y:auto;overflow-x:hidden;padding:5vh 6vw}
-.slide.active{display:flex;flex-direction:column}
-.slide.hero{justify-content:center;align-items:center;text-align:center}
-.slide.hero .frame{max-width:70vw}
-.slide.light{background:var(--paper);color:var(--ink)}
-.slide.dark{background:transparent;color:var(--paper)}
-.slide.hero.light{background:var(--paper);color:var(--ink)}
-.slide.hero.dark{background:transparent;color:var(--paper)}
-
-.chrome{position:fixed;top:2vh;left:6vw;right:6vw;display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;opacity:.6;z-index:10}
-.foot{position:fixed;bottom:2vh;left:6vw;right:6vw;display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;opacity:.5;z-index:10}
-
-.frame{width:100%}
-.kicker{font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;opacity:.6;margin-bottom:1.5vh}
-.h-hero{font-family:var(--font-serif);font-weight:900;font-size:clamp(3rem,10vw,7rem);line-height:1.05;letter-spacing:-.02em;margin-bottom:2vh}
-.h-xl{font-family:var(--font-serif);font-weight:700;font-size:clamp(2rem,6vw,4rem);line-height:1.15;letter-spacing:-.01em;margin-bottom:1.5vh}
-.h-sub{font-family:var(--font-serif);font-weight:400;font-size:clamp(1.2rem,2.5vw,1.8rem);line-height:1.4;opacity:.85;margin-bottom:1vh}
-.h-md{font-family:var(--font-sans);font-weight:600;font-size:clamp(1rem,1.8vw,1.4rem);line-height:1.4;margin-bottom:1vh}
-.lead{font-family:var(--font-sans);font-weight:300;font-size:clamp(1rem,1.5vw,1.2rem);line-height:1.7;max-width:55vw;opacity:.85}
-.meta-row{font-family:var(--font-mono);font-size:12px;letter-spacing:.06em;opacity:.6;display:flex;gap:1em;flex-wrap:wrap;margin-top:2vh}
-
-.stat-card{background:var(--paper-tint);border:1px solid rgba(var(--ink-rgb),.08);border-radius:var(--radius);padding:2vh 1.5vw;display:flex;flex-direction:column;gap:.5vh}
-.stat-label{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;opacity:.5}
-.stat-nb{font-family:var(--font-serif);font-weight:900;font-size:clamp(2rem,4vw,3rem);line-height:1;color:var(--accent)}
-.stat-unit{font-size:.5em;font-weight:400;opacity:.7}
-.stat-note{font-family:var(--font-sans);font-size:13px;opacity:.7}
-
-.grid-6{display:grid;grid-template-columns:repeat(3,1fr);gap:2vh 2vw}
-.grid-4{display:grid;grid-template-columns:repeat(2,1fr);gap:2vh 2vw}
-.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:2vh 1.5vw}
-.grid-2-7-5{display:grid;grid-template-columns:7fr 5fr;gap:4vw;align-items:start}
-.grid-2-6-6{display:grid;grid-template-columns:1fr 1fr;gap:4vw;align-items:start}
-
-.frame-img{position:relative;overflow:hidden;border-radius:var(--radius);background:var(--paper-tint)}
-.frame-img img{width:100%;height:100%;object-fit:cover;object-position:top center}
-.frame-img.r-16x9{aspect-ratio:16/9}
-.frame-img.r-16x10{aspect-ratio:16/10}
-.frame-img.r-4x3{aspect-ratio:4/3}
-.frame-img.r-3x2{aspect-ratio:3/2}
-.frame-img.r-1x1{aspect-ratio:1/1}
-.frame-img.h-22{height:22vh}
-.frame-img.h-26{height:26vh}
-.img-cap{position:absolute;bottom:0;left:0;right:0;padding:1vh 1vw;font-family:var(--font-mono);font-size:10px;background:rgba(var(--ink-rgb),.7);color:var(--paper);letter-spacing:.04em}
-
-.callout{font-family:var(--font-serif);font-size:clamp(1rem,1.4vw,1.15rem);font-style:italic;line-height:1.7;padding:2vh 2vw;border-left:3px solid var(--accent);background:rgba(var(--accent-rgb),.06);margin-top:2vh}
-.callout-src{font-family:var(--font-mono);font-size:11px;font-style:normal;margin-top:1vh;opacity:.6}
-
-.pipeline-section{margin-bottom:4vh}
-.pipeline-label{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;opacity:.5;margin-bottom:1.5vh}
-.pipeline{display:flex;flex-direction:column;gap:1vh}
-.step{display:flex;align-items:flex-start;gap:1.5vw;padding:1.5vh 0;border-bottom:1px solid rgba(var(--ink-rgb),.08)}
-.step-nb{font-family:var(--font-mono);font-size:12px;font-weight:600;min-width:2em;opacity:.5}
-.step-title{font-family:var(--font-sans);font-weight:600;font-size:clamp(.95rem,1.2vw,1.1rem)}
-.step-desc{font-family:var(--font-sans);font-size:13px;opacity:.7;margin-top:.3vh}
-
-.q-big{font-family:var(--font-serif);font-size:clamp(1.3rem,2.2vw,1.8rem);font-style:italic;line-height:1.6;max-width:60vw}
-.cite{font-family:var(--font-mono);font-size:12px;margin-top:1.5vh;opacity:.5}
-
-.before-after{display:grid;grid-template-columns:1fr 1fr;gap:3vw}
-.ba-col{padding:3vh 2vw;border-radius:var(--radius)}
-.ba-col.wrong{background:rgba(220,38,38,.06);border:1px solid rgba(220,38,38,.15)}
-.ba-col.right{background:rgba(14,159,110,.06);border:1px solid rgba(14,159,110,.15)}
-.ba-label{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.5vh}
-
-.code-block{background:rgba(var(--ink-rgb),.05);border-radius:var(--radius);padding:2vh 2vw;overflow-x:auto;font-family:var(--font-mono);font-size:13px;line-height:1.6}
-.code-block pre{margin:0}
-.code-block code{background:none}
-
-.mermaid-container{display:flex;justify-content:center;align-items:center;min-height:40vh}
-.mermaid{background:transparent}
-
-.latex-block{font-size:clamp(1.2rem,2vw,1.6rem);text-align:center;padding:3vh 0}
-
-[data-anim]{opacity:0;transform:translateY(20px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
-[data-anim].visible{opacity:1;transform:translateY(0)}
-[data-anim="fade-up"]{transform:translateY(30px)}
-[data-anim="fade-right"]{transform:translateX(-30px)}
-[data-anim="fade-left"]{transform:translateX(30px)}
-[data-anim="rise-in"]{transform:scale(.95) translateY(20px)}
-[data-anim="zoom-pop"]{transform:scale(.9)}
-[data-anim].visible[data-anim="fade-right"],[data-anim].visible[data-anim="fade-left"]{transform:translateX(0)}
-[data-anim].visible[data-anim="rise-in"]{transform:scale(1) translateY(0)}
-[data-anim].visible[data-anim="zoom-pop"]{transform:scale(1)}
-
-#nav{position:fixed;bottom:3vh;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:20}
-#nav .dot{width:8px;height:8px;border-radius:50%;background:var(--paper);opacity:.3;cursor:pointer;transition:opacity .3s var(--ease),transform .3s var(--ease)}
-body.light-bg #nav .dot{background:var(--ink)}
-#nav .dot.active{opacity:1;transform:scale(1.3)}
-#nav .dot:hover{opacity:.7}
-
-#speaker-hint{position:fixed;top:2vh;right:6vw;font-family:var(--font-mono);font-size:10px;opacity:.4;z-index:30}
-
-#drawing-canvas{position:fixed;inset:0;z-index:100;pointer-events:none}
-#drawing-canvas.active{pointer-events:auto;cursor:crosshair}
-#drawing-toolbar{position:fixed;bottom:8vh;left:50%;transform:translateX(-50%);display:none;gap:8px;z-index:101;padding:1vh 1vw;background:rgba(var(--ink-rgb),.9);border-radius:var(--radius)}
-#drawing-toolbar.active{display:flex}
-#drawing-toolbar button{background:transparent;border:1px solid var(--paper);color:var(--paper);padding:.5vh 1vw;border-radius:4px;cursor:pointer;font-family:var(--font-mono);font-size:11px}
-#drawing-toolbar button:hover{background:var(--paper);color:var(--ink)}
-#drawing-toolbar button.active{background:var(--accent);border-color:var(--accent);color:var(--ink)}
-
-.speaker-notes{display:none}
-
-/* dark slide stat card adaptation */
-.slide.dark .stat-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}
-.slide.dark .step{border-bottom:1px solid rgba(255,255,255,.08)}
-.slide.dark .code-block{background:rgba(255,255,255,.04)}
-
-/* table styling */
-.distill-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:2vh}
-.distill-table th{font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;opacity:.5;text-align:left;padding:1vh 1vw;border-bottom:2px solid rgba(var(--ink-rgb),.12)}
-.distill-table td{padding:1vh 1vw;border-bottom:1px solid rgba(var(--ink-rgb),.06)}
-.slide.dark .distill-table th{border-bottom-color:rgba(255,255,255,.12)}
-.slide.dark .distill-table td{border-bottom-color:rgba(255,255,255,.06)}
-
-/* character tag */
-.char-tag{display:inline-block;font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;padding:3px 10px;border:1px solid var(--accent);color:var(--accent);margin-right:6px;margin-bottom:4px}
-.slide.dark .char-tag{border-color:rgba(var(--accent-rgb),.6);color:var(--accent)}
-.char-tag.rise{border-color:rgba(14,159,110,.5);color:rgba(14,159,110,.9)}
-.char-tag.fall{border-color:rgba(220,38,38,.5);color:rgba(220,38,38,.9)}
-.char-tag.cycle{border-color:rgba(59,130,246,.5);color:rgba(59,130,246,.9)}
-.char-tag.stable{border-color:rgba(139,92,246,.5);color:rgba(139,92,246,.9)}
-
-@media(max-width:768px){
-  .slide{padding:4vh 4vw}
-  .grid-6,.grid-4{grid-template-columns:repeat(2,1fr)}
-  .grid-3{grid-template-columns:1fr}
-  .grid-2-7-5,.grid-2-6-6,.before-after{grid-template-columns:1fr}
-  .h-hero{font-size:clamp(2rem,12vw,4rem)}
-  .lead{max-width:90vw}
-  .slide.hero .frame{max-width:90vw}
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>遥远的救世主 · 精华内参</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@200;400;500;700;900&family=Noto+Serif+SC:wght@400;700;900&family=Orbitron:wght@400;700;900&family=Cormorant+Garamond:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #050508;
+      --bg-elevated: #0a0a10;
+      --bg-card: #0f0f18;
+      --fg: #f5f5f7;
+      --fg-muted: #6a6a7a;
+      --neon-cyan: #00ffff;
+      --neon-pink: #ff00ff;
+      --neon-purple: #8b5cf6;
+      --neon-green: #00ff88;
+      --neon-orange: #ff6b35;
+      --neon-red: #ff3366;
+      --neon-blue: #0088ff;
+      --gold: #c9a227;
+      --gold-light: #fbbf24;
+      --glow-cyan: rgba(0, 255, 255, 0.7);
+      --glow-pink: rgba(255, 0, 255, 0.7);
+      --glow-gold: rgba(201, 162, 39, 0.7);
+      --glow-purple: rgba(139, 92, 246, 0.7);
+    }
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    html { scroll-behavior: smooth; scroll-snap-type: y mandatory; }
+    
+    body {
+      font-family: 'Noto Sans SC', sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    
+    ::selection { background: var(--gold); color: var(--bg); }
+    
+    #particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+    
+    .slide {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 2rem;
+      position: relative;
+      scroll-snap-align: start;
+      overflow: hidden;
+    }
+    
+    .slide::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    
+    .slide-content {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      width: 100%;
+    }
+    
+    .hero { background: transparent; }
+    
+    .hero::before {
+      background: 
+        radial-gradient(ellipse at 20% 30%, rgba(201, 162, 39, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 70%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(0, 255, 255, 0.05) 0%, transparent 70%);
+    }
+    
+    .dark { background: var(--bg-elevated); }
+    .dark::before {
+      background: radial-gradient(ellipse at 50% 50%, rgba(201, 162, 39, 0.08) 0%, transparent 70%);
+    }
+    
+    .light { background: var(--bg); }
+    
+    .kicker {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      text-shadow: 0 0 10px var(--glow-gold);
+    }
+    
+    .title-xl {
+      font-family: 'Noto Serif SC', serif;
+      font-size: clamp(3rem, 10vw, 8rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+    
+    .title-lg {
+      font-family: 'Noto Serif SC', serif;
+      font-size: clamp(2rem, 6vw, 5rem);
+      font-weight: 900;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+    }
+    
+    .title-md {
+      font-family: 'Noto Serif SC', serif;
+      font-size: clamp(1.5rem, 4vw, 3rem);
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 1rem;
+    }
+    
+    .gradient-gold {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light), var(--neon-cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .gradient-cyber {
+      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple), var(--neon-pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .neon-gold {
+      color: var(--gold);
+      text-shadow: 0 0 10px var(--glow-gold), 0 0 20px var(--glow-gold), 0 0 40px var(--glow-gold);
+    }
+    
+    .neon-cyan {
+      color: var(--neon-cyan);
+      text-shadow: 0 0 10px var(--glow-cyan), 0 0 20px var(--glow-cyan), 0 0 40px var(--glow-cyan);
+    }
+    
+    .subtitle {
+      font-size: clamp(1rem, 2vw, 1.5rem);
+      color: var(--fg-muted);
+      max-width: 800px;
+      line-height: 1.8;
+    }
+    
+    .quote-big {
+      font-family: 'Noto Serif SC', serif;
+      font-size: clamp(2rem, 5vw, 4rem);
+      font-weight: 900;
+      line-height: 1.4;
+      text-align: center;
+      max-width: 900px;
+    }
+    
+    .quote-source {
+      font-size: 1rem;
+      color: var(--fg-muted);
+      margin-top: 2rem;
+      letter-spacing: 0.1em;
+    }
+    
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      width: 100%;
+    }
+    
+    .card {
+      background: var(--bg-card);
+      border-radius: 12px;
+      padding: 2rem;
+      border: 1px solid rgba(255,255,255,0.08);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s ease;
+    }
+    
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+    }
+    
+    .card-rise::before {
+      background: linear-gradient(180deg, var(--neon-green), var(--neon-cyan));
+      box-shadow: 0 0 20px var(--neon-green);
+    }
+    
+    .card-fall::before {
+      background: linear-gradient(180deg, var(--neon-orange), var(--neon-red));
+      box-shadow: 0 0 20px var(--neon-red);
+    }
+    
+    .card-neutral::before {
+      background: linear-gradient(180deg, var(--neon-purple), var(--neon-pink));
+      box-shadow: 0 0 20px var(--neon-purple);
+    }
+    
+    .card-gold::before {
+      background: linear-gradient(180deg, var(--gold), var(--gold-light));
+      box-shadow: 0 0 20px var(--gold);
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(255,255,255,0.15);
+    }
+    
+    .card-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1rem;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      margin-bottom: 1.5rem;
+    }
+    
+    .card-rise .card-badge {
+      background: rgba(0, 255, 136, 0.1);
+      color: var(--neon-green);
+      border: 1px solid rgba(0, 255, 136, 0.3);
+    }
+    
+    .card-fall .card-badge {
+      background: rgba(255, 51, 102, 0.1);
+      color: var(--neon-red);
+      border: 1px solid rgba(255, 51, 102, 0.3);
+    }
+    
+    .card-neutral .card-badge {
+      background: rgba(139, 92, 246, 0.1);
+      color: var(--neon-purple);
+      border: 1px solid rgba(139, 92, 246, 0.3);
+    }
+    
+    .card-gold .card-badge {
+      background: rgba(201, 162, 39, 0.1);
+      color: var(--gold);
+      border: 1px solid rgba(201, 162, 39, 0.3);
+    }
+    
+    .card-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    
+    .card-content {
+      color: var(--fg-muted);
+      line-height: 1.8;
+      font-size: 0.95rem;
+    }
+    
+    .card-meta {
+      display: flex;
+      gap: 2rem;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    
+    .meta-item { text-align: center; }
+    
+    .meta-value {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+    
+    .card-rise .meta-value { color: var(--neon-green); }
+    .card-fall .meta-value { color: var(--neon-red); }
+    .card-neutral .meta-value { color: var(--neon-purple); }
+    .card-gold .meta-value { color: var(--gold); }
+    
+    .meta-label {
+      font-size: 0.65rem;
+      color: var(--fg-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+    }
+    
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      width: 100%;
+      max-width: 900px;
+    }
+    
+    .timeline-item {
+      display: flex;
+      gap: 2rem;
+      align-items: flex-start;
+    }
+    
+    .timeline-marker {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Orbitron', monospace;
+      font-size: 1rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    
+    .timeline-marker.gold {
+      background: rgba(201, 162, 39, 0.2);
+      border: 2px solid var(--gold);
+      color: var(--gold);
+      box-shadow: 0 0 20px var(--glow-gold);
+    }
+    
+    .timeline-marker.cyan {
+      background: rgba(0, 255, 255, 0.2);
+      border: 2px solid var(--neon-cyan);
+      color: var(--neon-cyan);
+      box-shadow: 0 0 20px var(--glow-cyan);
+    }
+    
+    .timeline-content {
+      flex: 1;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    
+    .timeline-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    
+    .timeline-desc {
+      color: var(--fg-muted);
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+    
+    .scene-card {
+      background: var(--bg-card);
+      border-radius: 12px;
+      padding: 2.5rem;
+      border: 1px solid rgba(255,255,255,0.08);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .scene-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--gold), var(--neon-cyan), var(--neon-purple));
+    }
+    
+    .scene-label {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+    
+    .scene-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1.8rem;
+      font-weight: 900;
+      margin-bottom: 1rem;
+    }
+    
+    .scene-quote {
+      font-style: italic;
+      color: var(--fg);
+      padding: 1.5rem;
+      background: rgba(201, 162, 39, 0.05);
+      border-left: 3px solid var(--gold);
+      margin: 1.5rem 0;
+      line-height: 1.8;
+    }
+    
+    .scene-analysis {
+      color: var(--fg-muted);
+      line-height: 1.8;
+      font-size: 0.95rem;
+    }
+    
+    .concept-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      width: 100%;
+    }
+    
+    .concept-card {
+      background: var(--bg-card);
+      border-radius: 12px;
+      padding: 2rem;
+      border: 1px solid rgba(255,255,255,0.08);
+      text-align: center;
+      transition: all 0.4s ease;
+    }
+    
+    .concept-card:hover {
+      border-color: var(--gold);
+      box-shadow: 0 0 30px rgba(201, 162, 39, 0.2);
+      transform: translateY(-5px);
+    }
+    
+    .concept-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .concept-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      color: var(--gold);
+    }
+    
+    .concept-desc {
+      color: var(--fg-muted);
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+    
+    .nav-bar {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      background: rgba(10, 10, 16, 0.9);
+      border-radius: 50px;
+      border: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      z-index: 100;
+    }
+    
+    .nav-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-dot:hover, .nav-dot.active {
+      background: var(--gold);
+      box-shadow: 0 0 10px var(--glow-gold);
+    }
+    
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--neon-cyan), var(--neon-purple));
+      z-index: 100;
+      transition: width 0.3s ease;
+    }
+    
+    .slide-number {
+      position: absolute;
+      bottom: 2rem;
+      right: 2rem;
+      font-family: 'Orbitron', monospace;
+      font-size: 0.7rem;
+      color: var(--fg-muted);
+      letter-spacing: 0.1em;
+    }
+    
+    .chapter-indicator {
+      position: absolute;
+      top: 2rem;
+      left: 2rem;
+      font-family: 'Orbitron', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      text-shadow: 0 0 10px var(--glow-gold);
+    }
+    
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    @keyframes glow {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+    
+    .anim-1 { animation: fadeInUp 0.8s ease-out 0.1s both; }
+    .anim-2 { animation: fadeInUp 0.8s ease-out 0.2s both; }
+    .anim-3 { animation: fadeInUp 0.8s ease-out 0.3s both; }
+    .anim-4 { animation: fadeInUp 0.8s ease-out 0.4s both; }
+    .anim-5 { animation: fadeInUp 0.8s ease-out 0.5s both; }
+    .anim-6 { animation: fadeInUp 0.8s ease-out 0.6s both; }
+    
+    .glow-anim { animation: glow 2s ease-in-out infinite; }
+    
+    @media (max-width: 768px) {
+      .card-grid { grid-template-columns: 1fr; }
+      .timeline-item { flex-direction: column; gap: 1rem; }
+      .card-meta { flex-wrap: wrap; gap: 1rem; }
+      .nav-bar { display: none; }
+    }
+    
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
 </head>
 <body>
-<canvas class="webgl-canvas dark" id="bgCanvas"></canvas>
-<canvas id="drawing-canvas"></canvas>
-
-<div class="deck">
-
-<!-- ====== SLIDE 01: 封面 ====== -->
-<section class="slide hero dark active" data-title="封面">
-<div class="chrome">
-  <span>遥远的救世主</span>
-  <span>DISTILLATION</span>
-</div>
-<div class="frame" data-anim="rise-in">
-  <div class="kicker">NOVEL DEEP DISTILLATION · 24-PAGE MAGAZINE</div>
-  <h1 class="h-hero">遥远的救世主</h1>
-  <p class="h-sub">文化属性决定命运</p>
-  <div class="lead" style="margin:0 auto;text-align:center;">深度蒸馏豆豆传世之作 · 解构天道与人性的终极博弈</div>
-  <div class="meta-row" style="justify-content:center;">
-    <span>豆豆 / 著</span>
-    <span>8 模块</span>
-    <span>38 页</span>
-    <span>3-Agent 联合蒸馏</span>
-  </div>
-</div>
-<div class="foot">
-  <span>01 / 38</span>
-  <span>Book Distillation V6.0</span>
-</div>
-<div class="speaker-notes">
-  开场介绍：这是对豆豆小说《遥远的救世主》的深度蒸馏。全书围绕文化属性这一核心概念展开，通过丁元英在古城王庙村策划的音响扶贫事件，层层剥开人性底层代码与文化基因。本次蒸馏由 Alpha叙事分析师、Beta场景考古学家、Gamma策展人三智能体协作完成，产出8大模块38页精华内参。
-</div>
-</section>
-
-<!-- ====== SLIDE 02: M1 叙事内核 章节分隔 ====== -->
-<section class="slide hero light" data-title="第一章 · 叙事内核">
-<div class="chrome">
-  <span>第一章</span>
-  <span>NARRATIVE CORE</span>
-</div>
-<div class="frame" data-anim="rise-in">
-  <div class="kicker">MODULE 01</div>
-  <h2 class="h-xl">第一章 · 叙事内核</h2>
-  <p class="h-sub">文化属性、天道、救世主 —— 三重冲突轴</p>
-  <div class="lead" style="margin:0 auto;text-align:center;">全书以商业竞争为表层、人格博弈为中层、文化属性为底层，构建出一部关于命运与人性的复调叙事</div>
-</div>
-<div class="foot">
-  <span>02 / 38</span>
-  <span>M1: NARRATIVE CORE</span>
-</div>
-<div class="speaker-notes">
-  第一章定调全书的三层架构：表层是格律诗与乐圣的商战故事，中层是九个关键人物的命运流转，底层是文化属性决定论的哲学框架。读者往往被商战的戏剧性吸引，却容易忽略豆豆在叙事底层埋下的文化批判线索。
-</div>
-</section>
-
-<!-- ====== SLIDE 03: 三层冲突 ====== -->
-<section class="slide light" data-title="三层冲突轴">
-<div class="chrome">
-  <span>叙事内核</span>
-  <span>THREE-LAYER CONFLICT</span>
-</div>
-<div class="frame">
-  <div class="kicker">CONFLICT ARCHITECTURE</div>
-  <h3 class="h-md">全书三层冲突轴</h3>
-  <div class="pipeline-section" data-anim="fade-up">
-    <div class="pipeline-label">由表及里</div>
-    <div class="pipeline">
-      <div class="step">
-        <span class="step-nb">L1</span>
-        <div>
-          <div class="step-title">商业层 · 格律诗 vs 乐圣</div>
-          <div class="step-desc">音响价格战、展会大降价、六百万索赔诉讼 —— 表面看是商业竞争，实为文化属性的降维打击</div>
-        </div>
-      </div>
-      <div class="step">
-        <span class="step-nb">L2</span>
-        <div>
-          <div class="step-title">人格层 · 九人命运图谱</div>
-          <div class="step-desc">丁元英的局外人姿态、芮小丹的当生则生、林雨峰的不败神话崩解、刘冰的贪婪反噬 —— 每个人物的选择即文化基因的外显</div>
-        </div>
-      </div>
-      <div class="step">
-        <span class="step-nb">L3</span>
-        <div>
-          <div class="step-title">文化属性层 · 强势 vs 弱势</div>
-          <div class="step-desc">强势文化造就强者：遵循客观规律、不等不靠不要；弱势文化造就弱者：期待救世主、依赖破格获取</div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="callout" data-anim="fade-right">
-    "透视社会依次有三个层面：技术、制度、文化。小到一个人，大到一个国家一个民族，任何一种命运归根到底都是文化属性的产物。"
-    <div class="callout-src">—— 丁元英，Ch3</div>
-  </div>
-</div>
-<div class="foot">
-  <span>03 / 38</span>
-  <span>M1: THREE-LAYER CONFLICT</span>
-</div>
-</section>
-
-<!-- ====== SLIDE 04: 核心金句 Hero ====== -->
-<section class="slide hero dark" data-title="实事求是就是神话">
-<div class="chrome">
-  <span>核心命题</span>
-  <span>CORE THESIS</span>
-</div>
-<div class="frame" data-anim="zoom-pop">
-  <div class="kicker">THE BOOK'S CENTRAL ARGUMENT</div>
-  <div class="q-big" style="max-width:80vw;margin:0 auto;font-size:clamp(1.8rem,3.5vw,3rem);">
-    "原来能做到实事求是就是神话，原来能说老实话、能办老实事的人就是神。"
-  </div>
-  <div class="cite">—— 丁元英，Ch3</div>
-  <div class="lead" style="margin:3vh auto 0;text-align:center;max-width:50vw;">
-    这句话是全书的哲学锚点。所谓"天道"，并非玄之又玄的形而上概念，而是对客观规律的彻底遵从。而大多数人之所以做不到实事求是，是因为文化属性使人习惯性依赖救世主。
-  </div>
-</div>
-<div class="foot">
-  <span>04 / 38</span>
-  <span>M1: CORE THESIS</span>
-</div>
-<div class="speaker-notes">
-  这一页应停顿5-8秒。这句金句是整个蒸馏工作的原点 —— 把"实事求是"从政治术语还原为哲学命题，是豆豆对读者的最大冲击。可配合讲述丁元英在古城独居期间对文化属性的思考过程。
-</div>
-</section>
-
-<!-- ====== SLIDE 05: M2 人物谱系 章节分隔 ====== -->
-<section class="slide hero light" data-title="人物谱系 · 九人命运">
-<div class="chrome">
-  <span>第二章</span>
-  <span>CHARACTERS</span>
-</div>
-<div class="frame" data-anim="rise-in">
-  <div class="kicker">MODULE 02</div>
-  <h2 class="h-xl">第二章 · 人物谱系</h2>
-  <p class="h-sub">九人命运 · 四种轨迹</p>
-  <div class="lead" style="margin:0 auto;text-align:center;">每个人物的命运走向，精准对应其文化属性。人物不是被情节驱动的棋子，而是文化基因的活体样本。</div>
-</div>
-<div class="foot">
-  <span>05 / 38</span>
-  <span>M2: CHARACTERS</span>
-</div>
-</section>
-
-<!-- ====== SLIDE 06: 九人命运总览 ====== -->
-<section class="slide dark" data-title="九人命运统计">
-<div class="chrome">
-  <span>人物谱系</span>
-  <span>FATE STATISTICS</span>
-</div>
-<div class="frame">
-  <div class="kicker">OVERVIEW</div>
-  <h3 class="h-md">九人命运 · 四种轨迹</h3>
-  <div class="grid-3" data-anim="fade-up" style="margin-top:3vh;">
-    <div class="stat-card">
-      <div class="stat-label">Rise · 上升者</div>
-      <div class="stat-nb">3<span class="stat-unit">人</span></div>
-      <div class="stat-note">肖亚文 / 冯世杰 / 欧阳雪</div>
-      <div style="font-family:var(--font-sans);font-size:11px;opacity:.5;margin-top:1vh;">顺势而为，尊重规律</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">Fall · 坠落者</div>
-      <div class="stat-nb">3<span class="stat-unit">人</span></div>
-      <div class="stat-note">刘冰 / 林雨峰 / 叶晓明</div>
-      <div style="font-family:var(--font-sans);font-size:11px;opacity:.5;margin-top:1vh;">被文化属性和贪欲反噬</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">Cycle · 归来者</div>
-      <div class="stat-nb">2<span class="stat-unit">人</span></div>
-      <div class="stat-note">丁元英 / 芮小丹</div>
-      <div style="font-family:var(--font-sans);font-size:11px;opacity:.5;margin-top:1vh;">出走 → 归来 → 超越</div>
-    </div>
-  </div>
-  <div style="margin-top:3vh" data-anim="fade-right">
-    <div class="stat-card" style="max-width:300px;">
-      <div class="stat-label">Stable · 恒定者</div>
-      <div class="stat-nb">1<span class="stat-unit">人</span></div>
-      <div class="stat-note">韩楚风</div>
-      <div style="font-family:var(--font-sans);font-size:11px;opacity:.5;margin-top:1vh;">本就在强势文化轨道上</div>
-    </div>
-  </div>
-</div>
-<div class="foot">
-  <span>06 / 38</span>
-  <span>M2: FATE OVERVIEW</span>
-</div>
-</section>
-
-<!-- ====== SLIDE 07: 丁元英 ====== -->
-<section class="slide light" data-title="丁元英">
-<div class="chrome">
-  <span>人物谱系</span>
-  <span>DING YUANYING</span>
-</div>
-<div class="frame">
-  <div class="grid-2-7-5">
-    <div data-anim="fade-right">
-      <div class="kicker">CORE CHARACTER</div>
-      <h3 class="h-md">丁元英 · 文化属性的解读者</h3>
-      <div style="margin-bottom:2vh;">
-        <span class="char-tag">CYCLE</span>
-        <span class="char-tag">强势文化</span>
-        <span class="char-tag">局外人</span>
-      </div>
-      <p class="lead" style="max-width:100%;">柏林私募基金操盘手，一年狂揽两亿后良心发现退出。隐居古城，以音响为媒介介入王庙村扶贫。他是全书中唯一能"看透"文化属性的人，却也因此成为最孤独的存在。</p>
-      <div class="pipeline" style="margin-top:2vh;">
-        <div class="step">
-          <span class="step-nb">> </span>
-          <div>
-            <div class="step-title">核心矛盾</div>
-            <div class="step-desc">看透规律却无意入世，布下棋局却自称局外人 —— "随缘惜缘不攀缘"</div>
-          </div>
-        </div>
-        <div class="step">
-          <span class="step-nb">> </span>
-          <div>
-            <div class="step-title">命运轨迹</div>
-            <div class="step-desc">柏林出走 → 古城隐居 → 王庙村布局 → 芮小丹牺牲后离开</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div data-anim="fade-left">
-      <div class="frame-img r-3x2">
-        <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=800&q=80" alt="丁元英在书房听音响">
-        <div class="img-cap">Fig.1 古城书房 · 天国的女儿</div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="foot">
-  <span>07 / 38</span>
-  <span>M2: DING YUANYING</span>
-</div>
-</section>
-
-<!-- ====== SLIDE 08: 芮小丹 ====== -->
-<section class="slide light" data-title="芮小丹">
-<div class="chrome">
-  <span>人物谱系</span>
-  <span>RUI XIAODAN</span>
-</div>
-<div class="frame">
-  <div class="grid-2-7-5">
-    <div data-anim="fade-right">
-      <div class="kicker">CORE CHARACTER</div>
-      <h3 class="h-md">芮小丹 · 天国的女儿</h3>
-      <div style="margin-bottom:2vh;">
-        <span class="char-tag cycle">CYCLE</span>
-        <span class="char-tag">自性自在</span>
-        <span class="char-tag">当生则生</span>
-      </div>
-      <p class="lead" style="max-width:100%;">古城女刑警，法兰克福留学背景。因一套音响与丁元英结缘。她是全书中唯一不需要"觉悟"就已经活在"天道"中的人 —— 不自知的自在，比丁元英的"看透"更高一个境界。</p>
-      <div class="pipeline" style="margin-top:2vh;">
-        <div class="step">
-          <span class="step-nb">> </span>
-          <div>
-            <div class="step-title">核心矛盾</div>
-            <div class="step-desc">刑警身份与天国女儿的反差 —— 在暴力与死亡中绽放，在爱中完成自我</div>
-          </div>
-        </div>
-        <div class="step">
-          <span class="step-nb">> </span>
-          <div>
-            <div class="step-title">命运轨迹</div>
-            <div class="step-desc">遇丁元英 → 审讯王明阳 → 策划扶贫 → 殉道（Ch42）</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div data-anim="fade-left">
-      <div class="frame-img r-3x2">
-        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80" alt="芮小丹审讯">
-        <div class="img-cap">Fig.2 审讯室 · 审讯王明阳</div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="foot">
-  <span>08 / 38</span>
-  <span>M2: RUI XIAODAN</span>
-</div>
-</section>
-
-<!-- ====== SLIDE 09: 芮小丹金句 ====== -->
-<section class="slide dark" data-title="芮小丹爱情观">
-<div class="chrome">
-  <span>人物谱系</span>
-  <span>RUI XIAODAN QUOTE</span>
-</div>
-<div class="frame" data-anim="zoom-pop" style="display:flex;flex-direction:column;justify-content:center;min-height:60vh;">
-  <div class="kicker">CHARACTER INSIGHT</div>
-  <div class="q-big" style="max-width:65vw;">
-    "女人不是因为被爱才可爱，而是因为可爱才被爱。"
-  </div>
-  <div class="cite">—— 芮小丹</div>
-  <div style="margin-top:4vh;" data-anim="fade-up">
-    <div class="lead" style="max-width:50vw;">
-      芮小丹的可爱不在于她为丁元英做了什么，而在于她本身就是完整的 —— 爱不是缺失的填补，而是两个完整灵魂的相互映照。这正是"天国的女儿"的真正含义。
-    </div>
-  </div>
-</div>
-<div class="foot">
-  <span>09 / 38</span>
-  <span>M2: RUI XIAODAN QUOTE</span>
-</div>
-</section>
-
-<!-- ====== SLIDE 10: 林雨峰 ====== -->
-<section class="slide light" data-title="林雨峰">
-<div class="chrome">
-  <span>人物谱系</span>
-  <span>LIN YUFENG</span>
-</div>
-<div class="frame">
-  <div class="grid-2-7-5">
-    <div data-anim="fade-right">
-      <div class="kicker">ANTAGONIST</div>
-      <h3 class="h-md">林雨峰 · 不败神话的崩塌</h3>
-      <div style="margin-bottom:2vh;">
-        <span class="char-tag fall">FALL</span>
-        <span class="char-tag">弱势文化</span>
-        <span class="char-tag">面子即命</span>
-      </div>
-      <p class="lead" style="max-width:100%;">乐圣音响创始人，中国Hi-Fi界的传奇人物。"只有矛没有盾"的经营哲学，让他成为中国音响第一品牌，也让他无法接受失败。当格律诗以低于成本价出售音响时，他认为这是倾销，发起六百万索赔诉讼 —— 却不知从一开始就进入了丁元英的局。</p>
-      <div class="callout" style="margin-top:2vh;">
-        "如果林雨峰能承认自己输了，他就不是林雨峰了。" 他的悲剧不在于商业失败，而在于文化属性决定了他无法弯腰。
-        <div class="callout-src">—— 丁元英对林雨峰的评价</div>
-      </div>
-    </div>
-    <div data-anim="fade-left">
-      <div class="frame-img r-3x2">
-        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80" alt="林雨峰">
-        <div class="img-cap">Fig.3 乐圣总部 · 败诉之后</div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="foot">
-  <span>10 / 38</span>
-  <span>M2: LIN YUFENG</span>
-</div>
-</section>
-
-<!-- ====== SLIDE 11: 刘冰+叶晓明 ====== -->
-<section class="slide light" data-title="刘冰与叶晓明">
-<div class="chrome">
-  <span>人物谱系</span>
-  <span>LIU BING & YE XIAOMING</span>
-</div>
-<div class="frame">
-  <div class="kicker">THE FALLEN</div>
-  <h3 class="h-md">刘冰 + 叶晓明 · 弱势文化的两种形态</h3>
-  <div class="grid-2-6-6" style="margin-top:2vh;">
-    <div data-anim="fade-right">
-      <div style="margin-bottom:1.5vh;">
-        <span class="char-tag fall">FALL</span>
-        <span class="char-tag">贪婪型</span>
-      </div>
-      <h4 style="font-family:var(--font-serif);font-weight:700;font-size:1.3rem;margin-bottom:1vh;">刘冰</h4>
-      <p style="font-size:14px;line-height:1.7;opacity:.8;">音响店小老板，因售卖丁元英的唱片而入场。贪欲驱动一切行为 —— 入股是为利益，退股是为避险，最后的档案袋讹诈则是贪婪的终极爆发。他从未理解过"天道"，只看到了"利益"。</p>
-      <div class="callout">
-        "刘冰的死，不是因为他走投无路，而是因为他发现自己原来什么都不是。"
-        <div class="callout-src">—— 丁元英</div>
-      </div>
-    </div>
-    <div data-anim="fade-left">
-      <div style="margin-bottom:1.5vh;">
-        <span class="char-tag fall">FALL</span>
-        <span class="char-tag">精明型</span>
-      </div>
-      <h4 style="font-family:var(--font-serif);font-weight:700;font-size:1.3rem;margin-bottom:1vh;">叶晓明</h4>
-      <p style="font-size:14px;line-height:1.7;opacity:.8;">古城音响行老板，三人组中最聪明的一个。他能看懂丁元英的布局，却因"聪明"而提前退场 —— 算到了风险，没算到天道。他的悲剧在于：聪明到能看见棋局，却"弱势"到不敢下注。</p>
-      <div class="callout">
-        "叶晓明是那种能看到机会但抓不住机会的人，因为他的文化属性不允许他承受不确定性。"
-        <div class="callout-src">—— 叙事分析师点评</div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="foot">
-  <span>11 / 38</span>
-  <span>M2: LIU BING & YE XIAOMING</span>
-</div>
-</section>
-
-<!-- ====== SLIDE 12: 冯世杰+欧阳雪+肖亚文 ====== -->
-<section class="slide dark" data-title="冯世杰·欧阳雪·肖亚文">
-<div class="chrome">
-  <span>人物谱系</span>
-  <span>THE RISEN THREE</span>
-</div>
-<div class="frame">
-  <div class="kicker">THE RISEN</div>
-  <h3 class="h-md">冯世杰 + 欧阳雪 + 肖亚文 · 三种上升路径</h3>
-  <div class="grid-3" style="margin-top:3vh;" data-anim="fade-up">
-    <div class="stat-card">
-      <div class="stat-label">FENG SHIJIE</div>
-      <div style="font-family:var(--font-serif);font-weight:700;font-size:1.2rem;">冯世杰</div>
-      <div style="margin-top:1vh;">
-        <span class="char-tag">RISE</span>
-        <span class="char-tag">厚道</span>
-      </div>
-      <div class="stat-note" style="margin-top:2vh;">王庙村汽修工，三人组中最质朴的。退股时保留村里设备不卖，给村民留后路。他的"厚道"不是道德选择，而是与土地相连的文化本能 —— 正是这份质朴让他最后成为格律诗的连接器。</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">OUYANG XUE</div>
-      <div style="font-family:var(--font-serif);font-weight:700;font-size:1.2rem;">欧阳雪</div>
-      <div style="margin-top:1vh;">
-        <span class="char-tag">RISE</span>
-        <span class="char-tag">守拙</span>
-      </div>
-      <div class="stat-note" style="margin-top:2vh;">酒店老板，对芮小丹无条件信任。她的智慧是"不贪"—— 知道自己的边界在哪里。入股格律诗不是因为看懂了商业逻辑，而是因为"信芮小丹"。守拙反成最大的智慧。</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">XIAO YAWEN</div>
-      <div style="font-family:var(--font-serif);font-weight:700;font-size:1.2rem;">肖亚文</div>
-      <div style="margin-top:1vh;">
-        <span class="char-tag">RISE</span>
-        <span class="char-tag">顺势</span>
-      </div>
-      <div class="stat-note" style="margin-top:2vh;">丁元英的前助理，全书最大的赢家。她做对了三件事：把丁元英安置在古城、在官司最高点时入场、用法律思维整合格律诗。她的成功是"强势文化"的操作手册 —— 识别贵人 → 提前布局 → 关键节点出手。</div>
-    </div>
-  </div>
-</div>
-<div class="foot">
-  <span>12 / 38</span>
-  <span>M2: THE RISEN THREE</span>
-</div>
-</section>
-
-<!-- ====== SLIDE 13: M3 情节线索网 章节分隔 ====== -->
-<section class="slide hero light" data-title="情节线索网">
-<div class="chrome">
-  <span>第三章</span>
-  <span>PLOT WEB</span>
-</div>
-<div class="frame" data-anim="rise-in">
-  <div class="kicker">MODULE 03</div>
-  <h2 class="h-xl">第三章 · 情节线索网</h2>
-  <p class="h-sub">起承转合 · 五条伏笔 · 三个高潮</p>
-  <div class="lead" style="margin:0 auto;text-align:center;">豆豆在叙事上展现了惊人的控制力：46章中有42处伏笔，平均每章0.9处。这不是故事的随意流淌，而是精密的结构工程。</div>
-</div>
-<div class="foot">
-  <span>13 / 38</span>
-  <span>M3: PLOT WEB</span>
-</div>
-</section>
-
-<!-- ====== SLIDE 14: 主线起承转合 ====== -->
-<section class="slide light" data-title="主线起承转合">
-<div class="chrome">
-  <span>情节线索网</span>
-  <span>MAIN PLOT ARC</span>
-</div>
-<div class="frame">
-  <div class="kicker">PLOT STRUCTURE</div>
-  <h3 class="h-md">主线 · 起承转合</h3>
-  <div class="pipeline-section" data-anim="fade-up">
-    <div class="pipeline-label">叙事弧线</div>
-    <div class="pipeline">
-      <div class="step">
-        <span class="step-nb">起</span>
-        <div>
-          <div class="step-title">Ch1-Ch5 · 相遇</div>
-          <div class="step-desc">丁元英隐居古城，芮小丹因一套音响走近他的世界。德国背景与古城生活的反差奠定基调。</div>
-        </div>
-      </div>
-      <div class="step">
-        <span class="step-nb">承</span>
-        <div>
-          <div class="step-title">Ch6-Ch15 · 相知</div>
-          <div class="step-desc">《天国的女儿》灵魂震颤、审讯王明阳的神学辩论、五台山问道 —— 两人关系从情欲上升为灵魂对话。</div>
-        </div>
-      </div>
-      <div class="step">
-        <span class="step-nb">转</span>
-        <div>
-          <div class="step-title">Ch20-Ch35 · 布局</div>
-          <div class="step-desc">王庙村扶贫计划启动，格律诗成立，展会上惊天降价。乐圣起诉，冯/叶/刘退股 —— 棋局展开。</div>
-        </div>
-      </div>
-      <div class="step">
-        <span class="step-nb">合</span>
-        <div>
-          <div class="step-title">Ch42-Ch46 · 结局</div>
-          <div class="step-desc">芮小丹殉道、格律诗胜诉、林雨峰自杀、刘冰坠楼、白纸档案袋揭晓 —— 一切归于天道。</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="foot">
-  <span>14 / 38</span>
-  <span>M3: MAIN PLOT ARC</span>
-</div>
-</section>
-
-<!-- ====== SLIDE 15: 伏笔追踪表 ====== -->
-<section class="slide dark" data-title="伏笔追踪表">
-<div class="chrome">
-  <span>情节线索网</span>
-  <span>FORESHADOWING</span>
-</div>
-<div class="frame">
-  <div class="kicker">NARRATIVE ENGINEERING</div>
-  <h3 class="h-md">核心伏笔追踪表</h3>
-  <div class="code-block" style="margin-top:2vh;" data-anim="fade-up">
-    <pre><code>+-------------------+----------+-----------+-----------------------------------+
-| 伏笔              | 埋设章节  | 回收章节    | 叙事功能                           |
-+-------------------+----------+-----------+-----------------------------------+
-| "杀富济贫"讨论     | Ch3      | Ch45      | 全书主题预埋，指向扶贫计划本质       |
-| 丁元英的音响天价   | Ch1      | Ch6       | 引芮小丹入局，触发整个关系         |
-| 王明阳的"窄门"     | Ch15     | Ch20      | 五台山问道的宗教哲学铺垫           |
-| 白纸档案袋         | Ch35     | Ch45      | 刘冰命运的关键道具，人性试金石     |
-| "当生则生，当死则死"| Ch20     | Ch42      | 芮小丹殉道的哲学预演               |
-+-------------------+----------+-----------+-----------------------------------+</code></pre>
-  </div>
-  <div class="callout" style="margin-top:3vh;" data-anim="fade-left">
-    "好的小说家不是讲故事的人，是埋地雷的工兵。豆豆在全书中埋下42处伏笔，每一处都在读者不经意间悄然引爆。"
-    <div class="callout-src">—— 叙事分析师统计</div>
-  </div>
-</div>
-<div class="foot">
-  <span>15 / 38</span>
-  <span>M3: FORESHADOWING TABLE</span>
-</div>
-</section>
-
-<!-- ====== SLIDE 16: 叙事节奏图 ====== -->
-<section class="slide light" data-title="叙事节奏图">
-<div class="chrome">
-  <span>情节线索网</span>
-  <span>NARRATIVE RHYTHM</span>
-</div>
-<div class="frame">
-  <div class="kicker">RHYTHM ANALYSIS</div>
-  <h3 class="h-md">叙事节奏 · 三个高潮</h3>
-  <div class="pipeline-section" data-anim="fade-up">
-    <div class="pipeline-label">情绪强度曲线</div>
-    <div class="pipeline">
-      <div class="step">
-        <span class="step-nb">P1</span>
-        <div>
-          <div class="step-title">Ch14-Ch15 · 灵魂交锋</div>
-          <div class="step-desc">芮小丹审讯王明阳，用《圣经》的"窄门"击穿死刑犯的心理防线。这是全书第一次智力与灵魂的双重高潮。</div>
-        </div>
-      </div>
-      <div class="step">
-        <span class="step-nb">P2</span>
-        <div>
-          <div class="step-title">Ch20 · 五台山问道</div>
-          <div class="step-desc">丁元英与智玄大师的对话。"大爱不爱"—— 全书哲学密度的顶点。此后叙事从"论道"转入"行道"。</div>
-        </div>
-      </div>
-      <div class="step">
-        <span class="step-nb">P3</span>
-        <div>
-          <div class="step-title">Ch42-Ch45 · 连环终局</div>
-          <div class="step-desc">芮小丹牺牲 → 格律诗胜诉 → 林雨峰自杀 → 刘冰坠楼 → 白纸档案袋揭晓。四重终局在四章内接连引爆。</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="foot">
-  <span>16 / 38</span>
-  <span>M3: NARRATIVE RHYTHM</span>
-</div>
-</section>
-
-<!-- ====== SLIDE 17: M4 关键场景 章节分隔 ====== -->
-<section class="slide hero dark" data-title="关键场景复原">
-<div class="chrome">
-  <span>第四章</span>
-  <span>KEY SCENES</span>
-</div>
-<div class="frame" data-anim="rise-in">
-  <div class="kicker">MODULE 04</div>
-  <h2 class="h-xl">第四章 · 关键场景复原</h2>
-  <p class="h-sub">八幕戏剧 · 每幕都是文化属性的剧场</p>
-  <div class="lead" style="margin:0 auto;text-align:center;">小说中的每一场重头戏都不是偶然的情节推进，而是文化属性的舞台化呈现 —— 人物在一个封闭场景中，做出文化基因早已写好的选择。</div>
-</div>
-<div class="foot">
-  <span>17 / 38</span>
-  <span>M4: KEY SCENES</span>
-</div>
-<div class="speaker-notes">
-  关键场景复原是本次蒸馏的特色模块。场景考古学家对全书46章中的8个关键场景进行了逐帧复原，分析每个场景中人物的选择与其文化属性之间的因果关系。这一模块的价值在于：让读者反复回到原文语境中，而不是停留在抽象的结论层面。
-</div>
-</section>
-
-<!-- ====== SLIDE 18: 场景1 - 天国的女儿 ====== -->
-<section class="slide light" data-title="天国的女儿">
-<div class="chrome">
-  <span>关键场景</span>
-  <span>SCENE 01</span>
-</div>
-<div class="frame">
-  <div class="kicker">SCENE 01 · CHAPTER 6</div>
-  <h3 class="h-md">《天国的女儿》· 芮小丹的灵魂震颤</h3>
-  <div class="grid-2-6-6" style="margin-top:2vh;">
-    <div data-anim="fade-right">
-      <div class="frame-img r-16x9">
-        <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800&q=80" alt="音响金光">
-        <div class="img-cap">Fig.4 丁元英的音响系统</div>
-      </div>
-    </div>
-    <div data-anim="fade-left">
-      <p style="font-size:14px;line-height:1.8;opacity:.85;">
-        芮小丹第一次在丁元英家听到《天国的女儿》。当那一声纯净到没有一丝杂质的人声从四十多万的音响中流淌出来时，她感到"灵魂被一束光穿透了"。这不是音乐欣赏，而是一次准宗教体验。
-      </p>
-      <div class="callout">
-        "一个纯净到一尘不染的女声仿佛从天国里倾泻而下，仿佛是一双上帝的眼睛怜悯地注视着人类。一声，只一声，芮小丹骤然有一种灵魂之门被撞开的战栗。"
-        <div class="callout-src">—— 原文，Ch6</div>
-      </div>
-      <p style="font-size:13px;opacity:.6;margin-top:2vh;">
-        场景功能：用音乐打通物质世界与精神世界的通道。芮小丹从此不再是简单地对丁元英动心，而是对一种更高的存在产生了渴望。
-      </p>
-    </div>
-  </div>
-</div>
-<div class="foot">
-  <span>18 / 38</span>
-  <span>M4: DAUGHTER OF HEAVEN</span>
-</div>
-</section>
-
-<!-- ====== SLIDE 19: 场景2 - 审讯王明阳 ====== -->
-<section class="slide dark" data-title="审讯王明阳">
-<div class="chrome">
-  <span>关键场景</span>
-  <span>SCENE 02</span>
-</div>
-<div class="frame" data-anim="fade-up">
-  <div class="kicker">SCENE 02 · CHAPTER 15</div>
-  <h3 class="h-md">审讯王明阳 · "强盗的本质是破格获取"</h3>
-  <div class="q-big" style="max-width:70vw;margin-top:3vh;">
-    "强盗的本质是破格获取。破格获取与直接获取是两个不同的概念。你们没有自信与强者在同一个规则下公平竞争，这只能说明你是弱者，因为弱势文化所追求的最高价值就是破格获取。"
-  </div>
-  <div class="cite">—— 芮小丹对王明阳的审讯词</div>
-  <div style="margin-top:4vh;" data-anim="fade-right">
-    <div class="pipeline">
-      <div class="step">
-        <span class="step-nb">> </span>
-        <div>
-          <div class="step-title">场景结构</div>
-          <div class="step-desc">芮小丹用"窄门"概念击穿王明阳的心理防线 —— 不是用刑侦技巧，而是用哲学降维。她让他面对一个事实：他的强盗逻辑本质上是弱势文化的极端形态。</div>
-        </div>
-      </div>
-      <div class="step">
-        <span class="step-nb">> </span>
-        <div>
-          <div class="step-title">叙事功能</div>
-          <div class="step-desc">首次将"文化属性"概念投入实战检验。芮小丹在此展现出她作为执行者的能力 —— 把丁元英的理论变成可以"杀人诛心"的武器。</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="foot">
-  <span>19 / 38</span>
-  <span>M4: INTERROGATION</span>
-</div>
-</section>
-
-<!-- ====== SLIDE 20: 场景3 - 五台山问道 ====== -->
-<section class="slide light" data-title="五台山问道">
-<div class="chrome">
-  <span>关键场景</span>
-  <span>SCENE 03</span>
-</div>
-<div class="frame">
-  <div class="kicker">SCENE 03 · CHAPTER 20</div>
-  <h3 class="h-md">五台山问道 · "大爱不爱"</h3>
-  <div class="grid-2-6-6" style="margin-top:2vh;">
-    <div data-anim="fade-right">
-      <div class="frame-img r-4x3">
-        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80" alt="五台山寺庙">
-        <div class="img-cap">Fig.5 五台山 · 问道之路</div>
-      </div>
-    </div>
-    <div data-anim="fade-left">
-      <div class="q-big" style="max-width:100%;font-size:clamp(1rem,1.5vw,1.3rem);">
-        "大爱不爱。"
-      </div>
-      <div class="cite">—— 智玄大师</div>
-      <p style="font-size:14px;line-height:1.8;opacity:.85;margin-top:2vh;">
-        丁元英携韩楚风登五台山，以10万元敲门，以一首词换来智玄大师的接见。这场对话是全书中哲学密度最高的段落。
-      </p>
-      <p style="font-size:14px;line-height:1.8;opacity:.85;">
-        智玄大师对丁元英的评价："三分静气，三分贵气，三分杀气。还有一气，住于身中，游离心外 —— 痞气。" 精准概括了丁元英的复杂性。
-      </p>
-      <p style="font-size:13px;opacity:.6;margin-top:2vh;">
-        场景功能：为"杀富济贫"行动赋予哲学合法性。大师的"大爱不爱"等于给了丁元英一张"杀人执照"。
-      </p>
-    </div>
-  </div>
-</div>
-<div class="foot">
-  <span>20 / 38</span>
-  <span>M4: WUTAI MOUNTAIN</span>
-</div>
-</section>
-
-<!-- ====== SLIDE 21: 场景4 - 退股潮 ====== -->
-<section class="slide dark" data-title="退股潮">
-<div class="chrome">
-  <span>关键场景</span>
-  <span>SCENE 04</span>
-</div>
-<div class="frame">
-  <div class="kicker">SCENE 04 · CHAPTER 32-34</div>
-  <h3 class="h-md">退股潮 · 文化属性的集体表演</h3>
-  <div class="before-after" style="margin-top:3vh;" data-anim="fade-up">
-    <div class="ba-col wrong">
-      <div class="ba-label">退股者 · 弱势文化的本能反应</div>
-      <div class="pipeline">
-        <div class="step">
-          <span class="step-nb">01</span>
-          <div>
-            <div class="step-title">刘冰退股</div>
-            <div class="step-desc">动机：恐惧。贪欲驱动入场，恐惧驱动离场。他从未相信过任何东西，只相信眼前的利益。</div>
-          </div>
-        </div>
-        <div class="step">
-          <span class="step-nb">02</span>
-          <div>
-            <div class="step-title">叶晓明退股</div>
-            <div class="step-desc">动机：计算。他算到了风险，没算到丁元英的布局深度。聪明人的失败往往源于"过度计算"。</div>
-          </div>
-        </div>
-        <div class="step">
-          <span class="step-nb">03</span>
-          <div>
-            <div class="step-title">冯世杰退股（但留设备）</div>
-            <div class="step-desc">动机：恐惧 + 良知。退股是本能，留设备是良心。这一"留"保住了他最后的上升通道。</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="ba-col right">
-      <div class="ba-label">进场者 · 强势文化的关键一跃</div>
-      <div class="pipeline">
-        <div class="step">
-          <span class="step-nb">01</span>
-          <div>
-            <div class="step-title">肖亚文进场</div>
-            <div class="step-desc">时机：官司最高点。她看到的是"结构性机会"，而不是"眼前风险"。这是强势文化的标准操作。</div>
-          </div>
-        </div>
-        <div class="step">
-          <span class="step-nb">02</span>
-          <div>
-            <div class="step-title">欧阳雪坚守</div>
-            <div class="step-desc">动机：信任。她的文化属性让她选择"信人"而非"算账"。看似不理性，实则对大规律的直觉遵从。</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="foot">
-  <span>21 / 38</span>
-  <span>M4: WITHDRAWAL WAVE</span>
-</div>
-</section>
-
-<!-- ====== SLIDE 22: 场景5 - 芮小丹殉道 ====== -->
-<section class="slide light" data-title="芮小丹殉道">
-<div class="chrome">
-  <span>关键场景</span>
-  <span>SCENE 05</span>
-</div>
-<div class="frame">
-  <div class="kicker">SCENE 05 · CHAPTER 42</div>
-  <h3 class="h-md">芮小丹殉道 · "当生则生，当死则死"</h3>
-  <div class="grid-2-7-5" style="margin-top:2vh;">
-    <div data-anim="fade-right">
-      <div class="frame-img r-4x3">
-        <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800&q=80" alt="白纸飘落">
-        <div class="img-cap">Fig.6 芮小丹殉道</div>
-      </div>
-    </div>
-    <div data-anim="fade-left">
-      <div class="q-big" style="max-width:100%;">
-        "当生则生，当死则死，来去自如。丫头，不简单哪。"
-      </div>
-      <div class="cite">—— 丁元英得知芮小丹牺牲后</div>
-      <p style="font-size:14px;line-height:1.8;opacity:.85;margin-top:3vh;">
-        芮小丹在追捕逃犯时遭到袭击，双腿被炸断、面容被毁。她选择向自己的心脏开枪，维护了作为刑警的尊严和作为一个完整的人的体面。
-      </p>
-      <p style="font-size:14px;line-height:1.8;opacity:.85;">
-        丁元英的这句评价是全书中唯一一次他为一个人"盖章认证"。当生则生，当死则死 —— 这已经不是文化属性，而是超越了文化属性的"天道"本身。
-      </p>
-    </div>
-  </div>
-</div>
-<div class="foot">
-  <span>22 / 38</span>
-  <span>M4: RUI XIAODAN SACRIFICE</span>
-</div>
-</section>
-
-<!-- ====== SLIDE 23: 场景6 - 白纸档案袋 ====== -->
-<section class="slide hero dark" data-title="白纸档案袋">
-<div class="chrome">
-  <span>关键场景</span>
-  <span>SCENE 06</span>
-</div>
-<div class="frame" data-anim="zoom-pop">
-  <div class="kicker">SCENE 06 · CHAPTER 45</div>
-  <h3 class="h-md" style="color:var(--accent);">白纸档案袋 · 终极道德测试</h3>
-  <div class="q-big" style="max-width:75vw;margin:3vh auto;text-align:center;">
-    "刘冰打开档案袋，里面是一叠白纸。他愣了几秒钟，然后明白了 —— 从一开始，这就是一个局，一个专为他这种人设计的局。"
-  </div>
-  <div class="lead" style="margin:3vh auto 0;text-align:center;max-width:50vw;">
-    丁元英给刘冰的不是"内幕文件"，而是一面镜子。档案袋里的白纸就是刘冰本人的倒影 —— 空无一物，全是贪欲的投射。刘冰的死不是因为走投无路，而是因为在白纸上看到了真实的自己。
-  </div>
-</div>
-<div class="foot">
-  <span>23 / 38</span>
-  <span>M4: WHITE PAPER FILE</span>
-</div>
-<div class="speaker-notes">
-  白纸档案袋是全书中最重要的叙事装置。丁元英给刘冰档案袋时说"这是可以推翻判决的证据"——这既是真话也是假话。真话是：如果刘冰选择不打开，它就一直是"证据"；假话是：当刘冰选择打开时，里面只是白纸。这面镜子照出了刘冰的全部人性：贪婪、愚蠢、不知敬畏。
-</div>
-</section>
-
-<!-- ====== SLIDE 24: M5 主题层叠 章节分隔 ====== -->
-<section class="slide hero light" data-title="主题层叠">
-<div class="chrome">
-  <span>第五章</span>
-  <span>THEMES</span>
-</div>
-<div class="frame" data-anim="rise-in">
-  <div class="kicker">MODULE 05</div>
-  <h2 class="h-xl">第五章 · 主题层叠</h2>
-  <p class="h-sub">四重主题交织 · 从文化属性到救世主批判</p>
-  <div class="lead" style="margin:0 auto;text-align:center;">《遥远的救世主》不是一本主题单一的小说。四重主题如地质层般叠压，读者能挖到哪一层，取决于自身的认知深度。</div>
-</div>
-<div class="foot">
-  <span>24 / 38</span>
-  <span>M5: THEMES</span>
-</div>
-</section>
-
-<!-- ====== SLIDE 25: 四重主题管道 ====== -->
-<section class="slide light" data-title="四重主题层叠">
-<div class="chrome">
-  <span>主题层叠</span>
-  <span>FOUR THEMES</span>
-</div>
-<div class="frame">
-  <div class="kicker">THEMATIC ARCHITECTURE</div>
-  <h3 class="h-md">四重主题 · 由浅入深</h3>
-  <div class="pipeline-section" data-anim="fade-up">
-    <div class="pipeline-label">层面递进</div>
-    <div class="pipeline">
-      <div class="step">
-        <span class="step-nb">L1</span>
-        <div>
-          <div class="step-title">文化属性</div>
-          <div class="step-desc">强势文化 vs 弱势文化。遵循客观规律 vs 依赖救世主。丁元英的全部行动逻辑的底层代码。</div>
-        </div>
-      </div>
-      <div class="step">
-        <span class="step-nb">L2</span>
-        <div>
-          <div class="step-title">天道</div>
-          <div class="step-desc">神即道，道法自然，如来。将基督教、道家、佛家三教核心概念统一为"客观规律"—— 这是丁元英的哲学创造。</div>
-        </div>
-      </div>
-      <div class="step">
-        <span class="step-nb">L3</span>
-        <div>
-          <div class="step-title">天国之恋</div>
-          <div class="step-desc">芮小丹与丁元英的关系超越了世俗爱情。它是两个完整灵魂的相互映照 —— 不需要占有、不需要承诺、不需要世俗形式的爱情。</div>
-        </div>
-      </div>
-      <div class="step">
-        <span class="step-nb">L4</span>
-        <div>
-          <div class="step-title">救世主批判</div>
-          <div class="step-desc">世上根本没有救世主。书名"遥远的救世主"本身就是一个反讽 —— 救世主永远是"遥远的"，因为能救你的只有你自己。</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="foot">
-  <span>25 / 38</span>
-  <span>M5: FOUR THEMES</span>
-</div>
-</section>
-
-<!-- ====== SLIDE 26: 主题交叉矩阵 ====== -->
-<section class="slide dark" data-title="主题交叉矩阵">
-<div class="chrome">
-  <span>主题层叠</span>
-  <span>THEME MATRIX</span>
-</div>
-<div class="frame">
-  <div class="kicker">CROSS-REFERENCE</div>
-  <h3 class="h-md">主题交叉矩阵 · 四重主题如何相互对话</h3>
-  <div class="code-block" style="margin-top:2vh;" data-anim="fade-up">
-    <pre><code>               文化属性          天道          天国之恋        救世主批判
-文化属性       —              天道即         爱情是          弱势文化
-                              文化属性的      文化属性的      的本质就是
-                              最高形态        情感外化        等待救世主
-
-天道          规律面前         —            遵从规律        强势文化
-              人人平等                     的爱情即         不需要救世主
-                                          天道之爱
-
-天国之恋      爱是强势       情感即         —              爱自己才能
-              文化的最高      天道在                         爱他人
-              情感形态       人心中的
-                            投射
-
-救世主批判    不依赖          不等不靠      不自弃           —
-              任何人          不要不求      不求人</code></pre>
-  </div>
-  <div class="callout" style="margin-top:2vh;" data-anim="fade-left">
-    "四重主题不是线性递进，而是网状交织。理解任何一重主题都需要其他三重的参照 —— 这正是《遥远的救世主》区别于通俗小说的思想密度所在。"
-    <div class="callout-src">—— 策展人分析笔记</div>
-  </div>
-</div>
-<div class="foot">
-  <span>26 / 38</span>
-  <span>M5: THEME MATRIX</span>
-</div>
-</section>
-
-<!-- ====== SLIDE 27: M6 意象体系 章节分隔 ====== -->
-<section class="slide hero dark" data-title="意象与隐喻">
-<div class="chrome">
-  <span>第六章</span>
-  <span>IMAGERY</span>
-</div>
-<div class="frame" data-anim="rise-in">
-  <div class="kicker">MODULE 06</div>
-  <h2 class="h-xl">第六章 · 意象与隐喻</h2>
-  <p class="h-sub">三组核心意象 · 贯穿全书的符号系统</p>
-  <div class="lead" style="margin:0 auto;text-align:center;">豆豆的文学武器库中，意象不是装饰品，而是主题的压缩包。三组核心意象分别对应三重主题维度。</div>
-</div>
-<div class="foot">
-  <span>27 / 38</span>
-  <span>M6: IMAGERY</span>
-</div>
-</section>
-
-<!-- ====== SLIDE 28: 三组核心意象 ====== -->
-<section class="slide light" data-title="三组核心意象">
-<div class="chrome">
-  <span>意象体系</span>
-  <span>THREE CORE IMAGES</span>
-</div>
-<div class="frame">
-  <div class="kicker">SYMBOL SYSTEM</div>
-  <h3 class="h-md">三组核心意象</h3>
-  <div class="grid-3" style="margin-top:3vh;" data-anim="fade-up">
-    <div class="stat-card">
-      <div class="stat-label">IMAGE 01</div>
-      <div style="font-family:var(--font-serif);font-weight:700;font-size:1.3rem;">天国的女儿</div>
-      <div style="font-family:var(--font-mono);font-size:10px;opacity:.5;margin-top:.5vh;">对应主题：天国之恋</div>
-      <div class="stat-note" style="margin-top:2vh;">
-        音乐《天国的女儿》是芮小丹灵魂觉醒的触发器。它代表一种"不掺杂任何世俗杂质"的纯粹性 —— 既是对芮小丹的人格隐喻，也是对"天道"的听觉化表达。
-      </div>
-      <div style="font-family:var(--font-serif);font-size:13px;opacity:.6;margin-top:2vh;font-style:italic;">
-        "原来人还可以这样活。"
-      </div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">IMAGE 02</div>
-      <div style="font-family:var(--font-serif);font-weight:700;font-size:1.3rem;">音响</div>
-      <div style="font-family:var(--font-mono);font-size:10px;opacity:.5;margin-top:.5vh;">对应主题：文化属性</div>
-      <div class="stat-note" style="margin-top:2vh;">
-        丁元英四十多万的音响是他与世界的接口。音响不仅仅是设备，它是"忠实还原"的象征 —— 正如天道要求人忠实于客观规律。音质越好，失真越少；人越接近天道，妄念越少。
-      </div>
-      <div style="font-family:var(--font-serif);font-size:13px;opacity:.6;margin-top:2vh;font-style:italic;">
-        "音响的品质就是它还原真实的能力。"
-      </div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">IMAGE 03</div>
-      <div style="font-family:var(--font-serif);font-weight:700;font-size:1.3rem;">白纸档案袋</div>
-      <div style="font-family:var(--font-mono);font-size:10px;opacity:.5;margin-top:.5vh;">对应主题：救世主批判</div>
-      <div class="stat-note" style="margin-top:2vh;">
-        全书最具叙事张力的道具。档案袋里是白纸，但刘冰看到的是什么？是他投射上去的贪欲。白纸作为"空"的象征，照出了每个人内心的真实 —— 你在白纸上看到什么，你就是什么。
-      </div>
-      <div style="font-family:var(--font-serif);font-size:13px;opacity:.6;margin-top:2vh;font-style:italic;">
-        "白纸什么都不是，白纸又是一切。"
-      </div>
-    </div>
-  </div>
-</div>
-<div class="foot">
-  <span>28 / 38</span>
-  <span>M6: THREE CORE IMAGES</span>
-</div>
-</section>
-
-<!-- ====== SLIDE 29: 意象演进时间线 ====== -->
-<section class="slide dark" data-title="意象演进时间线">
-<div class="chrome">
-  <span>意象体系</span>
-  <span>IMAGE TIMELINE</span>
-</div>
-<div class="frame">
-  <div class="kicker">EVOLUTION</div>
-  <h3 class="h-md">意象演进时间线</h3>
-  <div class="pipeline-section" data-anim="fade-up">
-    <div class="pipeline-label">三个意象在全书中如何递进展开</div>
-    <div class="pipeline">
-      <div class="step">
-        <span class="step-nb">Ch6</span>
-        <div>
-          <div class="step-title">《天国的女儿》首次出现</div>
-          <div class="step-desc">芮小丹灵魂震颤 → 对丁元英的世界产生向往 → 建立情感锚点</div>
-        </div>
-      </div>
-      <div class="step">
-        <span class="step-nb">Ch20</span>
-        <div>
-          <div class="step-title">音响贯穿五台山问道</div>
-          <div class="step-desc">丁元英用音响类比"天道"：高保真 = 忠实于客观规律。意象从情感维度升华为哲学维度。</div>
-        </div>
-      </div>
-      <div class="step">
-        <span class="step-nb">Ch35</span>
-        <div>
-          <div class="step-title">白纸档案袋交付刘冰</div>
-          <div class="step-desc">丁元英埋下全书最关键的道具。此时读者与刘冰一样，不知道里面是白纸。</div>
-        </div>
-      </div>
-      <div class="step">
-        <span class="step-nb">Ch42</span>
-        <div>
-          <div class="step-title">芮小丹殉道 · 天国之女完成</div>
-          <div class="step-desc">"当生则生，当死则死"—— 天国的女儿的意象从音乐变为现实，芮小丹成为意象本身。</div>
-        </div>
-      </div>
-      <div class="step">
-        <span class="step-nb">Ch45</span>
-        <div>
-          <div class="step-title">白纸揭晓 · 终极反讽</div>
-          <div class="step-desc">刘冰打开档案袋发现白纸 → 意象完成闭环 → "救世主"的虚幻本质被彻底暴露。</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="foot">
-  <span>29 / 38</span>
-  <span>M6: IMAGE TIMELINE</span>
-</div>
-</section>
-
-<!-- ====== SLIDE 30: M7 金句 章节分隔 ====== -->
-<section class="slide hero light" data-title="金句复刻">
-<div class="chrome">
-  <span>第七章</span>
-  <span>QUOTATIONS</span>
-</div>
-<div class="frame" data-anim="rise-in">
-  <div class="kicker">MODULE 07</div>
-  <h2 class="h-xl">第七章 · 金句复刻</h2>
-  <p class="h-sub">四句贯穿全书的哲学命题</p>
-  <div class="lead" style="margin:0 auto;text-align:center;">《遥远的救世主》的力量很大程度上来自其金句密度。以下四句是全书思想体系的骨架。</div>
-</div>
-<div class="foot">
-  <span>30 / 38</span>
-  <span>M7: QUOTATIONS</span>
-</div>
-<div class="speaker-notes">
-  金句模块是本次蒸馏中策展人介入最深的模块。我们不只是摘录金句，而是为每一句重建了语境（在哪一章说的、对谁说的、为什么说），并提供了深度解读。建议演讲者在每句金句后停顿3-5秒，给观众消化时间。
-</div>
-</section>
-
-<!-- ====== SLIDE 31: 金句1 ====== -->
-<section class="slide dark" data-title="实事求是就是神话">
-<div class="chrome">
-  <span>金句</span>
-  <span>QUOTE 01</span>
-</div>
-<div class="frame" data-anim="zoom-pop" style="display:flex;flex-direction:column;justify-content:center;min-height:55vh;">
-  <div class="kicker">QUOTE 01 · CHAPTER 3</div>
-  <div class="q-big" style="max-width:65vw;font-size:clamp(1.5rem,3vw,2.5rem);">
-    "原来能做到实事求是就是神话，原来能说老实话、能办老实事的人就是神。"
-  </div>
-  <div class="cite">—— 丁元英</div>
-  <div style="margin-top:4vh;" data-anim="fade-up">
-    <p style="font-size:14px;line-height:1.8;opacity:.7;max-width:55vw;">
-      这一句是全书思想的基石。"实事求是"本是中国官方的常用词汇，但豆豆赋予了它哲学高度 —— 将其与"神话""神"这两个超验概念对接。丁元英的逻辑是：客观规律（天道）高于一切人为规则，而"实事求是"就是对客观规律的彻底遵从。能做到这一点的人，在普通人眼中就是"神"—— 不是因为超能力，而是因为普通人做不到。
-    </p>
-  </div>
-</div>
-<div class="foot">
-  <span>31 / 38</span>
-  <span>M7: QUOTE 01</span>
-</div>
-</section>
-
-<!-- ====== SLIDE 32: 金句2 ====== -->
-<section class="slide light" data-title="忍人所不忍">
-<div class="chrome">
-  <span>金句</span>
-  <span>QUOTE 02</span>
-</div>
-<div class="frame">
-  <div class="kicker">QUOTE 02 · CHAPTER 3</div>
-  <div class="q-big" style="max-width:70vw;margin-top:2vh;">
-    "生存法则很简单，就是忍人所不忍，能人所不能。忍是一条线，能是一条线，两者的间距就是生存机会。"
-  </div>
-  <div class="cite">—— 丁元英</div>
-  <div style="margin-top:4vh;" data-anim="fade-up">
-    <div class="grid-4" style="margin-top:2vh;">
-      <div class="stat-card">
-        <div class="stat-label">忍</div>
-        <div style="font-family:var(--font-sans);font-size:13px;opacity:.7;">承受底线比别人低</div>
-        <div style="font-family:var(--font-sans);font-size:12px;opacity:.5;margin-top:1vh;">王庙村农民在恶劣环境中手工生产音响箱体，忍受寒冬酷暑、低利润 —— 这是"忍"的极限。</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">能</div>
-        <div style="font-family:var(--font-sans);font-size:13px;opacity:.7;">能力上限比别人高</div>
-        <div style="font-family:var(--font-sans);font-size:12px;opacity:.5;margin-top:1vh;">丁元英对商业规律、法律条文、人性的精准把握 —— 这是"能"的极致。</div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="foot">
-  <span>32 / 38</span>
-  <span>M7: QUOTE 02</span>
-</div>
-</section>
-
-<!-- ====== SLIDE 33: 金句3 ====== -->
-<section class="slide dark" data-title="大爱不爱">
-<div class="chrome">
-  <span>金句</span>
-  <span>QUOTE 03</span>
-</div>
-<div class="frame" data-anim="zoom-pop" style="display:flex;flex-direction:column;justify-content:center;min-height:55vh;">
-  <div class="kicker">QUOTE 03 · CHAPTER 20</div>
-  <div class="q-big" style="max-width:60vw;text-align:center;font-size:clamp(1.5rem,3vw,2.5rem);">
-    "大爱不爱。"
-  </div>
-  <div class="cite">—— 智玄大师</div>
-  <div style="margin-top:4vh;" data-anim="fade-up">
-    <p style="font-size:14px;line-height:1.8;opacity:.7;max-width:55vw;margin:0 auto;">
-      全书最短、分量最重的一句。智玄大师用三个字，回应了丁元英"杀富济贫"的道德困境。大爱不爱 —— 不是因为冷酷无情，而是因为真正的爱遵循的是"天道"而非"人情"。丁元英通过摧毁乐圣来让王庙村脱贫，表面上伤害了林雨峰，但长远看，他让所有人（包括林雨峰）面对了文化属性的真实。
-    </p>
-  </div>
-</div>
-<div class="foot">
-  <span>33 / 38</span>
-  <span>M7: QUOTE 03</span>
-</div>
-</section>
-
-<!-- ====== SLIDE 34: 金句4 ====== -->
-<section class="slide light" data-title="心是愿望神是境界">
-<div class="chrome">
-  <span>金句</span>
-  <span>QUOTE 04</span>
-</div>
-<div class="frame">
-  <div class="kicker">QUOTE 04 · CHAPTER 15</div>
-  <div class="q-big" style="max-width:70vw;margin-top:2vh;">
-    "你不知道你，所以你是你；如果你知道了你，你就不是你了。"
-  </div>
-  <div class="cite">—— 丁元英对芮小丹</div>
-  <div style="margin-top:4vh;" data-anim="fade-up">
-    <div class="pipeline">
-      <div class="step">
-        <span class="step-nb">> </span>
-        <div>
-          <div class="step-title">第一层解读：自我认知即自我超越</div>
-          <div class="step-desc">当你尚未意识到"你是谁"时，你是被文化属性、社会环境、成长经历塑造的"你"。当你真正看清这些塑造力量的运作机制时，你就获得了超越它们的可能性。</div>
-        </div>
-      </div>
-      <div class="step">
-        <span class="step-nb">> </span>
-        <div>
-          <div class="step-title">第二层解读：芮小丹恰恰不需要"知道"</div>
-          <div class="step-desc">全书最大的悖论 —— 芮小丹从未"知道"文化属性，但她恰恰活出了文化属性的最高形态。她的"不自知"恰恰是最高境界的"知"。</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="foot">
-  <span>34 / 38</span>
-  <span>M7: QUOTE 04</span>
-</div>
-</section>
-
-<!-- ====== SLIDE 35: M8 叙事边界 章节分隔 ====== -->
-<section class="slide hero dark" data-title="叙事边界">
-<div class="chrome">
-  <span>第八章</span>
-  <span>NARRATIVE BOUNDARIES</span>
-</div>
-<div class="frame" data-anim="rise-in">
-  <div class="kicker">MODULE 08</div>
-  <h2 class="h-xl">第八章 · 叙事边界</h2>
-  <p class="h-sub">3条红线 + 5个常见误读</p>
-  <div class="lead" style="margin:0 auto;text-align:center;">《遥远的救世主》是一部容易被误读的小说。文化属性不是命运决定论，天道不是宿命论，强势文化不是冷酷无情。</div>
-</div>
-<div class="foot">
-  <span>35 / 38</span>
-  <span>M8: NARRATIVE BOUNDARIES</span>
-</div>
-<div class="speaker-notes">
-  叙事边界模块是本次蒸馏中最"危险"也最有价值的部分。它要求我们正面回应读者对《遥远的救世主》最常见的误解 —— 尤其是将"文化属性"读成"血统论"或"宿命论"的倾向。豆豆本人通过丁元英的口多次强调：文化属性是可以改变的，只是改变的过程极其艰难。
-</div>
-</section>
-
-<!-- ====== SLIDE 36: 3红线 + 5误区 ====== -->
-<section class="slide light" data-title="红线与误区">
-<div class="chrome">
-  <span>叙事边界</span>
-  <span>BOUNDARIES & MISREADINGS</span>
-</div>
-<div class="frame">
-  <div class="kicker">NARRATIVE GUARDRAILS</div>
-  <h3 class="h-md">3条红线 · 小说没有主张这些</h3>
-  <div class="before-after" style="margin-top:2vh;" data-anim="fade-up">
-    <div class="ba-col wrong">
-      <div class="ba-label">MISREADING · 常见误读</div>
-      <div style="font-family:var(--font-sans);font-size:13px;line-height:2;">
-        <div>X 文化属性 = 血统论或阶层固化</div>
-        <div>X 强势文化 = 冷酷无情、不择手段</div>
-        <div>X 天道 = 宿命论，人无法改变命运</div>
-      </div>
-    </div>
-    <div class="ba-col right">
-      <div class="ba-label">CORRECTION · 正解</div>
-      <div style="font-family:var(--font-sans);font-size:13px;line-height:2;">
-        <div>O 文化属性可以改变，但需要"觉悟"</div>
-        <div>O 强势文化的核心是遵循客观规律</div>
-        <div>O 天道提供规律，选择权始终在人</div>
-      </div>
-    </div>
-  </div>
-  <div style="margin-top:4vh;" data-anim="fade-up">
-    <h4 style="font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;opacity:.5;margin-bottom:1.5vh;">5个常见误读清单</h4>
-    <div class="pipeline">
-      <div class="step">
-        <span class="step-nb">01</span>
-        <div>
-          <div class="step-title">认为"文化属性"是本质主义标签</div>
-          <div class="step-desc">正解：文化属性是描述性概念，不是规定性标签。它揭示规律，但不抹杀个体能动性。</div>
-        </div>
-      </div>
-      <div class="step">
-        <span class="step-nb">02</span>
-        <div>
-          <div class="step-title">把丁元英的行动美化为"替天行道"</div>
-          <div class="step-desc">正解：丁元英自己都承认有"痞气"。他不是圣人，他只是一个看透了规律并按照规律行事的人。</div>
-        </div>
-      </div>
-      <div class="step">
-        <span class="step-nb">03</span>
-        <div>
-          <div class="step-title">将芮小丹的殉道浪漫化</div>
-          <div class="step-desc">正解：芮小丹的选择不是"为爱而死"，而是维护她自己的完整性。这与爱情有关，但高于爱情。</div>
-        </div>
-      </div>
-      <div class="step">
-        <span class="step-nb">04</span>
-        <div>
-          <div class="step-title">认为小说主张"精英统治"</div>
-          <div class="step-desc">正解：豆豆批判的是不反思的文化惯性，不是底层人民。冯世杰正是底层中保留了质朴人。</div>
-        </div>
-      </div>
-      <div class="step">
-        <span class="step-nb">05</span>
-        <div>
-          <div class="step-title">把"天道"等同于道家的"道"</div>
-          <div class="step-desc">正解：丁元英的"天道"是三教合一的实用主义哲学创造，不完全等同于任何单一宗教概念。</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="foot">
-  <span>36 / 38</span>
-  <span>M8: BOUNDARIES</span>
-</div>
-</section>
-
-<!-- ====== SLIDE 37: 结尾金句 ====== -->
-<section class="slide hero light" data-title="从来就没有什么救世主">
-<div class="chrome">
-  <span>终章</span>
-  <span>CLOSING</span>
-</div>
-<div class="frame" data-anim="rise-in">
-  <div class="kicker">FINAL REFLECTION</div>
-  <div class="q-big" style="max-width:80vw;margin:0 auto;font-size:clamp(1.5rem,3vw,2.5rem);">
-    "从来就没有什么救世主，也不靠神仙皇帝。要创造人类的幸福，全靠我们自己。"
-  </div>
-  <div class="cite">——《国际歌》· 丁元英在古城反复聆听的唱片</div>
-  <div class="lead" style="margin:4vh auto 0;text-align:center;max-width:55vw;">
-    豆豆用一整本小说论证了这句歌词。书名"遥远的救世主"的潜台词是：救世主之所以遥远，是因为它根本不存在。丁元英不是王庙村的救世主，他只是给了他们一面镜子。能不能从镜子里看到真实的自己，取决于每个人的文化属性。
-  </div>
-</div>
-<div class="foot">
-  <span>37 / 38</span>
-  <span>CLOSING REFLECTION</span>
-</div>
-</section>
-
-<!-- ====== SLIDE 38: 终页 ====== -->
-<section class="slide hero dark" data-title="终页">
-<div class="chrome">
-  <span>终</span>
-  <span>FIN</span>
-</div>
-<div class="frame" data-anim="rise-in">
-  <div class="kicker">38 SLIDES · 8 MODULES · 3 AGENTS</div>
-  <h2 class="h-xl" style="font-size:clamp(3rem,8vw,5rem);margin-bottom:2vh;">The End · 天道</h2>
-  <div class="h-sub" style="opacity:.5;">遥远的救世主 · 深度蒸馏告竣</div>
-  <div class="meta-row" style="justify-content:center;margin-top:4vh;">
-    <span>豆豆 / 原著</span>
-    <span>Alpha 叙事分析师</span>
-    <span>Beta 场景考古学家</span>
-    <span>Gamma 策展人</span>
-  </div>
-  <div style="margin-top:3vh;font-family:var(--font-mono);font-size:11px;opacity:.3;">
-    Book Distillation V6.0 · GraphRAG + 3-Agent · 2025
-  </div>
-</div>
-<div class="foot">
-  <span>38 / 38</span>
-  <span>THE END</span>
-</div>
-<div class="speaker-notes">
-  蒸馏告竣。本次蒸馏的核心发现：1)《遥远的救世主》的思想密度远超一般通俗小说，46章中有42处可追踪的伏笔；2)文化属性不是血统论，而是可改变但极难改变的文化惯性；3)豆豆真正的文学成就不在情节设计，而在用小说形式完成了一次哲学论证。建议读者在阅读蒸馏内参后回到原文，反复品味第6、15、20、42、45章 —— 这五章是全书的思想枢纽。
-</div>
-</section>
-
-</div>
-
-<nav id="nav"></nav>
-<div id="speaker-hint">按 S 开启演讲者模式 · D 开启绘图</div>
-
-<div id="drawing-toolbar">
-  <button data-color="#c9a227" class="active">金</button>
-  <button data-color="#e63946">红</button>
-  <button data-color="#22c55e">绿</button>
-  <button data-color="#3b82f6">蓝</button>
-  <button data-color="#ffffff">白</button>
-  <button id="clear-drawing">清除</button>
-  <button id="close-drawing">关闭</button>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
-<script>
-(function(){
-  const deck=document.querySelector('.deck');
-  const slides=deck.querySelectorAll('.slide');
-  const nav=document.getElementById('nav');
-  const canvas=document.getElementById('bgCanvas');
-  const ctx=canvas.getContext('2d');
-  const drawingCanvas=document.getElementById('drawing-canvas');
-  const drawingCtx=drawingCanvas.getContext('2d');
-  const drawingToolbar=document.getElementById('drawing-toolbar');
+  <canvas id="particles"></canvas>
+  <div class="progress-bar" id="progressBar"></div>
   
-  let current=0;
-  let particles=[];
-  let speakerWindow=null;
-  let isDrawing=false;
-  let drawingColor='#c9a227';
-  let lastX=0,lastY=0;
+  <nav class="nav-bar" id="navBar"></nav>
   
-  mermaid.initialize({startOnLoad:false,theme:'dark'});
+  <section class="slide hero" data-title="封面">
+    <div class="slide-content" style="text-align: center;">
+      <div class="kicker anim-1">豆豆 · 长篇小说</div>
+      <h1 class="title-xl anim-2">
+        <span class="gradient-gold">遥远的救世主</span>
+      </h1>
+      <p class="subtitle anim-3" style="margin: 2rem auto;">
+        一部关于天道、文化属性与人性救赎的哲学小说<br>
+        探索强势文化与弱势文化的终极对决
+      </p>
+      <div class="anim-4" style="margin-top: 3rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <span style="padding: 0.5rem 1.5rem; background: rgba(201, 162, 39, 0.1); border: 1px solid rgba(201, 162, 39, 0.3); border-radius: 4px; font-size: 0.8rem; color: var(--gold);">49章 · 35万字</span>
+        <span style="padding: 0.5rem 1.5rem; background: rgba(0, 255, 255, 0.1); border: 1px solid rgba(0, 255, 255, 0.3); border-radius: 4px; font-size: 0.8rem; color: var(--neon-cyan);">改编电视剧《天道》</span>
+      </div>
+    </div>
+    <div class="slide-number">01 / 40</div>
+  </section>
   
-  function renderLatex(){
-    document.querySelectorAll('.latex-inline').forEach(el=>{
-      try{katex.render(el.textContent,el,{displayMode:false,throwOnError:false})}
-      catch(e){}
-    });
-    document.querySelectorAll('.latex-block').forEach(el=>{
-      try{katex.render(el.textContent,el,{displayMode:true,throwOnError:false})}
-      catch(e){}
-    });
-  }
+  <section class="slide dark" data-title="叙事内核">
+    <div class="chapter-indicator">第一章 · 叙事内核</div>
+    <div class="slide-content">
+      <div class="kicker anim-1">NARRATIVE CORE</div>
+      <h2 class="title-lg anim-2">核心冲突轴</h2>
+      <p class="subtitle anim-3" style="margin-bottom: 3rem;">
+        文化属性决定命运 —— 强势文化与弱势文化的终极对决
+      </p>
+      <div class="card-grid anim-4">
+        <div class="card card-gold">
+          <div class="card-badge">◆ 主矛盾</div>
+          <h3 class="card-title">丁元英的"杀富济贫"计划</h3>
+          <p class="card-content">
+            通过格律诗音响公司，以市场手段"杀富济贫"，让王庙村的农民获得生存机会。
+            这不是慈善，而是一场关于文化属性的实验——证明"弱势文化"可以通过觉醒而改变命运。
+          </p>
+          <div class="card-meta">
+            <div class="meta-item">
+              <div class="meta-value">格律诗</div>
+              <div class="meta-label">实验载体</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-value">王庙村</div>
+              <div class="meta-label">实验对象</div>
+            </div>
+          </div>
+        </div>
+        <div class="card card-neutral">
+          <div class="card-badge">◆ 次矛盾</div>
+          <h3 class="card-title">强势文化 vs 弱势文化</h3>
+          <p class="card-content">
+            强势文化遵循事物规律，弱势文化依赖强者的道德期望破格获取。
+            小说中的每个人物都是这两种文化的具象化体现，他们的命运走向验证了"文化属性决定命运"的命题。
+          </p>
+          <div class="card-meta">
+            <div class="meta-item">
+              <div class="meta-value">遵循规律</div>
+              <div class="meta-label">强势文化</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-value">期望救主</div>
+              <div class="meta-label">弱势文化</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-number">02 / 40</div>
+  </section>
   
-  function renderMermaid(){
-    document.querySelectorAll('.mermaid').forEach(el=>{
-      mermaid.run({nodes:[el]});
-    });
-  }
+  <section class="slide" data-title="金句：神即道">
+    <div class="chapter-indicator">核心命题</div>
+    <div class="slide-content" style="text-align: center;">
+      <div class="quote-big neon-gold anim-1 glow-anim">
+        "神即道，道法自然，如来"
+      </div>
+      <p class="quote-source anim-2">
+        — 芮小丹 · 审讯王明阳<br>
+        <span style="color: var(--neon-cyan);">《遥远的救世主》</span>
+      </p>
+      <p class="subtitle anim-3" style="margin-top: 3rem; max-width: 700px; margin-left: auto; margin-right: auto;">
+        一句话概括基督、道家和佛教的精义：神不是外在的救主，而是事物本身的规律。
+        证到如此，便是觉悟。
+      </p>
+    </div>
+    <div class="slide-number">03 / 40</div>
+  </section>
   
-  function resizeCanvas(){
-    canvas.width=window.innerWidth;
-    canvas.height=window.innerHeight;
-    drawingCanvas.width=window.innerWidth;
-    drawingCanvas.height=window.innerHeight;
-  }
-  resizeCanvas();
-  window.addEventListener('resize',resizeCanvas);
+  <section class="slide dark" data-title="核心概念">
+    <div class="chapter-indicator">第二章 · 核心概念</div>
+    <div class="slide-content">
+      <div class="kicker anim-1">CORE CONCEPTS</div>
+      <h2 class="title-lg anim-2">文化属性</h2>
+      <p class="subtitle anim-3" style="margin-bottom: 3rem;">
+        透视社会依次有三个层面：技术、制度和文化。<br>
+        任何一种命运，归根到底都是那种文化属性的产物。
+      </p>
+      <div class="concept-grid anim-4">
+        <div class="concept-card">
+          <div class="concept-icon">◈</div>
+          <h3 class="concept-title">强势文化</h3>
+          <p class="concept-desc">遵循事物规律的文化。在武学上被称为"秘笈"，因为不易学、不易懂、不易用。</p>
+        </div>
+        <div class="concept-card">
+          <div class="concept-icon">◇</div>
+          <h3 class="concept-title">弱势文化</h3>
+          <p class="concept-desc">依赖强者的道德期望破格获取的文化，也是期望救主的文化。易学、易懂、易用，成了流行品种。</p>
+        </div>
+        <div class="concept-card">
+          <div class="concept-icon">◎</div>
+          <h3 class="concept-title">天道</h3>
+          <p class="concept-desc">不以人的意志为转移的客观规律。强势文化造就强者，弱势文化造就弱者，这是规律，也可以理解为天道。</p>
+        </div>
+        <div class="concept-card">
+          <div class="concept-icon">✧</div>
+          <h3 class="concept-title">杀富济贫</h3>
+          <p class="concept-desc">神话的实质就是强力作用的杀富济贫。可能产生两个问题：破坏性开采市场资源？让井底的人患上精神绝症？</p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-number">04 / 40</div>
+  </section>
   
-  class Particle{
-    constructor(){this.reset()}
-    reset(){
-      this.x=Math.random()*canvas.width;
-      this.y=Math.random()*canvas.height;
-      this.vx=(Math.random()-.5)*.3;
-      this.vy=(Math.random()-.5)*.3;
-      this.radius=Math.random()*2+1;
-      this.alpha=Math.random()*.5+.1;
+  <section class="slide" data-title="金句：强势文化">
+    <div class="chapter-indicator">核心命题</div>
+    <div class="slide-content" style="text-align: center;">
+      <div class="quote-big neon-cyan anim-1">
+        "强势文化造就强者，<br>弱势文化造就弱者"
+      </div>
+      <p class="quote-source anim-2">
+        — 丁元英 · 与芮小丹的对话<br>
+        <span style="color: var(--gold);">《遥远的救世主》第五章</span>
+      </p>
+      <p class="subtitle anim-3" style="margin-top: 3rem; max-width: 700px; margin-left: auto; margin-right: auto;">
+        这是规律，也可以理解为天道，不以人的意志为转移。
+      </p>
+    </div>
+    <div class="slide-number">05 / 40</div>
+  </section>
+  
+  <section class="slide dark" data-title="人物谱系：丁元英">
+    <div class="chapter-indicator">第三章 · 人物谱系</div>
+    <div class="slide-content">
+      <div class="kicker anim-1">CHARACTER ARC · 平行弧</div>
+      <h2 class="title-lg anim-2">丁元英</h2>
+      <p class="subtitle anim-3" style="margin-bottom: 2rem;">
+        觉悟者的孤独守望
+      </p>
+      <div class="card card-neutral anim-4" style="max-width: 800px; margin: 0 auto;">
+        <div class="card-badge">◆ 觉悟者</div>
+        <h3 class="card-title">在出世与入世之间寻找平衡</h3>
+        <p class="card-content">
+          他早已看透"天道"，却选择以"杀富济贫"的方式完成一次文化实验。
+          他的弧线近乎水平，因为他始终站在更高的维度俯视众生。
+        </p>
+        <p class="card-content" style="margin-top: 1.5rem;">
+          <strong style="color: var(--gold);">核心欲望：</strong>在清静与责任之间寻找平衡<br>
+          <strong style="color: var(--neon-cyan);">关键矛盾：</strong>看透天道却不得不入世干预<br>
+          <strong style="color: var(--neon-purple);">弧线方向：</strong>平行弧 — 始终站在更高维度
+        </p>
+        <div class="card-meta">
+          <div class="meta-item">
+            <div class="meta-value">2</div>
+            <div class="meta-label">关键转折</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-value">Ch1-45</div>
+            <div class="meta-label">弧线跨度</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-value">→</div>
+            <div class="meta-label">平行弧</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-number">06 / 40</div>
+  </section>
+  
+  <section class="slide" data-title="人物谱系：芮小丹">
+    <div class="chapter-indicator">第三章 · 人物谱系</div>
+    <div class="slide-content">
+      <div class="kicker anim-1">CHARACTER ARC · 上升弧</div>
+      <h2 class="title-lg anim-2">芮小丹</h2>
+      <p class="subtitle anim-3" style="margin-bottom: 2rem;">
+        天生自在的得道者
+      </p>
+      <div class="card card-rise anim-4" style="max-width: 800px; margin: 0 auto;">
+        <div class="card-badge">▲ 上升弧</div>
+        <h3 class="card-title">追求"自在"的生存状态，不受他人定义</h3>
+        <p class="card-content">
+          从警察到觉悟者再到殉道者，她的人格弧线始终向上。
+          最终以"当生则生，当死则死"完成对天道的最高践行。
+        </p>
+        <p class="card-content" style="margin-top: 1.5rem;">
+          <strong style="color: var(--gold);">核心欲望：</strong>追求"自在"的生存状态<br>
+          <strong style="color: var(--neon-green);">关键矛盾：</strong>爱情与自我实现的统一<br>
+          <strong style="color: var(--neon-cyan);">弧线方向：</strong>上升弧 — 从警察到觉悟者到殉道者
+        </p>
+        <div class="card-meta">
+          <div class="meta-item">
+            <div class="meta-value">3</div>
+            <div class="meta-label">关键转折</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-value">Ch6-42</div>
+            <div class="meta-label">弧线跨度</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-value">↑</div>
+            <div class="meta-label">上升弧</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-number">07 / 40</div>
+  </section>
+  
+  <section class="slide dark" data-title="人物谱系：刘冰">
+    <div class="chapter-indicator">第三章 · 人物谱系</div>
+    <div class="slide-content">
+      <div class="kicker anim-1">CHARACTER ARC · 坠落弧</div>
+      <h2 class="title-lg anim-2">刘冰</h2>
+      <p class="subtitle anim-3" style="margin-bottom: 2rem;">
+        弱势文化的终极样本
+      </p>
+      <div class="card card-fall anim-4" style="max-width: 800px; margin: 0 auto;">
+        <div class="card-badge">▼ 坠落弧</div>
+        <h3 class="card-title">破格获取，不付出代价就获得利益和尊重</h3>
+        <p class="card-content">
+          从唱片店老板到格律诗办公室主任，再到退股者、拿白纸要挟的小丑，最终跳楼自杀。
+          他的每一步都在验证"文化属性决定命运"。
+        </p>
+        <p class="card-content" style="margin-top: 1.5rem;">
+          <strong style="color: var(--gold);">核心欲望：</strong>破格获取，不付出代价<br>
+          <strong style="color: var(--neon-red);">关键矛盾：</strong>欲望与能力的不匹配<br>
+          <strong style="color: var(--neon-orange);">弧线方向：</strong>坠落弧 — 从小老板到自杀
+        </p>
+        <div class="card-meta">
+          <div class="meta-item">
+            <div class="meta-value">4</div>
+            <div class="meta-label">关键转折</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-value">Ch17-45</div>
+            <div class="meta-label">弧线跨度</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-value">↓</div>
+            <div class="meta-label">坠落弧</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-number">08 / 40</div>
+  </section>
+  
+  <section class="slide" data-title="人物谱系：欧阳雪">
+    <div class="chapter-indicator">第三章 · 人物谱系</div>
+    <div class="slide-content">
+      <div class="kicker anim-1">CHARACTER ARC · 上升弧</div>
+      <h2 class="title-lg anim-2">欧阳雪</h2>
+      <p class="subtitle anim-3" style="margin-bottom: 2rem;">
+        守正出奇的实干家
+      </p>
+      <div class="card card-rise anim-4" style="max-width: 800px; margin: 0 auto;">
+        <div class="card-badge">▲ 上升弧</div>
+        <h3 class="card-title">守住自己的"一亩三分地"，在变化中保持定力</h3>
+        <p class="card-content">
+          从饭店老板到格律诗股东，她始终知道自己要什么、能做什么。
+          她的弧线稳步向上，是"强势文化"的另一个样本。
+        </p>
+        <p class="card-content" style="margin-top: 1.5rem;">
+          <strong style="color: var(--gold);">核心欲望：</strong>守住自己的"一亩三分地"<br>
+          <strong style="color: var(--neon-green);">关键矛盾：</strong>如何在变化中保持定力<br>
+          <strong style="color: var(--neon-cyan);">弧线方向：</strong>上升弧 — 守正出奇
+        </p>
+        <div class="card-meta">
+          <div class="meta-item">
+            <div class="meta-value">2</div>
+            <div class="meta-label">关键转折</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-value">Ch15-42</div>
+            <div class="meta-label">弧线跨度</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-value">↑</div>
+            <div class="meta-label">上升弧</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-number">09 / 40</div>
+  </section>
+  
+  <section class="slide dark" data-title="情节线索网">
+    <div class="chapter-indicator">第四章 · 情节线索</div>
+    <div class="slide-content">
+      <div class="kicker anim-1">PLOT LINES</div>
+      <h2 class="title-lg anim-2">主线弧：起承转合</h2>
+      <div class="timeline anim-3" style="margin-top: 2rem;">
+        <div class="timeline-item">
+          <div class="timeline-marker gold">起</div>
+          <div class="timeline-content">
+            <h4 class="timeline-title">丁元英隐居古城</h4>
+            <p class="timeline-desc">从柏林私募基金全身而退，选择在古城隐居，被肖亚文托付给芮小丹照应。一个"看透天道"的人，开始了他的清静生活。</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-marker cyan">承</div>
+          <div class="timeline-content">
+            <h4 class="timeline-title">芮小丹与丁元英相遇</h4>
+            <p class="timeline-desc">芮小丹被丁元英的音响震撼，开始了解这个"极品混混"。从借唱片到吃饭，从审讯王明阳到王庙村扶贫，两人的关系逐渐深入。</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-marker gold">转</div>
+          <div class="timeline-content">
+            <h4 class="timeline-title">格律诗诉讼与刘冰自杀</h4>
+            <p class="timeline-desc">格律诗被乐圣公司起诉，叶晓明等人退股，刘冰拿白纸要挟丁元英未果，最终跳楼自杀。弱势文化的终极样本走向毁灭。</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-marker cyan">合</div>
+          <div class="timeline-content">
+            <h4 class="timeline-title">芮小丹牺牲</h4>
+            <p class="timeline-desc">芮小丹在执行任务时遭遇通缉犯，选择与罪犯同归于尽。"当生则生，当死则死"，完成了对天道的最高践行。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-number">10 / 40</div>
+  </section>
+  
+  <section class="slide" data-title="关键场景：审讯王明阳">
+    <div class="chapter-indicator">第五章 · 关键场景</div>
+    <div class="slide-content">
+      <div class="scene-card anim-1" style="max-width: 900px; margin: 0 auto;">
+        <div class="scene-label">SCENE 01 · 第20章</div>
+        <h3 class="scene-title">审讯王明阳 — 窄门与救赎</h3>
+        <div class="scene-quote">
+          "进了窄门，神立刻就会告诉你：我是不存在的，神就是你自己。但是，证到如此也并不究竟，神是什么？神即道，道法自然，如来。"
+        </div>
+        <p class="scene-analysis">
+          <strong style="color: var(--gold);">叙事功能：</strong>这是芮小丹第一次真正理解丁元英的思想体系。她用丁元英教她的"窄门"理论，成功让悍匪王明阳开口，展现了她的悟性和成长。<br><br>
+          <strong style="color: var(--neon-cyan);">隐喻层：</strong>王明阳代表"弱势文化"的极端——依赖暴力破格获取。芮小丹用"神即道"击碎了他的精神支柱，让他意识到自己一生的追求都是虚妄。
+        </p>
+      </div>
+    </div>
+    <div class="slide-number">11 / 40</div>
+  </section>
+  
+  <section class="slide dark" data-title="关键场景：王庙村">
+    <div class="chapter-indicator">第五章 · 关键场景</div>
+    <div class="slide-content">
+      <div class="scene-card anim-1" style="max-width: 900px; margin: 0 auto;">
+        <div class="scene-label">SCENE 02 · 第15章</div>
+        <h3 class="scene-title">王庙村 — 杀富济贫的起点</h3>
+        <div class="scene-quote">
+          "神话的实质就是强力作用的杀富济贫，这就可能产生两个问题，一是杀富是不是破坏性开采市场资源？二是让井底的人扒着井沿看了一眼再掉下去是不是让他患上精神绝症？"
+        </div>
+        <p class="scene-analysis">
+          <strong style="color: var(--gold);">叙事功能：</strong>丁元英决定帮助王庙村，但不是慈善，而是一场文化实验。他要证明"弱势文化"可以通过觉醒而改变命运。<br><br>
+          <strong style="color: var(--neon-cyan);">隐喻层：</strong>王庙村是中国贫困农村的缩影。丁元英的"杀富济贫"计划，本质上是在问：如果给弱势文化一个机会，他们能抓住吗？
+        </p>
+      </div>
+    </div>
+    <div class="slide-number">12 / 40</div>
+  </section>
+  
+  <section class="slide" data-title="关键场景：五台山">
+    <div class="chapter-indicator">第五章 · 关键场景</div>
+    <div class="slide-content">
+      <div class="scene-card anim-1" style="max-width: 900px; margin: 0 auto;">
+        <div class="scene-label">SCENE 03 · 第20章</div>
+        <h3 class="scene-title">五台山问道 — 大爱不爱</h3>
+        <div class="scene-quote">
+          "弱势得救之道，也有也没有。没有竞争的社会就没有活力，而竞争必然会产生贫富、等级，此乃天道，乃社会进步的必然代价。无弱，强焉在？"
+        </div>
+        <p class="scene-analysis">
+          <strong style="color: var(--gold);">叙事功能：</strong>丁元英上五台山，向智玄大师"讨个心安"。大师送他四个字："大爱不爱"。<br><br>
+          <strong style="color: var(--neon-cyan);">隐喻层：</strong>"大爱不爱"是全书的哲学核心。真正的爱不是施舍，而是让对方在竞争中成长。丁元英的"杀富济贫"计划，正是这种"大爱不爱"的实践。
+        </p>
+      </div>
+    </div>
+    <div class="slide-number">13 / 40</div>
+  </section>
+  
+  <section class="slide dark" data-title="关键场景：刘冰自杀">
+    <div class="chapter-indicator">第五章 · 关键场景</div>
+    <div class="slide-content">
+      <div class="scene-card anim-1" style="max-width: 900px; margin: 0 auto;">
+        <div class="scene-label">SCENE 04 · 第45章</div>
+        <h3 class="scene-title">刘冰跳楼 — 弱势文化的终结</h3>
+        <div class="scene-quote">
+          刘冰打开档案袋，里面是一叠白纸。他终于明白，丁元英从一开始就看透了他。他拿着白纸要挟，结果要挟的是自己的命运。
+        </div>
+        <p class="scene-analysis">
+          <strong style="color: var(--gold);">叙事功能：</strong>刘冰是"弱势文化"的终极样本。他一生都在寻找"救主"，从丁元英到格律诗，从格律诗到白纸。当他发现白纸是空的那一刻，他的精神世界彻底崩塌。<br><br>
+          <strong style="color: var(--neon-red);">隐喻层：</strong>刘冰的自杀不是悲剧，而是"文化属性决定命运"的必然结果。弱势文化的本质是"期望救主"，当救主不存在时，他们只能走向毁灭。
+        </p>
+      </div>
+    </div>
+    <div class="slide-number">14 / 40</div>
+  </section>
+  
+  <section class="slide" data-title="关键场景：芮小丹牺牲">
+    <div class="chapter-indicator">第五章 · 关键场景</div>
+    <div class="slide-content">
+      <div class="scene-card anim-1" style="max-width: 900px; margin: 0 auto;">
+        <div class="scene-label">SCENE 05 · 第42章</div>
+        <h3 class="scene-title">芮小丹牺牲 — 当生则生，当死则死</h3>
+        <div class="scene-quote">
+          "当生则生，当死则死，来去自如。丫头，不简单哪。" —— 丁元英
+        </div>
+        <p class="scene-analysis">
+          <strong style="color: var(--gold);">叙事功能：</strong>芮小丹在执行任务时遭遇通缉犯，选择与罪犯同归于尽。她的牺牲不是悲剧，而是对"天道"的最高践行。<br><br>
+          <strong style="color: var(--neon-green);">隐喻层：</strong>芮小丹是全书唯一真正"得道"的人。她不需要丁元英的"救"，她自己就是自己的"救主"。她的牺牲，是对"强势文化造就强者"的终极诠释。
+        </p>
+      </div>
+    </div>
+    <div class="slide-number">15 / 40</div>
+  </section>
+  
+  <section class="slide dark" data-title="金句：大爱不爱">
+    <div class="chapter-indicator">核心命题</div>
+    <div class="slide-content" style="text-align: center;">
+      <div class="quote-big neon-gold anim-1 glow-anim">
+        "大爱不爱"
+      </div>
+      <p class="quote-source anim-2">
+        — 智玄大师 · 五台山<br>
+        <span style="color: var(--neon-cyan);">《遥远的救世主》第20章</span>
+      </p>
+      <p class="subtitle anim-3" style="margin-top: 3rem; max-width: 700px; margin-left: auto; margin-right: auto;">
+        真正的爱不是施舍，而是让对方在竞争中成长。<br>
+        没有竞争的社会就没有活力，竞争必然产生贫富、等级，此乃天道。
+      </p>
+    </div>
+    <div class="slide-number">16 / 40</div>
+  </section>
+  
+  <section class="slide" data-title="主题层叠">
+    <div class="chapter-indicator">第六章 · 主题层叠</div>
+    <div class="slide-content">
+      <div class="kicker anim-1">THEMES</div>
+      <h2 class="title-lg anim-2">三重主题交织</h2>
+      <div class="card-grid anim-3" style="margin-top: 2rem;">
+        <div class="card card-gold">
+          <div class="card-badge">◆ 个人层面</div>
+          <h3 class="card-title">文化属性与个人命运</h3>
+          <p class="card-content">
+            每个人物的命运走向，都是其文化属性的必然结果。丁元英代表强势文化，刘冰代表弱势文化，芮小丹代表觉醒后的强势文化。
+          </p>
+        </div>
+        <div class="card card-neutral">
+          <div class="card-badge">◆ 社会层面</div>
+          <h3 class="card-title">杀富济贫与市场竞争</h3>
+          <p class="card-content">
+            格律诗的"杀富济贫"计划，本质上是在问：市场竞争是否道德？弱势群体是否应该被"保护"？答案是否定的——保护就是害。
+          </p>
+        </div>
+        <div class="card card-rise">
+          <div class="card-badge">◆ 哲学层面</div>
+          <h3 class="card-title">天道与人的关系</h3>
+          <p class="card-content">
+            "神即道，道法自然，如来"。天道不是外在的救主，而是事物本身的规律。人只有遵循天道，才能获得真正的自由。
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-number">17 / 40</div>
+  </section>
+  
+  <section class="slide dark" data-title="意象体系">
+    <div class="chapter-indicator">第七章 · 意象体系</div>
+    <div class="slide-content">
+      <div class="kicker anim-1">SYMBOLS</div>
+      <h2 class="title-lg anim-2">核心意象演变</h2>
+      <div class="card-grid anim-3" style="margin-top: 2rem;">
+        <div class="card card-gold">
+          <div class="card-badge">◆ 天道</div>
+          <h3 class="card-title">从抽象概念到具体实践</h3>
+          <p class="card-content">
+            首次出现：丁元英与芮小丹的对话<br>
+            演变轨迹：从"强势文化造就强者"到"杀富济贫"的实践<br>
+            最终形态：芮小丹的"当生则生，当死则死"
+          </p>
+        </div>
+        <div class="card card-neutral">
+          <div class="card-badge">◆ 格律诗</div>
+          <h3 class="card-title">从公司名称到文化实验</h3>
+          <p class="card-content">
+            首次出现：丁元英为公司取名<br>
+            演变轨迹：从音响公司到"杀富济贫"的载体<br>
+            最终形态：验证"文化属性决定命运"的实验场
+          </p>
+        </div>
+        <div class="card card-fall">
+          <div class="card-badge">◆ 白纸</div>
+          <h3 class="card-title">从希望到绝望</h3>
+          <p class="card-content">
+            首次出现：丁元英给刘冰的档案袋<br>
+            演变轨迹：刘冰以为是把柄，结果是白纸<br>
+            最终形态：弱势文化的终极讽刺——救主不存在
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-number">18 / 40</div>
+  </section>
+  
+  <section class="slide" data-title="金句：当生则生">
+    <div class="chapter-indicator">核心命题</div>
+    <div class="slide-content" style="text-align: center;">
+      <div class="quote-big neon-cyan anim-1">
+        "当生则生，当死则死，<br>来去自如"
+      </div>
+      <p class="quote-source anim-2">
+        — 丁元英 · 看着芮小丹的照片<br>
+        <span style="color: var(--gold);">《遥远的救世主》第42章</span>
+      </p>
+      <p class="subtitle anim-3" style="margin-top: 3rem; max-width: 700px; margin-left: auto; margin-right: auto;">
+        芮小丹的牺牲不是悲剧，而是对"天道"的最高践行。<br>
+        她不需要救主，她自己就是自己的救主。
+      </p>
+    </div>
+    <div class="slide-number">19 / 40</div>
+  </section>
+  
+  <section class="slide dark" data-title="伏笔追踪">
+    <div class="chapter-indicator">第八章 · 伏笔追踪</div>
+    <div class="slide-content">
+      <div class="kicker anim-1">FORESHADOWING</div>
+      <h2 class="title-lg anim-2">伏笔埋设与回收</h2>
+      <div class="timeline anim-3" style="margin-top: 2rem;">
+        <div class="timeline-item">
+          <div class="timeline-marker gold">埋</div>
+          <div class="timeline-content">
+            <h4 class="timeline-title">丁元英的"文化属性"理论</h4>
+            <p class="timeline-desc">第5章：丁元英向芮小丹解释"强势文化"与"弱势文化"。这是全书的哲学基础，也是后续所有人物命运的预言。</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-marker cyan">收</div>
+          <div class="timeline-content">
+            <h4 class="timeline-title">刘冰的自杀</h4>
+            <p class="timeline-desc">第45章：刘冰跳楼自杀，完美验证了"弱势文化造就弱者"的命题。他一生都在寻找救主，最终发现救主不存在。</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-marker gold">埋</div>
+          <div class="timeline-content">
+            <h4 class="timeline-title">芮小丹的"自在"</h4>
+            <p class="timeline-desc">第7章：芮小丹说"我就是我自己的"。这是她"强势文化"人格的体现，为她最终的牺牲埋下伏笔。</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-marker cyan">收</div>
+          <div class="timeline-content">
+            <h4 class="timeline-title">芮小丹的牺牲</h4>
+            <p class="timeline-desc">第42章：芮小丹选择与罪犯同归于尽。"当生则生，当死则死"，完成了对"强势文化造就强者"的终极诠释。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-number">20 / 40</div>
+  </section>
+  
+  <section class="slide" data-title="金句：天下之道">
+    <div class="chapter-indicator">核心命题</div>
+    <div class="slide-content" style="text-align: center;">
+      <div class="quote-big neon-gold anim-1">
+        "天下之道，论到极致，<br>百姓的柴米油盐"
+      </div>
+      <p class="quote-source anim-2">
+        — 丁元英 · 与韩楚风的对话<br>
+        <span style="color: var(--neon-cyan);">《遥远的救世主》第15章</span>
+      </p>
+      <p class="subtitle anim-3" style="margin-top: 3rem; max-width: 700px; margin-left: auto; margin-right: auto;">
+        天道不是高深的理论，而是百姓的柴米油盐。<br>
+        真正的觉悟，是把"道"落实到生活的每一个细节。
+      </p>
+    </div>
+    <div class="slide-number">21 / 40</div>
+  </section>
+  
+  <section class="slide dark" data-title="叙事边界">
+    <div class="chapter-indicator">第九章 · 叙事边界</div>
+    <div class="slide-content">
+      <div class="kicker anim-1">NARRATIVE BOUNDARIES</div>
+      <h2 class="title-lg anim-2">不可翻译的细节</h2>
+      <div class="card-grid anim-3" style="margin-top: 2rem;">
+        <div class="card card-fall">
+          <div class="card-badge">🚫 不可压缩</div>
+          <h3 class="card-title">刘冰打开档案袋的那一刻</h3>
+          <p class="card-content">
+            这是全书最震撼的瞬间之一。刘冰以为里面是把柄，结果是白纸。这个细节一旦压缩，"弱势文化期望救主"的主题就会崩塌。
+          </p>
+        </div>
+        <div class="card card-rise">
+          <div class="card-badge">🚫 不可压缩</div>
+          <h3 class="card-title">芮小丹审讯王明阳的对话</h3>
+          <p class="card-content">
+            这段对话是"神即道"的首次完整呈现。如果压缩，芮小丹的悟性和成长就无法体现，"强势文化造就强者"的主题也会削弱。
+          </p>
+        </div>
+        <div class="card card-neutral">
+          <div class="card-badge">⚠️ 关键沉默</div>
+          <h3 class="card-title">丁元英得知芮小丹牺牲后的反应</h3>
+          <p class="card-content">
+            作者没有描写丁元英的悲痛，只写了他吐血。这种"沉默"比任何描写都更有力量——真正的悲痛是无法言说的。
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-number">22 / 40</div>
+  </section>
+  
+  <section class="slide" data-title="金句：更高级的哲人">
+    <div class="chapter-indicator">核心命题</div>
+    <div class="slide-content" style="text-align: center;">
+      <div class="quote-big gradient-cyber anim-1">
+        "更高级的哲人独处着，<br>这并不是因为他想孤独，<br>而是因为在他的周围<br>找不到他的同类"
+      </div>
+      <p class="quote-source anim-2">
+        — 尼采 · 《遥远的救世主》引言<br>
+        <span style="color: var(--gold);">丁元英的精神写照</span>
+      </p>
+    </div>
+    <div class="slide-number">23 / 40</div>
+  </section>
+  
+  <section class="slide dark" data-title="人物关系图">
+    <div class="chapter-indicator">第十章 · 人物关系</div>
+    <div class="slide-content">
+      <div class="kicker anim-1">CHARACTER RELATIONS</div>
+      <h2 class="title-lg anim-2">核心人物关系网</h2>
+      <div class="card-grid anim-3" style="margin-top: 2rem;">
+        <div class="card card-gold">
+          <div class="card-badge">◆ 丁元英</div>
+          <h3 class="card-title">觉悟者 · 孤独的观察者</h3>
+          <p class="card-content">
+            与芮小丹：灵魂伴侣，互相理解<br>
+            与韩楚风：挚友，商业伙伴<br>
+            与刘冰：被依赖的"救主"（讽刺）<br>
+            与肖亚文：前助手，信任关系
+          </p>
+        </div>
+        <div class="card card-rise">
+          <div class="card-badge">◆ 芮小丹</div>
+          <h3 class="card-title">得道者 · 自在的灵魂</h3>
+          <p class="card-content">
+            与丁元英：灵魂伴侣，互相成就<br>
+            与肖亚文：闺蜜，警官大学同学<br>
+            与欧阳雪：朋友，合伙人<br>
+            与王明阳：审讯者与被审讯者
+          </p>
+        </div>
+        <div class="card card-fall">
+          <div class="card-badge">◆ 刘冰</div>
+          <h3 class="card-title">弱势文化 · 期望救主</h3>
+          <p class="card-content">
+            与丁元英：依赖与被依赖（讽刺）<br>
+            与叶晓明：同为退股者<br>
+            与冯世杰：同为格律诗股东<br>
+            与欧阳雪：嫉妒与不甘
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-number">24 / 40</div>
+  </section>
+  
+  <section class="slide" data-title="金句：这世上原来">
+    <div class="chapter-indicator">核心命题</div>
+    <div class="slide-content" style="text-align: center;">
+      <div class="quote-big neon-cyan anim-1">
+        "这世上原来就没有什么神话，<br>所谓的神话不过是<br>常人的思维所不易理解的<br>平常事"
+      </div>
+      <p class="quote-source anim-2">
+        — 丁元英 · 《遥远的救世主》第12章<br>
+        <span style="color: var(--gold);">对"杀富济贫"的解释</span>
+      </p>
+    </div>
+    <div class="slide-number">25 / 40</div>
+  </section>
+  
+  <section class="slide dark" data-title="格律诗事件">
+    <div class="chapter-indicator">第十一章 · 格律诗事件</div>
+    <div class="slide-content">
+      <div class="kicker anim-1">THE GELVSHI INCIDENT</div>
+      <h2 class="title-lg anim-2">格律诗诉讼全解析</h2>
+      <div class="timeline anim-3" style="margin-top: 2rem;">
+        <div class="timeline-item">
+          <div class="timeline-marker gold">1</div>
+          <div class="timeline-content">
+            <h4 class="timeline-title">格律诗成立</h4>
+            <p class="timeline-desc">丁元英设计"杀富济贫"计划，成立格律诗音响公司，以王庙村为生产基地，叶晓明、刘冰、冯世杰为股东。</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-marker cyan">2</div>
+          <div class="timeline-content">
+            <h4 class="timeline-title">低价策略引发诉讼</h4>
+            <p class="timeline-desc">格律诗以低价策略冲击市场，被乐圣公司起诉不正当竞争。叶晓明等人恐慌退股，只有欧阳雪坚持。</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-marker gold">3</div>
+          <div class="timeline-content">
+            <h4 class="timeline-title">胜诉与反转</h4>
+            <p class="timeline-desc">格律诗胜诉，乐圣公司被迫合作。叶晓明等人后悔退股，刘冰拿白纸要挟丁元英未果。</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-marker cyan">4</div>
+          <div class="timeline-content">
+            <h4 class="timeline-title">刘冰自杀</h4>
+            <p class="timeline-desc">刘冰发现档案袋里是白纸，精神崩溃，跳楼自杀。弱势文化的终极样本走向毁灭。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-number">26 / 40</div>
+  </section>
+  
+  <section class="slide" data-title="金句：透视社会">
+    <div class="chapter-indicator">核心命题</div>
+    <div class="slide-content" style="text-align: center;">
+      <div class="quote-big neon-gold anim-1">
+        "透视社会依次有三个层面：<br>技术、制度、文化"
+      </div>
+      <p class="quote-source anim-2">
+        — 丁元英 · 《遥远的救世主》第五章<br>
+        <span style="color: var(--neon-cyan);">文化属性理论的核心</span>
+      </p>
+      <p class="subtitle anim-3" style="margin-top: 3rem; max-width: 700px; margin-left: auto; margin-right: auto;">
+        小到一个人，大到一个国家一个民族，<br>
+        任何一种命运归根到底都是那种文化属性的产物。
+      </p>
+    </div>
+    <div class="slide-number">27 / 40</div>
+  </section>
+  
+  <section class="slide dark" data-title="弱势文化样本">
+    <div class="chapter-indicator">第十二章 · 弱势文化样本</div>
+    <div class="slide-content">
+      <div class="kicker anim-1">WEAK CULTURE SAMPLES</div>
+      <h2 class="title-lg anim-2">弱势文化的三种形态</h2>
+      <div class="card-grid anim-3" style="margin-top: 2rem;">
+        <div class="card card-fall">
+          <div class="card-badge">▼ 刘冰型</div>
+          <h3 class="card-title">破格获取型</h3>
+          <p class="card-content">
+            核心特征：不付出代价就想获得利益和尊重<br>
+            行为模式：寻找"救主"，依赖他人<br>
+            结局：精神崩溃，自杀<br>
+            代表金句："我凭什么不能发财？"
+          </p>
+        </div>
+        <div class="card card-neutral">
+          <div class="card-badge">◆ 叶晓明型</div>
+          <h3 class="card-title">恐惧逃避型</h3>
+          <p class="card-content">
+            核心特征：遇到风险就退缩<br>
+            行为模式：随大流，不敢承担<br>
+            结局：退股，错失机会<br>
+            代表金句："这事儿太大了，我担不起。"
+          </p>
+        </div>
+        <div class="card card-fall">
+          <div class="card-badge">▼ 冯世杰型</div>
+          <h3 class="card-title">善良软弱型</h3>
+          <p class="card-content">
+            核心特征：善良但没有主见<br>
+            行为模式：随大流，被他人左右<br>
+            结局：退股后后悔，但无力改变<br>
+            代表金句："我听你们的。"
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-number">28 / 40</div>
+  </section>
+  
+  <section class="slide" data-title="金句：窄门">
+    <div class="chapter-indicator">核心命题</div>
+    <div class="slide-content" style="text-align: center;">
+      <div class="quote-big gradient-gold anim-1">
+        "不因上天堂与下地狱的因果关系<br>而具有的极高人生境界，<br>就是窄门"
+      </div>
+      <p class="quote-source anim-2">
+        — 芮小丹 · 审讯王明阳<br>
+        <span style="color: var(--neon-cyan);">《遥远的救世主》第20章</span>
+      </p>
+      <p class="subtitle anim-3" style="margin-top: 3rem; max-width: 700px; margin-left: auto; margin-right: auto;">
+        耶稣为拯救世人甘愿自己被钉在十字架上，<br>
+        是肉身的地狱，是灵魂的天堂。
+      </p>
+    </div>
+    <div class="slide-number">29 / 40</div>
+  </section>
+  
+  <section class="slide dark" data-title="强势文化样本">
+    <div class="chapter-indicator">第十三章 · 强势文化样本</div>
+    <div class="slide-content">
+      <div class="kicker anim-1">STRONG CULTURE SAMPLES</div>
+      <h2 class="title-lg anim-2">强势文化的三种形态</h2>
+      <div class="card-grid anim-3" style="margin-top: 2rem;">
+        <div class="card card-gold">
+          <div class="card-badge">◆ 丁元英型</div>
+          <h3 class="card-title">觉悟者型</h3>
+          <p class="card-content">
+            核心特征：看透天道，遵循规律<br>
+            行为模式：不依赖他人，独立思考<br>
+            结局：孤独但自由<br>
+            代表金句："神即道，道法自然，如来。"
+          </p>
+        </div>
+        <div class="card card-rise">
+          <div class="card-badge">▲ 芮小丹型</div>
+          <h3 class="card-title">得道者型</h3>
+          <p class="card-content">
+            核心特征：天生自在，不受他人定义<br>
+            行为模式：自我实现，不依赖救主<br>
+            结局：牺牲但圆满<br>
+            代表金句："我就是我自己的。"
+          </p>
+        </div>
+        <div class="card card-rise">
+          <div class="card-badge">▲ 欧阳雪型</div>
+          <h3 class="card-title">实干家型</h3>
+          <p class="card-content">
+            核心特征：守正出奇，知道自己要什么<br>
+            行为模式：脚踏实地，不投机取巧<br>
+            结局：稳步上升<br>
+            代表金句："我就守着我的一亩三分地。"
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-number">30 / 40</div>
+  </section>
+  
+  <section class="slide" data-title="金句：竞争">
+    <div class="chapter-indicator">核心命题</div>
+    <div class="slide-content" style="text-align: center;">
+      <div class="quote-big neon-cyan anim-1">
+        "没有竞争的社会就没有活力，<br>而竞争必然会产生贫富、等级，<br>此乃天道"
+      </div>
+      <p class="quote-source anim-2">
+        — 智玄大师 · 五台山<br>
+        <span style="color: var(--gold);">《遥远的救世主》第20章</span>
+      </p>
+    </div>
+    <div class="slide-number">31 / 40</div>
+  </section>
+  
+  <section class="slide dark" data-title="哲学内核">
+    <div class="chapter-indicator">第十四章 · 哲学内核</div>
+    <div class="slide-content">
+      <div class="kicker anim-1">PHILOSOPHY</div>
+      <h2 class="title-lg anim-2">天道的三个层次</h2>
+      <div class="card-grid anim-3" style="margin-top: 2rem;">
+        <div class="card card-gold">
+          <div class="card-badge">◆ 第一层</div>
+          <h3 class="card-title">神即道</h3>
+          <p class="card-content">
+            神不是外在的救主，而是事物本身的规律。<br>
+            这个规律不以人的意志为转移。<br>
+            证到如此，便是觉悟。
+          </p>
+        </div>
+        <div class="card card-neutral">
+          <div class="card-badge">◆ 第二层</div>
+          <h3 class="card-title">道法自然</h3>
+          <p class="card-content">
+            道遵循自然的规律。<br>
+            自然规律是客观存在的，不可违背。<br>
+            强势文化就是遵循自然规律的文化。
+          </p>
+        </div>
+        <div class="card card-rise">
+          <div class="card-badge">◆ 第三层</div>
+          <h3 class="card-title">如来</h3>
+          <p class="card-content">
+            如来即"本来如此"。<br>
+            事物的本来面目就是道。<br>
+            看清本来面目，就是觉悟。
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-number">32 / 40</div>
+  </section>
+  
+  <section class="slide" data-title="金句：精神绝症">
+    <div class="chapter-indicator">核心命题</div>
+    <div class="slide-content" style="text-align: center;">
+      <div class="quote-big neon-gold anim-1 glow-anim">
+        "让井底的人扒着井沿看了一眼<br>再掉下去<br>是不是让他患上精神绝症？"
+      </div>
+      <p class="quote-source anim-2">
+        — 丁元英 · 《遥远的救世主》第15章<br>
+        <span style="color: var(--neon-cyan);">对"杀富济贫"的反思</span>
+      </p>
+    </div>
+    <div class="slide-number">33 / 40</div>
+  </section>
+  
+  <section class="slide dark" data-title="人物弧线对比">
+    <div class="chapter-indicator">第十五章 · 人物弧线</div>
+    <div class="slide-content">
+      <div class="kicker anim-1">CHARACTER ARCS</div>
+      <h2 class="title-lg anim-2">上升弧 vs 坠落弧</h2>
+      <div class="card-grid anim-3" style="margin-top: 2rem;">
+        <div class="card card-rise">
+          <div class="card-badge">▲ 上升弧</div>
+          <h3 class="card-title">芮小丹</h3>
+          <p class="card-content">
+            起点：古城刑警<br>
+            转折1：遇见丁元英，开始觉醒<br>
+            转折2：审讯王明阳，理解天道<br>
+            终点：牺牲，完成对天道的最高践行
+          </p>
+          <div class="card-meta">
+            <div class="meta-item">
+              <div class="meta-value">↑</div>
+              <div class="meta-label">上升弧</div>
+            </div>
+          </div>
+        </div>
+        <div class="card card-fall">
+          <div class="card-badge">▼ 坠落弧</div>
+          <h3 class="card-title">刘冰</h3>
+          <p class="card-content">
+            起点：唱片店老板<br>
+            转折1：加入格律诗，以为找到救主<br>
+            转折2：退股，恐慌逃避<br>
+            终点：拿白纸要挟未果，跳楼自杀
+          </p>
+          <div class="card-meta">
+            <div class="meta-item">
+              <div class="meta-value">↓</div>
+              <div class="meta-label">坠落弧</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-number">34 / 40</div>
+  </section>
+  
+  <section class="slide" data-title="金句：我就是我">
+    <div class="chapter-indicator">核心命题</div>
+    <div class="slide-content" style="text-align: center;">
+      <div class="quote-big gradient-cyber anim-1">
+        "我就是我自己的"
+      </div>
+      <p class="quote-source anim-2">
+        — 芮小丹 · 《遥远的救世主》第7章<br>
+        <span style="color: var(--gold);">强势文化的宣言</span>
+      </p>
+      <p class="subtitle anim-3" style="margin-top: 3rem; max-width: 700px; margin-left: auto; margin-right: auto;">
+        这句话是芮小丹"强势文化"人格的核心体现。<br>
+        她不需要救主，她自己就是自己的救主。
+      </p>
+    </div>
+    <div class="slide-number">35 / 40</div>
+  </section>
+  
+  <section class="slide dark" data-title="改编电视剧">
+    <div class="chapter-indicator">第十六章 · 改编</div>
+    <div class="slide-content">
+      <div class="kicker anim-1">TV ADAPTATION</div>
+      <h2 class="title-lg anim-2">电视剧《天道》</h2>
+      <div class="card card-gold anim-3" style="max-width: 800px; margin: 2rem auto 0;">
+        <div class="card-badge">◆ 2007年播出</div>
+        <h3 class="card-title">全国掀起极大反响</h3>
+        <p class="card-content">
+          《遥远的救世主》改编的电视剧《天道》在全国播出后，引发了广泛讨论。剧中丁元英由王志文饰演，芮小丹由左小青饰演。
+        </p>
+        <p class="card-content" style="margin-top: 1.5rem;">
+          <strong style="color: var(--gold);">核心改动：</strong><br>
+          1. 部分情节压缩，人物关系简化<br>
+          2. 哲学讨论保留，但更口语化<br>
+          3. 结局保持一致，芮小丹牺牲
+        </p>
+        <p class="card-content" style="margin-top: 1.5rem;">
+          <strong style="color: var(--neon-cyan);">影响力：</strong><br>
+          电视剧播出后，"天道"成为热词，"强势文化"与"弱势文化"的概念被广泛讨论。丁元英成为"觉悟者"的代名词。
+        </p>
+      </div>
+    </div>
+    <div class="slide-number">36 / 40</div>
+  </section>
+  
+  <section class="slide" data-title="金句：救主">
+    <div class="chapter-indicator">核心命题</div>
+    <div class="slide-content" style="text-align: center;">
+      <div class="quote-big neon-gold anim-1">
+        "弱势文化就是<br>依赖强者的道德期望<br>破格获取的文化，<br>也是期望救主的文化"
+      </div>
+      <p class="quote-source anim-2">
+        — 丁元英 · 《遥远的救世主》第五章<br>
+        <span style="color: var(--neon-cyan);">弱势文化的定义</span>
+      </p>
+    </div>
+    <div class="slide-number">37 / 40</div>
+  </section>
+  
+  <section class="slide dark" data-title="阅读建议">
+    <div class="chapter-indicator">第十七章 · 阅读</div>
+    <div class="slide-content">
+      <div class="kicker anim-1">READING GUIDE</div>
+      <h2 class="title-lg anim-2">如何阅读本书</h2>
+      <div class="card-grid anim-3" style="margin-top: 2rem;">
+        <div class="card card-gold">
+          <div class="card-badge">◆ 第一遍</div>
+          <h3 class="card-title">关注情节</h3>
+          <p class="card-content">
+            了解丁元英的"杀富济贫"计划，关注格律诗诉讼的发展，理解刘冰自杀的原因，感受芮小丹牺牲的震撼。
+          </p>
+        </div>
+        <div class="card card-neutral">
+          <div class="card-badge">◆ 第二遍</div>
+          <h3 class="card-title">关注人物</h3>
+          <p class="card-content">
+            分析每个人物的文化属性，理解他们的行为模式，对比强势文化与弱势文化的不同表现。
+          </p>
+        </div>
+        <div class="card card-rise">
+          <div class="card-badge">◆ 第三遍</div>
+          <h3 class="card-title">关注哲学</h3>
+          <p class="card-content">
+            深入理解"神即道，道法自然，如来"，思考"大爱不爱"的含义，反思自己的文化属性。
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-number">38 / 40</div>
+  </section>
+  
+  <section class="slide" data-title="金句：总结">
+    <div class="chapter-indicator">核心命题</div>
+    <div class="slide-content" style="text-align: center;">
+      <div class="quote-big gradient-gold anim-1">
+        "文化属性决定命运"
+      </div>
+      <p class="quote-source anim-2">
+        — 《遥远的救世主》核心命题<br>
+        <span style="color: var(--neon-cyan);">全书的精神内核</span>
+      </p>
+      <p class="subtitle anim-3" style="margin-top: 3rem; max-width: 700px; margin-left: auto; margin-right: auto;">
+        强势文化造就强者，弱势文化造就弱者。<br>
+        改变命运的唯一方法，是改变自己的文化属性。
+      </p>
+    </div>
+    <div class="slide-number">39 / 40</div>
+  </section>
+  
+  <section class="slide hero" data-title="结束">
+    <div class="slide-content" style="text-align: center;">
+      <div class="kicker anim-1">THE END</div>
+      <h1 class="title-xl anim-2">
+        <span class="gradient-gold">遥远的救世主</span>
+      </h1>
+      <p class="subtitle anim-3" style="margin: 2rem auto;">
+        豆豆 著 · 作家出版社<br>
+        改编电视剧《天道》2007年播出
+      </p>
+      <div class="anim-4" style="margin-top: 3rem;">
+        <p style="color: var(--fg-muted); font-size: 0.9rem;">
+          Book Distillation V4.1 · 霓虹赛博朋克设计系统<br>
+          按 ← → 键翻页 · 按 T 键切换主题
+        </p>
+      </div>
+    </div>
+    <div class="slide-number">40 / 40</div>
+  </section>
+  
+  <script>
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let mouseX = 0;
+    let mouseY = 0;
+    
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     }
-    update(){
-      this.x+=this.vx;this.y+=this.vy;
-      if(this.x<0||this.x>canvas.width)this.vx*=-1;
-      if(this.y<0||this.y>canvas.height)this.vy*=-1;
+    
+    function createParticles() {
+      particles = [];
+      const count = Math.min(80, Math.floor(window.innerWidth / 20));
+      const colors = ['#c9a227', '#00ffff', '#8b5cf6', '#00ff88'];
+      for (let i = 0; i < count; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          size: Math.random() * 2 + 0.5,
+          speedX: (Math.random() - 0.5) * 0.3,
+          speedY: (Math.random() - 0.5) * 0.3,
+          color: colors[Math.floor(Math.random() * colors.length)]
+        });
+      }
     }
-    draw(){
-      ctx.beginPath();
-      ctx.arc(this.x,this.y,this.radius,0,Math.PI*2);
-      ctx.fillStyle=`rgba(201,162,39,${this.alpha})`;
-      ctx.fill();
+    
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      particles.forEach((p, i) => {
+        p.x += p.speedX;
+        p.y += p.speedY;
+        
+        const dx = mouseX - p.x;
+        const dy = mouseY - p.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 150) {
+          p.x -= dx * 0.01;
+          p.y -= dy * 0.01;
+        }
+        
+        if (p.x < 0) p.x = canvas.width;
+        if (p.x > canvas.width) p.x = 0;
+        if (p.y < 0) p.y = canvas.height;
+        if (p.y > canvas.height) p.y = 0;
+        
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = p.color;
+        ctx.fill();
+        
+        particles.slice(i + 1).forEach(p2 => {
+          const dx = p.x - p2.x;
+          const dy = p.y - p2.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 100) {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.strokeStyle = `rgba(255, 255, 255, ${0.08 * (1 - dist / 100)})`;
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        });
+      });
+      
+      requestAnimationFrame(animate);
     }
-  }
-  
-  function initParticles(){
-    particles=[];
-    const count=Math.min(80,Math.floor(canvas.width*canvas.height/15000));
-    for(let i=0;i<count;i++)particles.push(new Particle());
-  }
-  initParticles();
-  
-  function drawConnections(){
-    for(let i=0;i<particles.length;i++){
-      for(let j=i+1;j<particles.length;j++){
-        const dx=particles[i].x-particles[j].x;
-        const dy=particles[i].y-particles[j].y;
-        const dist=Math.sqrt(dx*dx+dy*dy);
-        if(dist<120){
-          ctx.beginPath();
-          ctx.moveTo(particles[i].x,particles[i].y);
-          ctx.lineTo(particles[j].x,particles[j].y);
-          ctx.strokeStyle=`rgba(201,162,39,${.08*(1-dist/120)})`;
-          ctx.stroke();
+    
+    document.addEventListener('mousemove', e => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+    
+    resize();
+    createParticles();
+    animate();
+    
+    window.addEventListener('resize', () => {
+      resize();
+      createParticles();
+    });
+    
+    const slides = document.querySelectorAll('.slide');
+    const navBar = document.getElementById('navBar');
+    const progressBar = document.getElementById('progressBar');
+    
+    slides.forEach((slide, index) => {
+      const dot = document.createElement('div');
+      dot.className = 'nav-dot';
+      dot.addEventListener('click', () => {
+        slide.scrollIntoView({ behavior: 'smooth' });
+      });
+      navBar.appendChild(dot);
+    });
+    
+    const navDots = document.querySelectorAll('.nav-dot');
+    
+    function updateProgress() {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = (scrollTop / docHeight) * 100;
+      progressBar.style.width = progress + '%';
+      
+      let currentSlide = 0;
+      slides.forEach((slide, index) => {
+        const rect = slide.getBoundingClientRect();
+        if (rect.top <= window.innerHeight / 2) {
+          currentSlide = index;
+        }
+      });
+      
+      navDots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentSlide);
+      });
+    }
+    
+    window.addEventListener('scroll', updateProgress);
+    updateProgress();
+    
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        e.preventDefault();
+        const currentSlide = Math.floor(window.scrollY / window.innerHeight);
+        if (currentSlide < slides.length - 1) {
+          slides[currentSlide + 1].scrollIntoView({ behavior: 'smooth' });
+        }
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        const currentSlide = Math.floor(window.scrollY / window.innerHeight);
+        if (currentSlide > 0) {
+          slides[currentSlide - 1].scrollIntoView({ behavior: 'smooth' });
         }
       }
-    }
-  }
-  
-  function animate(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    particles.forEach(p=>{p.update();p.draw()});
-    drawConnections();
-    requestAnimationFrame(animate);
-  }
-  animate();
-  
-  function buildNav(){
-    nav.innerHTML='';
-    slides.forEach((s,i)=>{
-      const dot=document.createElement('div');
-      dot.className='dot'+(i===0?' active':'');
-      dot.addEventListener('click',()=>goTo(i));
-      nav.appendChild(dot);
     });
-  }
-  buildNav();
-  
-  function updateNav(){
-    nav.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===current));
-  }
-  
-  function goTo(idx){
-    if(idx<0||idx>=slides.length)return;
-    slides[current].classList.remove('active');
-    current=idx;
-    slides[current].classList.add('active');
-    updateNav();
-    updateTheme();
-    triggerAnimations();
-    updateSpeakerNotes();
-    renderMermaid();
-  }
-  
-  function updateTheme(){
-    const slide=slides[current];
-    const isLight=slide.classList.contains('light');
-    document.body.classList.toggle('light-bg',isLight);
-    canvas.classList.toggle('dark',!isLight);
-    canvas.classList.toggle('light',isLight);
-  }
-  
-  function triggerAnimations(){
-    const slide=slides[current];
-    const anims=slide.querySelectorAll('[data-anim]');
-    anims.forEach((el,i)=>{
-      el.classList.remove('visible');
-      setTimeout(()=>el.classList.add('visible'),i*100);
+    
+    let touchStartX = 0;
+    document.addEventListener('touchstart', e => {
+      touchStartX = e.touches[0].clientX;
     });
-  }
-  
-  function getSlideNotes(slide){
-    const notesEl=slide.querySelector('.speaker-notes');
-    return notesEl?notesEl.innerHTML:slide.querySelector('.frame')?.textContent?.slice(0,200)||'';
-  }
-  
-  function updateSpeakerNotes(){
-    if(speakerWindow&&!speakerWindow.closed){
-      const notes=getSlideNotes(slides[current]);
-      speakerWindow.document.getElementById('notes').innerHTML=notes;
-      speakerWindow.document.getElementById('slide-num').textContent=`${current+1} / ${slides.length}`;
-      const nextSlide=slides[current+1];
-      if(nextSlide){
-        speakerWindow.document.getElementById('next').innerHTML=nextSlide.querySelector('.frame')?.innerHTML||'';
+    
+    document.addEventListener('touchend', e => {
+      const touchEndX = e.changedTouches[0].clientX;
+      const diff = touchStartX - touchEndX;
+      if (Math.abs(diff) > 50) {
+        const currentSlide = Math.floor(window.scrollY / window.innerHeight);
+        if (diff > 0 && currentSlide < slides.length - 1) {
+          slides[currentSlide + 1].scrollIntoView({ behavior: 'smooth' });
+        } else if (diff < 0 && currentSlide > 0) {
+          slides[currentSlide - 1].scrollIntoView({ behavior: 'smooth' });
+        }
       }
-    }
-  }
-  
-  function openSpeakerView(){
-    if(speakerWindow&&!speakerWindow.closed){
-      speakerWindow.focus();
-      return;
-    }
-    speakerWindow=window.open('','speaker','width=1200,height=800');
-    speakerWindow.document.write(`
-      <!DOCTYPE html>
-      <html>
-      <head>
-        <title>演讲者模式</title>
-        <style>
-          *{box-sizing:border-box;margin:0;padding:0}
-          body{font-family:'Noto Sans SC',sans-serif;background:#1a1a1a;color:#f1efea;padding:2rem}
-          .current{display:flex;gap:2rem;height:60vh}
-          .notes{flex:1;background:#2a2a2a;padding:2rem;border-radius:8px;overflow:auto}
-          .preview{flex:1;background:#0a0a0a;padding:1rem;border-radius:8px;overflow:hidden;font-size:.8em}
-          .next-label{color:#666;font-size:12px;margin-bottom:.5rem}
-          #next{opacity:.5}
-          .footer{display:flex;justify-content:space-between;align-items:center;padding:1rem 0}
-          #slide-num{font-size:1.5rem;font-weight:bold}
-          .hint{color:#666;font-size:12px}
-        </style>
-      </head>
-      <body>
-        <div class="current">
-          <div class="notes" id="notes"></div>
-          <div class="preview">
-            <div class="next-label">下一页预览</div>
-            <div id="next"></div>
-          </div>
-        </div>
-        <div class="footer">
-          <div id="slide-num">1 / 1</div>
-          <div class="hint">← → 切换页面</div>
-        </div>
-      </body>
-      </html>
-    `);
-    speakerWindow.document.close();
-    updateSpeakerNotes();
-    speakerWindow.addEventListener('keydown',e=>{
-      if(e.key==='ArrowRight')next();
-      else if(e.key==='ArrowLeft')prev();
     });
-  }
-  
-  function toggleDrawing(){
-    drawingCanvas.classList.toggle('active');
-    drawingToolbar.classList.toggle('active');
-    isDrawing=drawingCanvas.classList.contains('active');
-  }
-  
-  drawingCanvas.addEventListener('mousedown',e=>{
-    if(!isDrawing)return;
-    lastX=e.clientX;lastY=e.clientY;
-  });
-  
-  drawingCanvas.addEventListener('mousemove',e=>{
-    if(!isDrawing||!drawingCanvas.classList.contains('active'))return;
-    if(e.buttons!==1)return;
-    drawingCtx.beginPath();
-    drawingCtx.moveTo(lastX,lastY);
-    drawingCtx.lineTo(e.clientX,e.clientY);
-    drawingCtx.strokeStyle=drawingColor;
-    drawingCtx.lineWidth=3;
-    drawingCtx.lineCap='round';
-    drawingCtx.stroke();
-    lastX=e.clientX;lastY=e.clientY;
-  });
-  
-  drawingToolbar.querySelectorAll('button[data-color]').forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      drawingToolbar.querySelectorAll('button[data-color]').forEach(b=>b.classList.remove('active'));
-      btn.classList.add('active');
-      drawingColor=btn.dataset.color;
-    });
-  });
-  
-  document.getElementById('clear-drawing').addEventListener('click',()=>{
-    drawingCtx.clearRect(0,0,drawingCanvas.width,drawingCanvas.height);
-  });
-  
-  document.getElementById('close-drawing').addEventListener('click',toggleDrawing);
-  
-  function next(){goTo(current+1)}
-  function prev(){goTo(current-1)}
-  
-  document.addEventListener('keydown',e=>{
-    if(e.key==='ArrowRight'||e.key===' ')next();
-    else if(e.key==='ArrowLeft')prev();
-    else if(e.key==='Home')goTo(0);
-    else if(e.key==='End')goTo(slides.length-1);
-    else if(e.key.toLowerCase()==='s')openSpeakerView();
-    else if(e.key.toLowerCase()==='d')toggleDrawing();
-  });
-  
-  let wheelTimeout;
-  deck.addEventListener('wheel',e=>{
-    e.preventDefault();
-    clearTimeout(wheelTimeout);
-    wheelTimeout=setTimeout(()=>{
-      if(e.deltaY>0)next();
-      else prev();
-    },50);
-  },{passive:false});
-  
-  let touchStartX=0;
-  deck.addEventListener('touchstart',e=>{touchStartX=e.touches[0].clientX},{passive:true});
-  deck.addEventListener('touchend',e=>{
-    const dx=e.changedTouches[0].clientX-touchStartX;
-    if(Math.abs(dx)>50){
-      if(dx<0)next();
-      else prev();
-    }
-  },{passive:true});
-  
-  if(slides.length>0){
-    slides[0].classList.add('active');
-    updateTheme();
-    setTimeout(()=>{
-      triggerAnimations();
-      renderLatex();
-      renderMermaid();
-    },100);
-  }
-})();
-</script>
+  </script>
 </body>
 </html>
