@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>设计学习成果展示 | Book Distillation V7.0</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Noto+Serif+SC:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --bg-elevated: #12121a;
+      --bg-card: #1a1a24;
+      --fg: #e5e7eb;
+      --fg-muted: #6b7280;
+      --accent: #00ffff;
+      --accent-alt: #ff00ff;
+      --neon-blue: #00ffff;
+      --neon-pink: #ff00ff;
+      --neon-purple: #8b5cf6;
+      --neon-green: #10b981;
+      --glow-cyan: rgba(0, 255, 255, 0.5);
+      --glow-pink: rgba(255, 0, 255, 0.5);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Noto Sans SC', sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    
+    header {
+      text-align: center;
+      padding: 4rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 3rem;
+    }
+    
+    h1 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 900;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, var(--neon-blue), var(--neon-pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .subtitle {
+      font-size: 1.1rem;
+      color: var(--fg-muted);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .section {
+      margin-bottom: 4rem;
+    }
+    
+    .section-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--neon-blue);
+      display: inline-block;
+    }
+    
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    
+    .card {
+      background: var(--bg-card);
+      border-radius: 12px;
+      padding: 1.5rem;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.3s ease;
+    }
+    
+    .card:hover {
+      border-color: var(--neon-blue);
+      box-shadow: 0 0 20px var(--glow-cyan);
+    }
+    
+    .card-title {
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .card-author {
+      color: var(--fg-muted);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    
+    .tag {
+      background: rgba(255,255,255,0.1);
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      color: var(--fg-muted);
+    }
+    
+    .color-palette {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+    
+    .color-swatch {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      position: relative;
+    }
+    
+    .color-swatch::after {
+      content: attr(data-name);
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.7rem;
+      color: var(--fg-muted);
+      white-space: nowrap;
+    }
+    
+    .neon-demo {
+      padding: 2rem;
+      text-align: center;
+      background: var(--bg-elevated);
+      border-radius: 12px;
+      margin-top: 2rem;
+    }
+    
+    .neon-text {
+      font-size: clamp(2rem, 6vw, 4rem);
+      font-weight: 900;
+      color: var(--neon-blue);
+      text-shadow: 
+        0 0 5px var(--glow-cyan),
+        0 0 10px var(--glow-cyan),
+        0 0 20px var(--glow-cyan),
+        0 0 40px var(--glow-cyan);
+      margin-bottom: 1rem;
+    }
+    
+    .neon-text-pink {
+      color: var(--neon-pink);
+      text-shadow: 
+        0 0 5px var(--glow-pink),
+        0 0 10px var(--glow-pink),
+        0 0 20px var(--glow-pink);
+    }
+    
+    .neon-border-demo {
+      display: inline-block;
+      padding: 1rem 2rem;
+      border: 2px solid var(--neon-blue);
+      border-radius: 8px;
+      box-shadow: 
+        0 0 5px var(--glow-cyan),
+        0 0 10px var(--glow-cyan),
+        0 0 20px var(--glow-cyan);
+      margin: 1rem;
+    }
+    
+    .neon-border-pink {
+      border-color: var(--neon-pink);
+      box-shadow: 
+        0 0 5px var(--glow-pink),
+        0 0 10px var(--glow-pink),
+        0 0 20px var(--glow-pink);
+    }
+    
+    .style-card {
+      background: var(--bg-card);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    
+    .style-preview {
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+    
+    .style-info {
+      padding: 1rem;
+    }
+    
+    .style-name {
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    
+    .style-desc {
+      font-size: 0.9rem;
+      color: var(--fg-muted);
+    }
+    
+    .preview-cyber {
+      background: linear-gradient(135deg, #0a0a0f, #1a0a2e, #0a0a0f);
+      color: var(--neon-pink);
+      text-shadow: 0 0 10px var(--glow-pink);
+    }
+    
+    .preview-hmi {
+      background: linear-gradient(135deg, #0a0e14, #0f1a24, #0a0e14);
+      color: #00d4aa;
+      text-shadow: 0 0 10px rgba(0, 212, 170, 0.5);
+    }
+    
+    .preview-data {
+      background: linear-gradient(135deg, #0a1628, #0f2040, #0a1628);
+      color: #3b82f6;
+    }
+    
+    .preview-tiandao {
+      background: linear-gradient(135deg, #0a0a0b, #1a1508, #0a0a0b);
+      color: #c9a227;
+      text-shadow: 0 0 10px rgba(201, 162, 39, 0.5);
+    }
+    
+    code {
+      background: rgba(255,255,255,0.1);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+    }
+    
+    .code-block {
+      background: var(--bg-elevated);
+      border-radius: 8px;
+      padding: 1rem;
+      overflow-x: auto;
+      margin-top: 1rem;
+    }
+    
+    .code-block code {
+      background: none;
+      padding: 0;
+      display: block;
+      white-space: pre;
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+    
+    footer {
+      text-align: center;
+      padding: 3rem 0;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      margin-top: 4rem;
+      color: var(--fg-muted);
+    }
+    
+    .source-link {
+      color: var(--neon-blue);
+      text-decoration: none;
+    }
+    
+    .source-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>设计学习成果展示</h1>
+      <p class="subtitle">从站酷6个优秀设计作品中学习霓虹科技风、赛博朋克、数据可视化配色</p>
+    </header>
+    
+    <section class="section">
+      <h2 class="section-title">学习来源</h2>
+      <div class="grid">
+        <div class="card">
+          <div class="card-title">Toyota23 概念设计</div>
+          <div class="card-author">CodeWolf · HMI汽车界面</div>
+          <div class="card-tags">
+            <span class="tag">UI</span>
+            <span class="tag">HMI</span>
+            <span class="tag">汽车</span>
+          </div>
+        </div>
+        
+        <div class="card">
+          <div class="card-title">AI全链路设计</div>
+          <div class="card-author">三鱼先生 · 数据可视化</div>
+          <div class="card-tags">
+            <span class="tag">数据可视化</span>
+            <span class="tag">数字孪生</span>
+            <span class="tag">AI</span>
+          </div>
+        </div>
+        
+        <div class="card">
+          <div class="card-title">2024 作品集</div>
+          <div class="card-author">刘佳亮佳刘 · APP界面</div>
+          <div class="card-tags">
+            <span class="tag">APP</span>
+            <span class="tag">移动端</span>
+          </div>
+        </div>
+        
+        <div class="card">
+          <div class="card-title">2026 UIUX 作品集</div>
+          <div class="card-author">金小妹 · UI/UX</div>
+          <div class="card-tags">
+            <span class="tag">UI</span>
+            <span class="tag">UX</span>
+          </div>
+        </div>
+        
+        <div class="card">
+          <div class="card-title">2025-2026 作品集</div>
+          <div class="card-author">跳跃的小鱼 · 动效设计</div>
+          <div class="card-tags">
+            <span class="tag">霓虹科技</span>
+            <span class="tag">暗黑色系</span>
+            <span class="tag">赛博朋克</span>
+          </div>
+        </div>
+        
+        <div class="card">
+          <div class="card-title">设计沉淀与价值探索</div>
+          <div class="card-author">萤火JCY · 工具类/AI产品</div>
+          <div class="card-tags">
+            <span class="tag">工具类</span>
+            <span class="tag">AI产品</span>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section class="section">
+      <h2 class="section-title">提取的设计风格</h2>
+      <div class="grid">
+        <div class="style-card">
+          <div class="style-preview preview-cyber">霓虹赛博朋克</div>
+          <div class="style-info">
+            <div class="style-name">霓虹赛博朋克</div>
+            <div class="style-desc">暗黑背景 + 霓虹粉/青/紫，适合科技、游戏、创意内容</div>
+          </div>
+        </div>
+        
+        <div class="style-card">
+          <div class="style-preview preview-hmi">HMI科技风</div>
+          <div class="style-info">
+            <div class="style-name">HMI科技风</div>
+            <div class="style-desc">深黑 + 青色强调，适合汽车、工业、技术分享</div>
+          </div>
+        </div>
+        
+        <div class="style-card">
+          <div class="style-preview preview-data">数据可视化</div>
+          <div class="style-info">
+            <div class="style-name">数据可视化</div>
+            <div class="style-desc">深蓝背景 + 多色数据点，适合数据报告、分析类</div>
+          </div>
+        </div>
+        
+        <div class="style-card">
+          <div class="style-preview preview-tiandao">天道金</div>
+          <div class="style-info">
+            <div class="style-name">天道金</div>
+            <div class="style-desc">暖黑 + 金色强调，适合哲学、文学、人文内容</div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section class="section">
+      <h2 class="section-title">霓虹效果演示</h2>
+      <div class="neon-demo">
+        <div class="neon-text">大爱不爱</div>
+        <div class="neon-text neon-text-pink" style="font-size: 2rem;">实事求是就是神话</div>
+        <div style="margin-top: 2rem;">
+          <span class="neon-border-demo">霓虹边框</span>
+          <span class="neon-border-demo neon-border-pink">赛博朋克</span>
+        </div>
+      </div>
+    </section>
+    
+    <section class="section">
+      <h2 class="section-title">可复用 CSS 代码</h2>
+      
+      <h3 style="margin: 1.5rem 0 1rem; color: var(--neon-blue);">霓虹赛博朋克配色</h3>
+      <div class="code-block">
+        <code>:root {
+  --bg: #0a0a0f;
+  --neon-blue: #00ffff;
+  --neon-pink: #ff00ff;
+  --neon-purple: #8b5cf6;
+  --glow-cyan: rgba(0, 255, 255, 0.5);
+  --glow-pink: rgba(255, 0, 255, 0.5);
+}</code>
+      </div>
+      
+      <h3 style="margin: 1.5rem 0 1rem; color: var(--neon-blue);">霓虹文字效果</h3>
+      <div class="code-block">
+        <code>.neon-text {
+  color: var(--neon-blue);
+  text-shadow: 
+    0 0 5px var(--glow-cyan),
+    0 0 10px var(--glow-cyan),
+    0 0 20px var(--glow-cyan);
+}</code>
+      </div>
+      
+      <h3 style="margin: 1.5rem 0 1rem; color: var(--neon-blue);">霓虹边框效果</h3>
+      <div class="code-block">
+        <code>.neon-border {
+  border: 1px solid var(--neon-blue);
+  box-shadow: 
+    0 0 5px var(--glow-cyan),
+    0 0 10px var(--glow-cyan),
+    0 0 20px var(--glow-cyan);
+}</code>
+      </div>
+    </section>
+    
+    <section class="section">
+      <h2 class="section-title">PPT 应用建议</h2>
+      <div class="grid">
+        <div class="card">
+          <div class="card-title">科技/AI内容</div>
+          <div class="card-desc" style="color: var(--fg-muted); margin-top: 0.5rem;">
+            使用霓虹赛博朋克配色，视觉冲击力强，符合科技感
+          </div>
+        </div>
+        
+        <div class="card">
+          <div class="card-title">汽车/硬件</div>
+          <div class="card-desc" style="color: var(--fg-muted); margin-top: 0.5rem;">
+            使用HMI科技风，专业感强，青色强调醒目
+          </div>
+        </div>
+        
+        <div class="card">
+          <div class="card-title">数据报告</div>
+          <div class="card-desc" style="color: var(--fg-muted); margin-top: 0.5rem;">
+            使用数据可视化配色，多色区分不同数据类型
+          </div>
+        </div>
+        
+        <div class="card">
+          <div class="card-title">文学/哲学</div>
+          <div class="card-desc" style="color: var(--fg-muted); margin-top: 0.5rem;">
+            使用天道金配色，暖黑背景 + 金色强调，庄重典雅
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <footer>
+      <p>Book Distillation V7.0 · 设计学习资源库</p>
+      <p style="margin-top: 0.5rem;">
+        学习来源：
+        <a href="https://www.zcool.com.cn" class="source-link" target="_blank">站酷</a>
+      </p>
+    </footer>
+  </div>
+</body>
+</html>

@@ -52,6 +52,7 @@ design-references/
 | Marp | Markdown驱动幻灯片 | `SKILL.md` |
 | PptxGenJS | Slide Masters 布局系统 | `references/layouts.md` |
 | 5维升维法 | 氛围系统、发布会级排版 | `SKILL.md` |
+| **站酷设计作品** | 霓虹科技风、赛博朋克、数据可视化配色 | `design-references/visual-examples/zcool-designs.md` |
 
 ---
 
