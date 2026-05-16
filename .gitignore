@@ -49,3 +49,10 @@ Thumbs.db
 
 # 知识图谱缓存
 graphify-out/cache/
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
